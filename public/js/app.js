@@ -81,7 +81,7 @@ async function sidebar(route) {
   ]);
   const toSign = revs.filter((r) => r.status === 'To sign').length;
   const item = (key, href, ic, label, extra = '') =>
-    `<a class="nav-item ${nav === key ? 'active' : ''}" href="${href}">${icon(ic)}<span>${label}</span>${extra}</a>`;
+    `<a class="nav-item ${nav === key ? 'active' : ''}" href="${href}" title="${label}">${icon(ic, 's16')}<span>${label}</span>${extra}</a>`;
   const subItem = (active, href, ic, label, count) =>
     `<a class="nav-item ${active ? 'active' : ''}" href="${href}">${icon(ic, 's16')}<span>${esc(label)}</span>${count != null ? `<span class="count">${count}</span>` : ''}</a>`;
 
@@ -90,7 +90,7 @@ async function sidebar(route) {
     const mine = docs.filter((d) => d.section === 'mine').length;
     const shared = docs.filter((d) => d.section === 'shared').length;
     subnav = `<div class="subnav">
-      ${subItem(sub === 'templates', '#/create', 'grid', 'Templates')}
+      ${subItem(sub === 'templates' || sub === 'all-templates', '#/create', 'library', 'Templates')}
       ${subItem(sub === 'my', '#/create/my', 'folder', 'My documents', mine)}
       ${subItem(sub === 'shared', '#/create/shared', 'people', 'Shared with me', shared)}
       ${subItem(sub === 'pinned', '#/create/pinned', 'bookmark', 'Pinned')}</div>`;
@@ -115,8 +115,9 @@ async function sidebar(route) {
       ${['To sign', 'To read', 'Due soon'].map((t) => subItem(cur === 'tag:' + t, '#/reviews/tag/' + encodeURIComponent(t), 'label', t, tagCount(t))).join('')}</div>`;
   }
   const u = state.user;
+  const curRecent = location.hash;
   return `<nav class="sidebar" aria-label="Main">
-    <div class="brand-row">${wordmark('#fff')}<button class="collapse-btn" data-action="collapse">${icon('dock', 's16')} Collapse</button></div>
+    <div class="brand-row">${wordmark()}<button class="collapse-btn" data-action="collapse" aria-label="${state.collapsed ? 'Expand' : 'Collapse'} sidebar">${icon('dock', 's16')}<span class="cl-label">${state.collapsed ? 'Expand' : 'Collapse'}</span></button></div>
     ${item('research', '#/research', 'search', 'Research')}
     ${item('briefing', '#/research/brief', 'sun', 'Briefing')}
     ${item('create', '#/create', 'edit', 'Create')}
@@ -127,11 +128,11 @@ async function sidebar(route) {
     ${nav === 'reviews' ? subnav : ''}
     ${item('library', '#/library', 'library', 'Library')}
     ${item('skills', '#/skills', 'sparkle', 'Skills')}
-    ${nav === 'reviews' ? '' : `<div class="recent"><button class="recent-title">Recent ${icon('down', 's16')}</button>
-      ${recent.map((r) => `<a href="${r.route}">${esc(r.title)}</a>`).join('')}</div>`}
+    <div class="recent"><button class="recent-title" data-action="recent" aria-expanded="${!state.recentClosed}">Recent ${icon(state.recentClosed ? 'up' : 'down', 's16')}</button>
+      ${state.recentClosed || nav === 'reviews' ? '' : recent.map((r) => `<a class="${curRecent === r.route && r.route.includes("thread") ? "active" : ""}" href="${r.route}">${icon('article', 's10')}<span>${esc(r.title)}</span></a>`).join('')}</div>
     <div class="sidebar-bottom">
-      <button class="agent-card" data-action="activity">${orb('sm', u?.agentLook)}<span class="grow"><b>${esc(u?.agentName || 'Bridge')}</b><br><span class="small" style="color:#b5b5b5">Working · 1 needs you</span></span><span class="dot"></span></button>
-      <a class="profile" href="#/settings"><span class="avatar" style="background:#fff;color:#111">${esc(u?.initials)}</span><span class="grow"><b class="small">${esc(u?.name)}</b><br><span class="small" style="color:#b5b5b5">${esc(u?.office)}</span></span>${icon('settings', 's16')}</a>
+      <button class="agent-card" data-action="activity" aria-label="What ${esc(u?.agentName || 'Bridge')} is doing">${orb('md', u?.agentLook)}<span class="grow"><b>${esc(u?.agentName || 'Bridge')}</b><br><span class="sub">Working · 1 needs you</span></span><span class="dot"></span></button>
+      <a class="profile" href="#/settings"><span class="avatar">${esc(u?.initials)}</span><span class="grow"><b>${esc(u?.name)}</b><br><span class="sub">${esc(u?.office)}</span></span>${icon('settings', 's16')}</a>
     </div></nav>`;
 }
 
@@ -192,7 +193,8 @@ export async function render() {
     app.querySelector('.sidebar').addEventListener('click', (e) => {
       const b = e.target.closest('[data-action]');
       if (b?.dataset.action === 'activity') { e.preventDefault(); toggleActivity(); }
-      if (b?.dataset.action === 'collapse') { e.preventDefault(); }
+      if (b?.dataset.action === 'collapse') { e.preventDefault(); state.collapsed = !state.collapsed; render(); }
+      if (b?.dataset.action === 'recent') { e.preventDefault(); state.recentClosed = !state.recentClosed; render(); }
     });
     view.mount && view.mount(app.querySelector('#main'));
   } else {

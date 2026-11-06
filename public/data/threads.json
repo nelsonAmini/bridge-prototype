@@ -1,81 +1,117 @@
 [
-  {
-    "_id": "th-land",
-    "question": "The land administration system is failing. How do we protect the data and what are our options to replace it?",
-    "time": "Today, 9:12 AM",
-    "plan": [
-      {
-        "title": "I’ll answer",
-        "text": "How to protect land data and replace the system, in order"
-      },
-      {
-        "title": "I’ll look at",
-        "text": "The 2025 audit, Lands and Surveys reports, two replacement proposals"
-      },
-      {
-        "title": "You’ll get",
-        "text": "Backup first, then open process gaps, then options with risks and a recommended order"
-      }
-    ],
-    "steps": [
-      "Backing up land records sources",
-      "Reviewing open process gaps",
-      "Comparing replacement options",
-      "Writing the answer"
-    ],
-    "answer": {
-      "summary": "The land registry can still be read but is failing under load. Protect the data first: take a full, verified backup off the failing servers, then freeze changes while the two critical audit gaps are closed.",
-      "stats": [
-        {
-          "label": "Parcels on record",
-          "value": "[x]k",
-          "note": "Stable"
-        },
-        {
-          "label": "Last full backup",
-          "value": "[x] days",
-          "note": "Late"
-        },
-        {
-          "label": "Open process gaps",
-          "value": "2 critical",
-          "note": "from audit [2]"
-        }
-      ],
-      "order": [
-        {
-          "title": "Back up and verify every record",
-          "when": "Week 1–2",
-          "text": "Take a full, verified copy off the failing servers and test that it restores."
-        },
-        {
-          "title": "Freeze changes to the old system",
-          "when": "Week 2",
-          "text": "Only fixes that protect data. No new features or fields."
-        },
-        {
-          "title": "Close the process gaps",
-          "when": "Weeks 2–8",
-          "text": "Fix the 2 critical gaps from the audit first, so bad data stops entering."
-        },
-        {
-          "title": "Choose a replacement",
-          "when": "Weeks 4–10",
-          "text": "Compare the options below with Lands and Surveys and Finance."
-        },
-        {
-          "title": "Migrate in stages",
-          "when": "From month 3",
-          "text": "Move parish by parish, running old and new side by side."
-        }
-      ],
-      "sources": [
-        "Lands and Surveys – system status, Oct 2026",
-        "2025 Land Registry audit",
-        "Replacement proposal A",
-        "Replacement proposal B"
-      ]
+ {
+  "_id": "th-land",
+  "question": "The land administration system is failing. How do we protect the data and replace it, and in what order?",
+  "time": "Today, 9:12 AM",
+  "plan": [
+   {
+    "title": "I’ll answer",
+    "text": "How to protect land data and replace the system, in order"
+   },
+   {
+    "title": "I’ll look at",
+    "text": "The 2025 audit, Lands and Surveys reports, two replacement proposals"
+   },
+   {
+    "title": "You’ll get",
+    "text": "Backup first, then open process gaps, then options with risks and a recommended order"
+   }
+  ],
+  "steps": [
+   "Backing up land records sources",
+   "Reviewing open process gaps",
+   "Comparing replacement options",
+   "Writing the answer"
+  ],
+  "answer": {
+   "summary": "The land registry can still be read but is failing under load. Protect the data first, then close the process gaps that let errors in, then replace the system in stages. Doing it in this order keeps title transactions running while the new system is built.",
+   "stats": [
+    {
+     "label": "Parcels on record",
+     "value": "[x]k",
+     "note": "in the registry",
+     "trend": "Stable",
+     "tone": "good"
     },
-    "order": 0
-  }
+    {
+     "label": "Last full backup",
+     "value": "[x] days",
+     "note": "ago",
+     "trend": "Late",
+     "tone": "bad"
+    },
+    {
+     "label": "Open process gaps",
+     "value": "6",
+     "note": "from audit [2]",
+     "trend": "2 critical",
+     "tone": "bad"
+    }
+   ],
+   "order": [
+    {
+     "title": "Back up and verify every record",
+     "when": "Week 1–2",
+     "text": "Take a full, verified copy off the failing servers and test that it restores. [1]"
+    },
+    {
+     "title": "Freeze changes to the old system",
+     "when": "Week 2",
+     "text": "Only fixes that protect data. No new features or fields."
+    },
+    {
+     "title": "Close the process gaps",
+     "when": "Weeks 2–8",
+     "text": "Fix the 2 critical gaps from the audit first, so bad data stops entering. [2]"
+    },
+    {
+     "title": "Choose a replacement",
+     "when": "Weeks 4–10",
+     "text": "Compare the options below with Lands and Surveys and Finance."
+    },
+    {
+     "title": "Migrate in stages",
+     "when": "From month 3",
+     "text": "Move parish by parish, running old and new side by side."
+    }
+   ],
+   "sources": [
+    "Lands and Surveys - System health report, September 2026.pdf",
+    "Auditor General - Land registry process audit 2025.pdf",
+    "Estimates of Revenue and Expenditure 2026-2027.pdf",
+    "CARICOM - Regional land information platform brief.docx"
+   ],
+   "options": [
+    {
+     "name": "Repair and extend",
+     "text": "Keep the current system and patch it. Cheapest now, risky later.",
+     "risk": "High risk",
+     "tone": "danger",
+     "icon": "🧯"
+    },
+    {
+     "name": "Off-the-shelf registry",
+     "text": "Proven product, configured for Barbados. 9 to 12 months.",
+     "risk": "Medium risk",
+     "tone": "warning",
+     "icon": "🧩"
+    },
+    {
+     "name": "Shared regional platform",
+     "text": "Join a CARICOM land platform. Lower cost, less control.",
+     "risk": "Medium risk",
+     "tone": "warning",
+     "icon": "🌐"
+    }
+   ],
+   "recommendation": "My recommendation: back up this week, then take the off-the-shelf route. It balances speed and control, and Finance already budgeted for it in the 2026 Estimates [3]. Repairing the old system only buys time.",
+   "followups": [
+    "Draft a Cabinet note",
+    "Cost each option",
+    "Who owns the backup?",
+    "Show the audit gaps"
+   ]
+  },
+  "order": 0
+ }
 ]

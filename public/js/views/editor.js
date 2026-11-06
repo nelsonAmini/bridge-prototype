@@ -38,10 +38,11 @@ class Editor {
     const words = (d.title + ' ' + (d.sections || []).map((s) => [s.body, s.tail, ...(s.bullets || [])].join(' ')).join(' ')).trim().split(/\s+/).filter(Boolean).length;
     this.el.innerHTML = `<div class="editor">
       <section class="doc-col">
-        <div class="doc-head"><a class="icon-btn" href="#/create/my" aria-label="Back to documents">${icon('left')}</a>
-          <div class="title"><b>${esc(d.title || 'Untitled document')}</b><span class="small muted">${d.template === 'Cabinet Paper' && d.status ? esc(d.status) + ' · ' : ''}Last saved ${esc(d.modified)}</span></div>
-          <button class="btn tertiary sm" id="export">Export</button><button class="icon-btn" id="share" aria-label="Share">${icon('share')}</button><button class="icon-btn" aria-label="History">${icon('history')}</button><button class="icon-btn" aria-label="More">${icon('more')}</button></div>
-        <div class="toolbar">${['bold', 'italic', 'underline', 'text'].map((i) => `<button class="icon-btn" data-fmt="${i}" aria-label="${i}">${icon(i)}</button>`).join('')}<span class="sep"></span><button class="icon-btn" aria-label="Align">${icon('align')}</button><button class="icon-btn" aria-label="List">${icon('list')}</button></div>
+        <div class="doc-head">
+          <div class="title"><b>${esc(d.title || 'Untitled document')}</b><span class="small">${esc(d.status || d.template)} · Last saved ${esc(d.modified)}</span></div>
+          <button class="btn tertiary sm" id="export" data-popover-anchor>Export</button><button class="icon-btn sm" id="share" aria-label="Share">${icon('share', 's16')}</button><button class="icon-btn sm" aria-label="History">${icon('history', 's16')}</button><button class="icon-btn sm" aria-label="More">${icon('more', 's16')}</button></div>
+        <div class="toolbar">${['bold', 'italic', 'underline', 'text'].map((i) => `<button class="icon-btn" data-fmt="${i}" aria-label="${i}">${icon(i, 's16')}</button>`).join('')}<span class="sep"></span><button class="icon-btn" aria-label="Align">${icon('align', 's16')}</button><button class="icon-btn" aria-label="List">${icon('list', 's16')}</button>
+          <span class="spacer"></span><span class="switch-label">Comments</span><button class="switch" role="switch" id="cmtSwitch" aria-checked="${ui.tab === 'comments'}" aria-label="Show comments"></button></div>
         <div class="canvas"><article class="sheet" id="sheet">${this.sheetHtml()}</article></div>
         <div class="doc-foot">Word count: ${words} words · ${(d.sources || []).length ? d.sources.length + ' sources cited' : 'Reading time: ' + Math.max(1, Math.round(words / 230)) + ' min'}</div>
       </section>
@@ -100,12 +101,12 @@ class Editor {
          ${m.sources ? `<div class="stack" style="--gap:6px"><span class="small muted">Sources used</span><div class="sources">${(d.sources || []).map((s, i) => `<div><span>[${i + 1}]</span>${esc(s)}</div>`).join('')}</div></div>` : ''}`).join('');
     const busy = ui.typing ? `<div class="bridge-line">${orb('sm thinking', state.user.agentLook)}<span>${d.stage === 'processing' ? 'Updating document…' : 'Thinking…'}</span></div>` : '';
     const sugg = !ui.typing && (d.suggestions || []).length ? `<div class="stack" style="--gap:8px">${d.suggestions.map((s) => `<button class="suggestion" data-suggest="${esc(s)}">${esc(s)}</button>`).join('')}</div>` : '';
-    return `<div class="row"><b class="grow">Writing assistant</b><button class="btn tertiary sm" id="clear">Clear chat</button></div>
+    return `<div class="panel-head"><b>Writing assistant</b><button class="btn tertiary sm" id="clear">Clear chat</button></div>
       <div class="panel-scroll">${msgs}${busy}${sugg}</div>
-      <form class="chatbox" id="chat">${ui.attachments.length ? `<div class="row wrap">${ui.attachments.map((a, i) => `<span class="attach-chip">${icon(a.type === 'link' ? 'web' : 'attach', 's16')}${esc(a.name)}<button type="button" class="link" data-rm="${i}" aria-label="Remove">✕</button></span>`).join('')}</div>` : ''}
-        <textarea id="msg" rows="2" placeholder="${d.flow === 'cabinet' && d.stage === 'initial' ? 'Describe the paper and add sources…' : 'Ask Bridge to draft, rewrite or cite…'}" aria-label="Message the assistant"></textarea>
-        <div class="tools"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Web search"></button><span class="small">Web</span><span class="spacer"></span><button type="button" class="icon-btn" aria-label="Tools">${icon('tune', 's16')}</button><button type="button" class="icon-btn" id="attach" aria-label="Add attachments">${icon('add')}</button><button type="button" class="icon-btn outline" aria-label="Dictate">${icon('mic', 's16')}</button><button class="send" aria-label="Send">${icon('send', 's16')}</button></div></form>
-      <p class="small muted" style="text-align:center">Bridge can make mistakes. Double-check facts and sources.</p>`;
+      <form class="chatbox" id="chat">${ui.attachments.length ? `<div class="row wrap">${ui.attachments.map((a, i) => `<span class="attach-chip">${icon(a.type === 'link' ? 'web' : 'attach', 's16')}${esc(a.name)}<button type="button" class="icon-btn xs" data-rm="${i}" aria-label="Remove">${icon('close', 's16')}</button></span>`).join('')}</div>` : ''}
+        <textarea id="msg" rows="2" placeholder="${d.flow === 'cabinet' && d.stage === 'initial' ? 'Describe the paper and add sources…' : 'Type / Speak your question...'}" aria-label="Message the assistant"></textarea>
+        <div class="tools"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Web search"></button><span>Web</span><span class="spacer"></span><button type="button" class="icon-btn" aria-label="Tools">${icon('tune', 's16')}</button><button type="button" class="icon-btn" id="attach" aria-label="Add attachments">${icon('add', 's16')}</button><button type="button" class="icon-btn outline" aria-label="Dictate">${icon('mic', 's16')}</button><button class="send" aria-label="Send">${icon('send', 's16')}</button></div></form>
+      <p class="panel-note">Bridge can make mistakes. Double-check facts and sources.</p>`;
   }
 
   kgHtml() {
@@ -122,8 +123,8 @@ class Editor {
     const list = all.filter((c) => ui.filter === 'all' || (ui.filter === 'resolved' ? c.status === 'resolved' : ui.filter === 'you' ? c.mentionsMe && c.status === 'open' : c.status === 'open'))
       .sort((a, b) => order.indexOf(a.sectionId) - order.indexOf(b.sectionId) || (a.bullet ?? -1) - (b.bullet ?? -1));
     const summary = this.doc.reviewSummary && !this.doc.reviewSummary.dismissed ? `<div class="review-summary"><div class="row">${orb('sm', state.user.agentLook)}<b>${esc(state.user.agentName)} reviewed this paper</b></div><p>Checked against Cabinet paper rules. 3 comments: a missing “Source of funds” line, an unsourced claim and a missing deadline.</p><div class="row"><button class="btn primary sm" id="allSugg">Turn all into suggestions</button><button class="btn tertiary sm" id="dismiss">Dismiss</button></div></div>` : '';
-    return `<div class="row"><b class="grow">Comments</b><button class="btn ghost sm" id="review">${orb('sm', state.user.agentLook)} Review with ${esc(state.user.agentName)}</button><button class="icon-btn" id="addc" aria-label="Add comment">${icon('addComment')}</button></div>
-      <div class="row wrap">${[['open', 'Open', count.open], ['you', 'For you', count.you], ['resolved', 'Resolved', count.resolved], ['all', 'All', count.all]].map(([k, l, n]) => `<button class="chip ${ui.filter === k ? 'selected' : ''}" data-filter="${k}">${l} · ${n}</button>`).join('')}</div>
+    return `<div class="panel-head"><b>Comments</b><button class="chip-btn" id="review">${orb('sm', state.user.agentLook)} Review with ${esc(state.user.agentName)}</button><button class="icon-btn sm" id="addc" aria-label="Add comment">${icon('addComment', 's16')}</button></div>
+      <div class="filter-chips">${[['open', 'Open', count.open], ['you', 'For you', count.you], ['resolved', 'Resolved', count.resolved], ['all', 'All', count.all]].map(([k, l, n]) => `<button class="chip ${ui.filter === k ? 'selected' : ''}" data-filter="${k}">${l} · ${n}</button>`).join('')}</div>
       <div class="panel-scroll top">${summary}${ui.pendingNew ? this.newCommentHtml() : ''}${list.map((t) => this.threadHtml(t)).join('') || '<p class="muted small">No comments here. Select text in the document to comment.</p>'}</div>`;
   }
 
@@ -150,6 +151,7 @@ class Editor {
   bind() {
     const el = this.el;
     el.querySelectorAll('[data-tab]').forEach((b) => (b.onclick = () => { ui.tab = b.dataset.tab; this.draw(); }));
+    el.querySelector('#cmtSwitch').onclick = () => { ui.tab = ui.tab === 'comments' ? 'assistant' : 'comments'; this.draw(); };
     el.querySelector('#export').onclick = () => popoverExport(el.querySelector('#export'));
     el.querySelector('#share').onclick = () => toast('Share: pick people in the Share dialog (see Directory)');
     el.querySelectorAll('[data-fmt]').forEach((b) => (b.onmousedown = (e) => { e.preventDefault(); document.execCommand(b.dataset.fmt === 'text' ? 'removeFormat' : b.dataset.fmt); }));

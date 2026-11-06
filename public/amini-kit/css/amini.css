@@ -1,0 +1,4 @@
+/* Amini Kit · single entry point. Link this one file:
+   <link rel="stylesheet" href="amini-kit/css/amini.css"> and add class="am-root" to <body>. */
+@import url('./tokens.css');
+@import url('./components.css');

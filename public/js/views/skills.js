@@ -14,24 +14,26 @@ const sw = (on, attrs = '') => `<button class="switch" role="switch" aria-checke
 async function home() {
   const u = state.user;
   const skills = (await api.list('skills')).filter((s) => !s.hidden && !s.dismissed);
+  const learned = (await api.list('learned')).filter((l) => !l.forgotten).length;
   const mine = skills.filter((s) => !s.suggested), sugg = skills.filter((s) => s.suggested);
   return {
     title: 'Skills',
-    html: `<div class="page"><div class="page-narrow stack" style="--gap:24px;max-width:800px">
-      <div class="card pad row" style="gap:16px">${orb('lg', u.agentLook)}<div class="grow"><h2>${esc(u.agentName)}</h2><p class="muted small">Your agent · ${mine.filter((s) => s.on).length} skills on · never signs, sends or decides for you</p></div><button class="btn secondary sm" id="editAgent">Edit</button></div>
+    html: `<div class="wide-page">
+      <h3 class="page-title">Skills</h3>
+      <div class="agent-head">${orb('lg', u.agentLook)}<div class="grow"><b>${esc(u.agentName)}</b><div class="small muted">Your agent · always on</div></div><button class="btn tertiary sm" id="editAgent">Edit</button></div>
       <div class="list">
-        <button class="list-row" id="instr">${icon('edit', 's16')}<div class="grow" style="text-align:left"><b>Instructions</b><div class="small muted">How ${esc(u.agentName)} should write and what it should never do</div></div>${icon('right', 's16')}</button>
-        <a class="list-row" href="#/skills/how">${icon('sparkle', 's16')}<div class="grow"><b>How you work</b><div class="small muted">What ${esc(u.agentName)} has learned about you</div></div>${icon('right', 's16')}</a>
-        <button class="list-row" id="ask">${icon('info', 's16')}<div class="grow" style="text-align:left"><b>When to act or ask</b><div class="small muted">Always ask before sharing, sending or changing a paper</div></div>${icon('right', 's16')}</button></div>
-      <div class="row"><h3 class="grow">Skills</h3><button class="btn primary sm" id="newSkill"><span class="lead">${icon('add', 's16')}</span>New skill</button></div>
-      <div class="list">${mine.map((s) => `<div class="list-row"><div class="grow"><b>${esc(s.name)}</b><div class="small muted">${esc(s.schedule)}${s.description ? ' · ' + esc(s.description) : ''}</div></div><button class="btn tertiary sm" data-edit="${s._id}">Edit</button>${sw(s.on, `data-skill="${s._id}" aria-label="${esc(s.name)}"`)}</div>`).join('')}</div>
-      ${sugg.length ? `<div class="stack" style="--gap:10px"><h4>Suggested</h4>${sugg.map((s) => `<div class="card pad row">${orb('sm', u.agentLook)}<div class="grow"><b>${esc(s.name)}</b><div class="small muted">${esc(s.schedule)}</div></div><button class="btn tertiary sm" data-dismiss="${s._id}">Dismiss</button><button class="btn secondary sm" data-add="${s._id}">Add</button></div>`).join('')}</div>` : ''}
-    </div></div>`,
+        <button class="settings-row" id="instr"><span class="grow">Instructions</span><span class="val">Summary first; I decide</span>${icon('right', 's16')}</button>
+        <a class="settings-row" href="#/skills/how"><span class="grow">How you work</span><span class="val">${learned} things learned</span>${icon('right', 's16')}</a>
+        <button class="settings-row" id="ask"><span class="grow">When to act or ask</span><span class="val">Asks before drafting</span>${icon('right', 's16')}</button></div>
+      <div class="row" style="margin-top:16px"><span class="grow small" style="font-weight:500">Skills</span><button class="btn primary sm" id="newSkill">New skill</button></div>
+      <div class="list">${mine.map((s) => `<div class="skill-row"><div class="grow"><b>${esc(s.name)}</b><div class="sub">${esc(s.schedule)}</div></div><button class="btn tertiary sm" data-edit="${s._id}">Edit</button>${sw(s.on, `data-skill="${s._id}" aria-label="${esc(s.name)}"`)}</div>`).join('')}
+        ${sugg.map((s) => `<div class="skill-row"><div class="grow"><b>${esc(s.name)}</b><div class="sub suggest">Suggested · you ask for this often</div></div><button class="btn tertiary sm" data-dismiss="${s._id}">Dismiss</button><button class="btn primary sm" data-add="${s._id}">Add</button></div>`).join('')}</div>
+    </div>`,
     mount(root) {
       root.querySelectorAll('[data-skill]').forEach((b) => (b.onclick = async () => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); await api.update('skills', b.dataset.skill, { on }); toast(on ? 'Skill turned on' : 'Skill paused'); }));
       root.querySelectorAll('[data-add]').forEach((b) => (b.onclick = async () => { await api.update('skills', b.dataset.add, { suggested: false, on: true, schedule: 'Mon and Wed, 8:00 AM' }); toast('Skill added'); rerender(); }));
       root.querySelectorAll('[data-dismiss]').forEach((b) => (b.onclick = async () => { await api.update('skills', b.dataset.dismiss, { dismissed: true }); rerender(); }));
-      root.querySelectorAll('[data-edit]').forEach((b) => (b.onclick = () => toast('Editing opens the same 3 steps as New skill (prototype)')));
+      root.querySelectorAll('[data-edit]').forEach((b) => (b.onclick = () => newSkill(skills.find((x) => x._id === b.dataset.edit))));
       root.querySelector('#editAgent').onclick = () => go('#/onboarding/1');
       root.querySelector('#instr').onclick = () => textModal('Instructions', 'Write in plain British English. Summary first. Never share a Confidential paper outside the Cabinet Office.');
       root.querySelector('#ask').onclick = () => textModal('When to act or ask', 'Act on its own: summarise, tag, file and remind.\nAlways ask first: share, send, change a paper, or contact anyone.');
@@ -45,13 +47,13 @@ function textModal(title, value) {
   m.el.querySelector('#ok').onclick = () => { m.close(); toast('Saved'); };
 }
 
-function newSkill() {
-  let step = 1;
-  const data = { desc: '', name: 'Friday deferred papers', days: ['Fri'], time: '4:00 PM', repeat: 'Every week' };
+function newSkill(existing) {
+  let step = existing ? 2 : 1;
+  const data = { desc: existing?.description || '', name: existing?.name || 'Friday deferred papers', days: ['Fri'], time: '4:00 PM', repeat: 'Every week' };
   const STEPS = ['Describe', 'Review', 'Schedule'];
-  const m = modal({ title: 'New skill', iconName: 'sparkle', wide: true, body: '<div id="ns"></div>', foot: '<div id="nsf" class="row" style="width:100%"></div>' });
+  const m = modal({ title: existing ? 'Edit skill' : 'New skill', iconName: 'sparkle', wide: true, body: '<div id="ns"></div>', foot: '<div id="nsf" class="row" style="width:100%"></div>' });
   const draw = () => {
-    const head = `<div class="steps">${STEPS.map((s, i) => `<div class="step ${i + 1 <= step ? 'active' : ''}"><span class="num">${i + 1 < step ? '✓' : i + 1}</span>${s}</div>`).join('<span class="step-line"></span>')}</div>`;
+    const head = `<div class="steps">${STEPS.map((s, i) => `<div class="step ${i + 1 <= step ? 'active' : ''}"><span class="num">${i + 1 < step ? '✓' : '0' + (i + 1)}</span>${s}</div>`).join('<span class="step-line"></span>')}</div>`;
     let body = '';
     if (step === 1) body = `<p class="muted">Describe what you want ${esc(state.user.agentName)} to do, in your own words.</p>
       <textarea class="textarea" id="desc" style="min-height:110px" placeholder="e.g. Every Friday, tell me which papers were deferred this week and why">${esc(data.desc)}</textarea>
@@ -78,6 +80,7 @@ function newSkill() {
       if (step === 2) data.name = m.el.querySelector('#sname').value.trim() || data.name;
       if (step === 3) {
         data.time = m.el.querySelector('#time').value; data.repeat = m.el.querySelector('#rep').value;
+        if (existing) { await api.update('skills', existing._id, { name: data.name, schedule: `${data.days.join(', ')}, ${data.time}` }); m.close(); rerender(); return toast('Skill updated'); }
         const s = await api.create('skills', { name: data.name, schedule: `${data.days.join(', ')}, ${data.time}`, description: data.desc, on: true, suggested: false, order: 50 });
         m.close(); rerender();
         return toast(`Skill saved. First run ${data.days[0] || 'Fri'} at ${data.time}`, 'Undo', async () => { await api.remove('skills', s._id); rerender(); });
@@ -94,9 +97,9 @@ async function how() {
   const group = (g, t) => `<div class="stack" style="--gap:10px"><h4>${t}</h4><div class="list">${learned.filter((l) => l.group === g).map((l) => `<div class="list-row"><div class="grow"><b>${esc(l.fact)}</b><div class="small muted">${esc(l.source)}</div></div>${l.confirm ? `<button class="btn secondary sm" data-yes="${l._id}">Yes</button>` : ''}<button class="icon-btn" data-forget="${l._id}" aria-label="Forget" title="Forget">${icon('close', 's16')}</button></div>`).join('')}</div></div>`;
   return {
     title: 'How you work',
-    html: `<div class="page"><div class="page-narrow stack" style="--gap:24px;max-width:800px">
+    html: `<div class="wide-page"><div class="stack" style="--gap:24px">
       <nav class="breadcrumb"><a href="#/skills">Skills</a>${icon('right', 's16')}<span>How you work</span></nav>
-      <div><h1>How you work</h1><p class="muted">What ${esc(u.agentName)} has learned about you. Remove anything that’s wrong.</p></div>
+      <div><h3 class="page-title">How you work</h3><p class="muted">What ${esc(u.agentName)} has learned about you. Remove anything that’s wrong.</p></div>
       ${u.keepLearning ? '' : `<div class="alert"><span class="alert-icon">${icon('info')}</span><div class="grow">Learning is off. ${esc(u.agentName)} keeps what it knows but won’t add more.</div><button class="btn tertiary sm" id="notNow">Not now</button><button class="btn secondary sm" id="turnOn">Turn on</button></div>`}
       ${group('decide', 'How you decide')}${group('rhythm', 'Your rhythm')}
       <div class="card pad row"><div class="grow"><b>Keep learning</b><div class="small muted">Learn from your chats, papers and activity</div></div>${sw(u.keepLearning, 'id="keep" aria-label="Keep learning"')}</div>
@@ -115,27 +118,27 @@ async function how() {
 async function settings() {
   const u = await refreshUser();
   return {
-    title: 'Settings',
-    html: `<div class="page"><div class="page-narrow stack" style="--gap:24px;max-width:720px">
-      <h1>Settings</h1>
-      <div class="card pad row" style="gap:16px"><span class="avatar" style="width:56px;height:56px;font-size:20px;background:var(--secondary);color:#fff">${esc(u.initials)}</span><div class="grow"><b>${esc(u.name)}</b><div class="small muted">${esc(u.office)}</div></div></div>
-      <div class="stack" style="--gap:12px"><h4>Account</h4>
-        <div class="field"><label>Email</label><input class="input" value="${esc(u.email)}" readonly></div>
-        <div class="field"><label>Wallet</label><input class="input" value="${esc(u.wallet)}" readonly></div>
-        <button class="btn secondary sm" style="align-self:flex-start" id="pw">Change password</button></div>
-      <div class="stack" style="--gap:12px"><h4>Usage</h4><div class="card pad stack" style="--gap:14px">${u.usage.map((x) => `<div class="stack" style="--gap:6px"><div class="row"><span class="grow small">${esc(x.label)}</span><span class="small muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(1, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div></div>
-      <div class="stack" style="--gap:12px"><h4>Preferences</h4><div class="list">
-        <div class="list-row"><span class="grow">Language</span><select class="select" id="lang" style="width:180px">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div class="list-row"><span class="grow">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div>
-        <div class="list-row"><span class="grow">Dark mode</span>${sw(state.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div></div></div>
-      <div class="row"><button class="btn tertiary" id="report">Report an issue</button><span class="spacer"></span><button class="btn tertiary" id="reset">Reset prototype data</button><button class="btn danger" id="out">Sign out</button></div>
-    </div></div>`,
+    title: 'Account and settings',
+    html: `<div class="wide-page">
+      <h3 class="page-title">Account and settings</h3>
+      <div class="row" style="--gap:12px"><span class="avatar dark" style="width:48px;height:48px;font-size:18px">${esc(u.initials)}</span><div><b class="small" style="font-weight:500">${esc(u.name)}</b><div class="tiny muted">${esc(u.email)} · ${esc(u.office)}</div></div></div>
+      <span class="small" style="font-weight:500;margin-top:8px">Account</span>
+      <div class="row" style="--gap:16px;align-items:flex-start"><div class="field grow"><label for="em">Email</label><input class="input" id="em" value="${esc(u.email)}" readonly></div><div class="field grow"><label for="wl">Wallet</label><input class="input" id="wl" value="${esc(u.wallet)}" readonly></div></div>
+      <button class="btn secondary sm" style="align-self:flex-start" id="pw">Change password</button>
+      <span class="small" style="font-weight:500;margin-top:8px">Usage and quota</span>
+      <div class="list">${u.usage.map((x) => `<div class="usage-row"><div class="row"><span class="grow small">${esc(x.label)}</span><span class="tiny muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(8, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div>
+      <span class="small" style="font-weight:500;margin-top:8px">App</span>
+      <div class="row" style="--gap:16px;align-items:flex-end"><div class="field grow"><label for="lang">Language</label><select class="select" id="lang">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        <div class="card row grow" style="height:40px;padding:0 12px"><span class="grow small">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div></div>
+      <div class="card row" style="height:40px;padding:0 12px;max-width:50%"><span class="grow small">Dark mode</span>${sw(state.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
+      <div class="row"><button class="btn tertiary sm" id="report">Report an issue</button><button class="btn danger sm" id="out">Sign out</button><span class="spacer"></span><button class="btn ghost sm" id="reset">Reset prototype data</button></div>
+    </div>`,
     mount(root) {
       root.querySelector('#lang').onchange = async (e) => { await api.update('users', 'u-pm', { language: e.target.value }); toast('Language saved'); };
       root.querySelector('#notif').onclick = async (e) => { const v = e.currentTarget.getAttribute('aria-checked') !== 'true'; e.currentTarget.setAttribute('aria-checked', v); await api.update('users', 'u-pm', { notifications: v }); };
       root.querySelector('#dark').onclick = () => { setTheme(state.theme === 'dark' ? 'light' : 'dark'); rerender(); };
-      root.querySelector('#pw').onclick = () => { const m = modal({ title: 'Change password', iconName: 'lock', body: '<div class="stack"><div class="field"><label>Current password</label><input class="input" type="password"></div><div class="field"><label>New password</label><input class="input" type="password"></div></div>', foot: '<button class="btn tertiary" data-close>Cancel</button><button class="btn primary" id="ok">Update</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Password updated (prototype)'); }; };
-      root.querySelector('#report').onclick = () => { const m = modal({ title: 'Report an issue', iconName: 'warning', body: '<textarea class="textarea" style="min-height:120px" placeholder="What happened?"></textarea>', foot: '<button class="btn tertiary" data-close>Cancel</button><button class="btn primary" id="ok">Send</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Thanks. Your report was sent.'); }; };
+      root.querySelector('#pw').onclick = () => { const m = modal({ title: 'Change password', iconName: 'lock', body: '<div class="stack"><div class="field"><label>Current password</label><input class="input" type="password"></div><div class="field"><label>New password</label><input class="input" type="password"></div></div>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Update</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Password updated (prototype)'); }; };
+      root.querySelector('#report').onclick = () => { const m = modal({ title: 'Report an issue', iconName: 'warning', body: '<textarea class="textarea" style="min-height:120px" placeholder="What happened?"></textarea>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Send</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Thanks. Your report was sent.'); }; };
       root.querySelector('#reset').onclick = async () => { await api.reset(); sessionStorage.clear(); toast('Prototype data reset'); location.hash = '#/login'; location.reload(); };
       root.querySelector('#out').onclick = () => signOut();
     },

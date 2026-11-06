@@ -1,76 +1,174 @@
 [
-  {
-    "_id": "brief-today",
-    "date": "Thursday 29 October",
-    "prepared": "6:30 AM",
-    "listen": "3 min",
-    "song": {
-      "title": "King Tubby Meets Rockers Uptown",
-      "artist": "Augustus Pablo",
-      "note": "picked from your favourites"
+ {
+  "_id": "brief-today",
+  "date": "Thursday 29 October",
+  "prepared": "6:30 AM",
+  "listen": "3 min",
+  "song": {
+   "title": "King Tubby Meets Rockers Uptown",
+   "artist": "Augustus Pablo",
+   "note": "picked from your favourites"
+  },
+  "summary": "Six papers came in overnight from four ministries. Three are ready for your signature before Thursday’s Cabinet. One housing paper repeats a request Cabinet deferred in August.",
+  "stats": [
+   {
+    "label": "To sign",
+    "value": "3",
+    "delta": "vs yesterday",
+    "trend": "+2",
+    "tone": "good"
+   },
+   {
+    "label": "Oldest waiting",
+    "value": "9 days",
+    "delta": "[Paper A]",
+    "trend": "",
+    "tone": "bad"
+   },
+   {
+    "label": "Flagged",
+    "value": "1",
+    "delta": "housing",
+    "trend": "Conflict",
+    "tone": "bad"
+   },
+   {
+    "label": "New complaints",
+    "value": "14",
+    "delta": "vs last week",
+    "trend": "-3",
+    "tone": "good"
+   }
+  ],
+  "backlogNote": "Most of the backlog is one paper. [Paper A] has waited nine days and is on Thursday’s agenda, so it is the one to clear first. The other two arrived this week.",
+  "waiting": [
+   {
+    "title": "[Paper A]",
+    "days": 9
+   },
+   {
+    "title": "[Paper B]",
+    "days": 3
+   },
+   {
+    "title": "[Housing paper]",
+    "days": 2
+   }
+  ],
+  "alignment": [
+   {
+    "paper": "[Paper A]",
+    "mission": 4,
+    "covenant": 5,
+    "manifesto": 4,
+    "past": "OK"
+   },
+   {
+    "paper": "[Paper B]",
+    "mission": 5,
+    "covenant": 5,
+    "manifesto": 3,
+    "past": "OK"
+   },
+   {
+    "paper": "[Housing paper]",
+    "mission": 3,
+    "covenant": 4,
+    "manifesto": 3,
+    "past": "Conflict [2]"
+   }
+  ],
+  "illustrative": true,
+  "order": 0,
+  "alignmentNote": "The housing paper asks again for funding Cabinet deferred in August, without new costings. Both passages are quoted in [2]. You may want to send it back or raise it on Thursday.",
+  "economy": {
+   "asOf": "Latest data as of [date]",
+   "text": "Growth is holding at [x]% and inflation is [x]%. Reserves cover [x] weeks of imports. Tourism, the main driver this quarter, is running ahead of last year.",
+   "stats": [
+    {
+     "label": "Real GDP growth",
+     "value": "[x]%",
+     "delta": "vs last quarter",
+     "trend": "+[x]pp",
+     "tone": "good"
     },
-    "summary": "Six papers came in overnight from four ministries. Three are waiting for your signature, one has waited nine days, and the housing paper conflicts with the Covenant of Hope.",
-    "stats": [
-      {
-        "label": "To sign",
-        "value": "3",
-        "delta": "+1 vs yesterday"
-      },
-      {
-        "label": "Oldest waiting",
-        "value": "9 days",
-        "delta": "Land Administration"
-      },
-      {
-        "label": "Flagged",
-        "value": "1",
-        "delta": "Conflict · housing"
-      },
-      {
-        "label": "New complaints",
-        "value": "14",
-        "delta": "−3 vs last week"
-      }
-    ],
-    "backlogNote": "Most of the backlog is one paper. Land Administration has waited nine days; the others arrived this week.",
-    "waiting": [
-      {
-        "title": "Land Administration System Replacement",
-        "days": 9
-      },
-      {
-        "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
-        "days": 3
-      },
-      {
-        "title": "National Housing Programme – Phase 2",
-        "days": 2
-      }
-    ],
-    "alignment": [
-      {
-        "paper": "Digital ID uptake",
-        "mission": "Aligned",
-        "covenant": "Aligned",
-        "manifesto": "Aligned",
-        "past": "No conflict"
-      },
-      {
-        "paper": "Land Administration",
-        "mission": "Aligned",
-        "covenant": "Aligned",
-        "manifesto": "Partly",
-        "past": "No conflict"
-      },
-      {
-        "paper": "Housing Phase 2",
-        "mission": "Aligned",
-        "covenant": "Conflict",
-        "manifesto": "Aligned",
-        "past": "Check 2024 decision"
-      }
-    ],
-    "illustrative": true,
-    "order": 0
-  }
+    {
+     "label": "Inflation",
+     "value": "[x]%",
+     "delta": "easing",
+     "trend": "-[x]pp",
+     "tone": "good"
+    },
+    {
+     "label": "Unemployment",
+     "value": "[x]%",
+     "delta": "vs last year",
+     "trend": "-[x]pp",
+     "tone": "good"
+    },
+    {
+     "label": "FX reserves",
+     "value": "BBD [x]",
+     "delta": "of imports",
+     "trend": "[x] wk",
+     "tone": "good"
+    },
+    {
+     "label": "Debt to GDP",
+     "value": "[x]%",
+     "delta": "slowly falling",
+     "trend": "High",
+     "tone": "bad"
+    },
+    {
+     "label": "Tourist arrivals",
+     "value": "[x]k",
+     "delta": "vs last year",
+     "trend": "+[x]%",
+     "tone": "good"
+    }
+   ],
+   "arrivals2026": [
+    62,
+    70,
+    74,
+    58,
+    44,
+    40,
+    55,
+    52,
+    30,
+    48,
+    null,
+    null
+   ],
+   "arrivals2025": [
+    55,
+    58,
+    64,
+    52,
+    40,
+    36,
+    42,
+    45,
+    28,
+    40,
+    52,
+    62
+   ]
+  },
+  "followups": [
+   "Read me the conflict",
+   "Draft a note to Housing",
+   "What’s on Thursday’s agenda?",
+   "How does growth compare to the region?"
+  ],
+  "citations": [
+   "Cabinet paper - [Paper A], Ministry of [X].pdf",
+   "Cabinet minutes - [August 2026 meeting].pdf",
+   "Covenant of Hope.pdf",
+   "PMO complaints log - October 2026.xlsx",
+   "Central Bank - latest economic review and Statistical Service releases"
+  ]
+ }
 ]

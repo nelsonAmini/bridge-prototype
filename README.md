@@ -2,6 +2,8 @@
 
 A clickable, coded prototype of **Amini Bridge**, built from the *Experimental Bridge* Figma file. Same stack as `person-registry`: Node + Express with an embedded NoSQL store (NeDB, MongoDB-style), and a vanilla JS front end with no build step.
 
+The UI is built on the **Amini Kit** (`public/amini-kit/`): the design tokens, components and icons from the Figma libraries *01. Amini DS Tokens*, *02. Amini Icons* and *03. Amini Main Components*. Bridge-specific pieces (agent orb, document sheet, editor, reviews) live in `public/css/app.css` on top of the kit tokens.
+
 ## What's in it
 
 | Area | Screens and flows |
@@ -49,7 +51,7 @@ Collections: users, people, topics, briefing, threads, papers, folders, myPapers
 
 ## Edit the data
 
-Change the JSON in `public/data/` (or regenerate it with `python3 scripts/build-seed.py`), then `npm run reset`. In static mode, reset the prototype data in Settings.
+Change the JSON in `public/data/` (one file per collection), then `npm run reset`. In static mode, reset the prototype data in Settings.
 
 ## Publish to GitHub Pages
 
@@ -59,6 +61,7 @@ Change the JSON in `public/data/` (or regenerate it with `python3 scripts/build-
 
 ## Notes
 
-- The Amini logo is a placeholder (wordmark + orb). Drop the real SVG into `public/img/` and swap it in `js/ui.js → wordmark()`.
-- Fonts: Geist (UI) and Tinos (document font, metric-compatible with Times New Roman), from Google Fonts.
+- **Logos and icons** are the real assets exported from Figma (Bridge Logo, Amini logo, Material icons from 02. Amini Icons).
+- **Fonts are bundled** (no Google Fonts call): Geist and Geist Mono for the UI (in the kit), and Tinos for the document sheet (metric-compatible with Times New Roman).
+- **Updating the kit:** replace `public/amini-kit/` with a newer copy of the `amini-kit` repo. Nothing else needs to change.
 - All AI responses are scripted. Nothing calls a model.

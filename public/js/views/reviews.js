@@ -22,10 +22,10 @@ async function folderView(params, route) {
   const name = tag || folder.fullName || folder.name;
 
   const card = (r) => `<button class="file" data-open="${r._id}" title="${esc(r.title)}">
-    <div class="top"><span class="pdf">PDF</span><span class="row" style="gap:2px">${r.favourite ? `<span style="color:var(--brand)">${icon('star', 's16')}</span>` : ''}${icon('more', 's16')}</span></div>
+    <div class="top"><span class="pdf">PDF</span><span class="row" style="--gap:0">${r.favourite ? `<span class="star">${icon('star', 's16')}</span>` : ''}<span class="icon-btn xs" data-more="${r._id}">${icon('more', 's16')}</span></span></div>
     <div class="preview">${thumb(r.kind)}</div>
     <div class="name">${esc(r.title)}</div>
-    <div class="row" style="justify-content:center;gap:6px"><span class="status ${statusClass(r.status)}">${esc(r.status)}</span><span class="small muted">${esc(r.meta)}</span></div></button>`;
+    <div class="meta">${esc(r.meta)}</div><span class="status ${statusClass(r.status)}">${esc(r.status)}</span></button>`;
 
   const grouped = groupBy === 'status' && !tag;
   const body = !items.length ? `<div class="card pad muted">${query ? 'No papers match “' + esc(query) + '”.' : 'This folder is empty. Add papers or drag them here.'}</div>`
@@ -33,7 +33,7 @@ async function folderView(params, route) {
         const list = items.filter((r) => r.status === g);
         if (!list.length) return '';
         const shut = collapsed.has(g);
-        return `<section class="stack" style="--gap:12px"><div class="group-head"><button data-group="${g}" aria-expanded="${!shut}">${icon(shut ? 'right' : 'down', 's16')}<b style="color:var(--text);font-size:14px">${g}</b><span>${list.length}</span></button><span class="grow" style="border-top:1px solid var(--border)"></span></div>
+        return `<section class="stack" style="--gap:12px"><div class="group-head"><span>${g} (${list.length})</span><button class="toggle" data-group="${g}" aria-expanded="${!shut}">${icon(shut ? 'down' : 'up', 's16')}${shut ? 'Expand' : 'Collapse'}</button></div>
           ${shut ? '' : `<div class="files">${list.map(card).join('')}</div>`}</section>`;
       }).join('')
     : `<div class="files">${items.map(card).join('')}</div>`;
@@ -42,16 +42,16 @@ async function folderView(params, route) {
     title: name,
     html: `<div class="page stack" style="--gap:20px">
       <div class="row"><nav class="breadcrumb grow"><a href="#/reviews">My Reviews</a>${icon('right', 's16')}<span>${esc(name)}</span></nav>
-        <span class="row small muted">${icon('cloud', 's16')} Synced</span><button class="btn tertiary sm" id="newFolder"><span class="lead">${icon('newFolder', 's16')}</span>New folder</button><button class="btn primary sm" id="add"><span class="lead">${icon('add', 's16')}</span>Add papers</button></div>
-      <div><h1>${esc(name)}</h1><p class="muted">${items.length} papers${folder?.filedBy ? ' · filed by ' + esc(folder.filedBy) : ''} · ${items.filter((r) => r.status === 'To sign').length} to sign</p></div>
-      ${folder?.bridgeNote ? `<div class="bridge-line">${orb('sm', state.user.agentLook)}<span>${esc(folder.bridgeNote)}</span></div>` : ''}
-      <div class="row wrap"><div class="input-wrap grow" style="max-width:360px;position:relative"><input class="input" id="search" placeholder="Search this folder" value="${esc(query)}" style="padding-left:36px"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%)" class="muted">${icon('search', 's16')}</span></div>
-        <button class="chip">${icon('sort', 's16')} Sort: Due date</button>
-        ${tag ? '' : `<button class="chip ${grouped ? 'selected' : ''}" id="groupBy">${icon('grid', 's16')} Group by: ${grouped ? 'Status' : 'None'}</button>`}
-        <button class="chip">${icon('lock', 's16')} Classification</button></div>
+        <span class="synced">${icon('cloud', 's16')}Synced with iBridge</span><button class="btn tertiary sm" id="newFolder"><span class="lead">${icon('newFolder', 's16')}</span>New folder</button><button class="btn secondary sm" id="add"><span class="lead">${icon('upload', 's16')}</span>Add papers</button></div>
+      <div><h3 class="page-title">${esc(name)}</h3><p class="tiny muted" style="margin-top:4px">${items.length} papers · ${items.filter((r) => r.status === 'To sign').length} to sign${folder?.filedBy ? ' · filed by ' + esc(folder.filedBy) : ''}</p></div>
+      ${folder?.bridgeNote ? `<div class="bridge-line" style="font-weight:400;font-size:12px">${orb('sm', state.user.agentLook)}<span>${esc(folder.bridgeNote)}</span></div>` : ''}
+      <div class="row wrap" style="--gap:16px"><div class="search" style="width:300px"><input class="input sm" id="search" placeholder="Search this folder…" value="${esc(query)}" aria-label="Search this folder">${icon('search', 's16')}</div><span class="spacer"></span>
+        <button class="chip drop">Sort <b>Due date</b>${icon('arrowDown', 's16')}</button>
+        ${tag ? '' : `<button class="chip drop" id="groupBy">Group by <b>${grouped ? 'Status' : 'None'}</b>${icon('down', 's16')}</button>`}
+        <button class="chip drop">Classification <b>Any</b>${icon('down', 's16')}</button></div>
       ${body}</div>`,
     mount(root) {
-      root.querySelectorAll('[data-open]').forEach((b) => (b.onclick = () => go('#/reviews/paper/' + b.dataset.open)));
+      root.querySelectorAll('[data-open]').forEach((b) => (b.onclick = (e) => { if (e.target.closest('[data-more]')) { e.stopPropagation(); const m = e.target.closest('[data-more]'); const pop = popover(m, `<button class="menu-item" data-a="open">${icon('eye', 's16')}Open</button><button class="menu-item" data-a="fav">${icon('star', 's16')}Favourite</button><button class="menu-item" data-a="move">${icon('newFolder', 's16')}Move to…</button>`, { align: 'right' }); pop.onclick = (ev) => { const a = ev.target.closest('[data-a]')?.dataset.a; closePopovers(); if (a === 'open') go('#/reviews/paper/' + m.dataset.more); else if (a) toast('Prototype action'); }; return; } go('#/reviews/paper/' + b.dataset.open); }));
       root.querySelectorAll('[data-group]').forEach((b) => (b.onclick = () => { const g = b.dataset.group; collapsed.has(g) ? collapsed.delete(g) : collapsed.add(g); rerender(); }));
       root.querySelector('#groupBy')?.addEventListener('click', () => { groupBy = groupBy === 'status' ? 'none' : 'status'; rerender(); });
       const s = root.querySelector('#search');
@@ -98,29 +98,30 @@ async function paper(id) {
     return out;
   };
 
-  const panel = () => `<div class="stack" style="--gap:16px">
-      <div class="stack" style="--gap:6px"><span class="status ${statusClass(r.status)}" style="align-self:flex-start">${esc(r.status)}</span><b>${esc(r.title)}</b><span class="small muted">${esc(r.kind)}${r.code ? ' · ' + esc(r.code) : ''}${r.ministry ? ' · ' + esc(r.ministry) : ''}</span></div>
-      <div class="stack" style="--gap:8px"><b class="small">Your notes</b><div id="noteSlot"></div>
-        ${notes.length ? notes.map((n) => `<div class="card pad stack" style="--gap:4px">${n.quote ? `<div class="quote"><span>“${esc(n.quote)}”</span></div>` : ''}${n.text ? `<div>${esc(n.text)}</div>` : ''}<span class="small muted">${esc(n.time || 'Just now')}</span></div>`).join('') : '<p class="small muted">Select text in the paper to highlight it or add a note.</p>'}</div>
-      ${r.voiceNote ? `<div class="card pad row" id="voice"><button class="play" aria-label="Play voice note">${icon('play', 's16')}</button><div class="grow"><b class="small">${esc(r.voiceNote.title)}</b><div class="small muted">${esc(r.voiceNote.meta)}</div><div class="small">${esc(r.voiceNote.transcript)}</div></div></div>` : ''}
-      ${r.bridge ? `<div class="card pad stack" style="--gap:8px"><div class="bridge-line" style="margin:0">${orb('sm', state.user.agentLook)}<b class="small">${esc(state.user.agentName)} on this paper</b></div><p class="small">${esc(r.bridge)}</p>${doc ? `<a class="btn tertiary sm" style="align-self:flex-start" href="#/create/doc/${doc._id}">Open in Create</a>` : ''}</div>` : ''}
-      ${r.status === 'Signed' ? `<div class="alert success"><span class="alert-icon">${icon('check')}</span><div>Signed ${esc(r.meta)}. Sent to the Cabinet Office.</div></div>`
-        : `<div class="stack" style="--gap:8px"><b class="small">Your decision</b><div class="row wrap">${['Approve', 'Defer', 'Return with comments'].map((d) => `<button class="chip" data-decide="${d}">${d}</button>`).join('')}</div></div>`}
-    </div>`;
+  // Right panel (LC / My Reviews / Paper): notes, voice note, Bridge card, decision buttons
+  const panel = () => `<div class="stack" style="--gap:16px;flex:1">
+      <span class="tiny muted">Your notes</span><div id="noteSlot"></div>
+      ${r.voiceNote ? `<div class="note-card" id="voice"><div class="row" style="--gap:12px"><button class="play" aria-label="Play voice note">${icon('play')}</button><div class="grow"><b>${esc(r.voiceNote.title)}</b><div class="tiny muted">${esc(r.voiceNote.meta)}</div></div><button class="btn tertiary sm">Edit</button></div><div>${esc(r.voiceNote.transcript)}</div></div>` : ''}
+      ${notes.map((n) => `<div class="note-card">${n.quote ? `<div class="quote"><span>“${esc(n.quote)}”</span></div>` : ''}${n.text ? `<div>${esc(n.text)}</div>` : ''}<span class="tiny muted">${esc(n.time || 'Just now')}</span></div>`).join('')}
+      ${!notes.length && !r.voiceNote ? '<p class="small muted">Select text in the paper to highlight it, add a note or ask Bridge.</p>' : ''}
+      ${r.bridge ? `<div class="note-card"><div class="bridge-line">${orb('sm', state.user.agentLook)}<b>${esc(state.user.agentName)} on this paper</b></div><div>${esc(r.bridge)}</div><div class="row">${doc ? `<a class="btn tertiary sm" href="#/create/doc/${doc._id}">Ask about this paper</a>` : `<button class="btn tertiary sm" id="askPaper">Ask about this paper</button>`}</div></div>` : ''}
+    </div>
+    ${r.status === 'Signed' ? `<div class="alert success"><span class="alert-icon">${icon('ok')}</span><div>Signed ${esc(r.meta)}. Sent to the Cabinet Office.</div></div>`
+      : `<div class="stack" style="--gap:8px"><span class="tiny muted">Your decision</span><div class="decision-row">${['Approve', 'Defer', 'Withdraw'].map((d) => `<button class="btn tertiary sm" data-decide="${d}">${d}</button>`).join('')}</div></div>`}`;
 
   return {
     title: r.title,
     html: `<div class="paper-view">
       <section class="doc-col">
-        <div class="doc-head"><a class="icon-btn" href="#/reviews/folder/${r.folderId}" aria-label="Back to folder">${icon('left')}</a>
-          <div class="title"><b>${esc(r.title)}</b><span class="small muted">${esc(r.meta)}</span></div>
-          <button class="icon-btn" id="dictate" aria-label="Record voice note">${icon('mic')}</button><button class="icon-btn" aria-label="Share">${icon('share')}</button><button class="icon-btn" aria-label="More">${icon('more')}</button>
+        <div class="doc-head"><a class="icon-btn sm" href="#/reviews/folder/${r.folderId}" aria-label="Back to folder">${icon('left', 's16')}</a>
+          <div class="title"><b>${esc(r.title)}</b><span class="small">${esc(r.kind)} · Page 1 of ${doc ? 12 : 2} · ${esc(r.status)} · ${esc(r.meta)}</span></div>
+          <button class="icon-btn sm" id="dictate" aria-label="Record voice note">${icon('mic', 's16')}</button><button class="icon-btn sm" aria-label="Share">${icon('share', 's16')}</button><button class="icon-btn sm" aria-label="More">${icon('more', 's16')}</button>
           ${r.status !== 'Signed' ? `<button class="btn primary sm" id="sign">${r.status === 'To read' ? 'Mark as read' : 'Sign'}</button>` : ''}</div>
-        <div class="toolbar"><button class="icon-btn" aria-label="Zoom out">${icon('zoomOut')}</button><span class="small">100%</span><button class="icon-btn" aria-label="Zoom in">${icon('zoomIn')}</button><span class="sep"></span><span class="small muted">Page 1 of ${doc ? 4 : 2}</span><span class="spacer"></span>
-          ${r.ink ? `<span class="small">Show iPad ink</span><button class="switch" role="switch" aria-checked="true" id="ink" aria-label="Show iPad ink"></button>` : ''}</div>
+        <div class="toolbar"><span class="code-badge" style="font-family:var(--am-font)">Page 1 / ${doc ? 12 : 2}</span><button class="icon-btn" aria-label="Zoom out">${icon('zoomOut', 's16')}</button><span class="small">100%</span><button class="icon-btn" aria-label="Zoom in">${icon('zoomIn', 's16')}</button><span class="sep"></span><span class="spacer"></span>
+          ${r.ink ? `<span class="switch-label">Show iPad ink</span><button class="switch" role="switch" aria-checked="true" id="ink" aria-label="Show iPad ink"></button>` : ''}</div>
         <div class="canvas" id="canvas">${page()}</div>
       </section>
-      <aside class="panel"><div class="panel-scroll top" id="panel">${panel()}</div></aside></div>`,
+      <aside class="panel" id="panel" style="padding-top:24px">${panel()}</aside></div>`,
     mount(root) {
       const redraw = () => { root.querySelector('#canvas').innerHTML = page(); root.querySelector('#panel').innerHTML = panel(); bind(); };
       const saveNotes = () => api.update('reviews', id, { notes });
@@ -128,6 +129,7 @@ async function paper(id) {
         root.querySelector('#pin')?.addEventListener('click', () => root.querySelector('#voice')?.scrollIntoView({ behavior: 'smooth' }));
         root.querySelector('#voice .play')?.addEventListener('click', () => toast('Playing voice note (prototype: no audio)'));
         root.querySelectorAll('[data-decide]').forEach((b) => (b.onclick = () => signDialog(r, b.dataset.decide)));
+        root.querySelector('#askPaper')?.addEventListener('click', () => toast('Ask Bridge about this paper in Research'));
         root.querySelector('#sheet').addEventListener('mouseup', () => setTimeout(onSelect, 0));
       };
       const onSelect = () => {
@@ -168,7 +170,7 @@ function signDialog(r, decision = 'Approve') {
   const m = modal({
     title: 'Sign this paper', iconName: 'edit',
     body: `<div class="stack" style="--gap:16px"><p class="muted">${esc(r.title)}</p>
-      <div class="stack" style="--gap:8px"><span class="label">Decision</span><div class="row wrap" id="dec">${['Approve', 'Defer', 'Return with comments'].map((d) => `<button class="chip ${d === decision ? 'selected' : ''}" data-d="${d}">${d}</button>`).join('')}</div></div>
+      <div class="stack" style="--gap:8px"><span class="label">Decision</span><div class="row wrap" id="dec">${['Approve', 'Defer', 'Withdraw'].map((d) => `<button class="chip ${d === decision ? 'selected' : ''}" data-d="${d}">${d}</button>`).join('')}</div></div>
       <div class="field"><label>Signature</label><div class="signature-box" id="sig"><span class="muted">Click to add your saved signature</span></div></div>
       <label class="row"><input type="checkbox" id="confirm"> <span>I have read this paper and its annexes</span></label>
       <div class="bridge-line" style="margin:0">${orb('sm', state.user.agentLook)}<span class="small">${esc(state.user.agentName)} will send it to the Cabinet Office and file the signed copy here. It never signs for you.</span></div></div>`,
