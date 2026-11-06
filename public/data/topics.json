@@ -1,50 +1,44 @@
 [
   {
-    "_id": "t0",
+    "_id": "tp-finance",
     "name": "Finance",
     "description": "Budgets, revenue and fiscal policy",
+    "icon": "img/emoji/t-finance.svg",
     "order": 0
   },
   {
-    "_id": "t1",
+    "_id": "tp-health",
     "name": "Health",
     "description": "Clinics, public health and staffing",
+    "icon": "img/emoji/t-health.svg",
     "order": 1
   },
   {
-    "_id": "t2",
+    "_id": "tp-agriculture",
     "name": "Agriculture",
     "description": "Food security, farmers and exports",
+    "icon": "img/emoji/t-agriculture.svg",
     "order": 2
   },
   {
-    "_id": "t3",
-    "name": "Education",
-    "description": "Schools, teachers and results",
+    "_id": "tp-sports",
+    "name": "Sports",
+    "description": "Events, facilities and programmes",
+    "icon": "img/emoji/t-sports.svg",
     "order": 3
   },
   {
-    "_id": "t4",
-    "name": "Housing",
-    "description": "Programmes, land and construction",
+    "_id": "tp-education",
+    "name": "Education",
+    "description": "Schools, exams and teachers",
+    "icon": "img/emoji/t-education.svg",
     "order": 4
   },
   {
-    "_id": "t5",
-    "name": "Climate and resilience",
-    "description": "Hurricanes, water and energy",
+    "_id": "tp-infrastructure",
+    "name": "Infrastructure",
+    "description": "Roads, works and utilities",
+    "icon": "img/emoji/t-infrastructure.svg",
     "order": 5
-  },
-  {
-    "_id": "t6",
-    "name": "Justice and policing",
-    "description": "Courts, crime and public safety",
-    "order": 6
-  },
-  {
-    "_id": "t7",
-    "name": "Foreign affairs",
-    "description": "Caricom, partners and missions",
-    "order": 7
   }
 ]

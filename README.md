@@ -65,5 +65,6 @@ Change the JSON in `public/data/` (one file per collection), then `npm run reset
 - **Fonts are bundled** (no Google Fonts call): Geist and Geist Mono for the UI (in the kit), and Tinos for the document sheet (metric-compatible with Times New Roman).
 - **Updating the kit:** replace `public/amini-kit/` with a newer copy of the `amini-kit` repo. Nothing else needs to change.
 - **Matched 1:1 to Figma.** Each screen's spacing, sizes and type were read from the Figma layout data (padding, gaps, radii, text styles) rather than estimated, then checked by overlaying screenshots. Exceptions: prototype-only controls (Dark mode toggle and Reset in Settings, the login hint) and the developer ticket pills (D3, D4…) in the Directory frames, which are annotations.
+- **Fluid 12-column grid:** layouts follow the kit's grid (see the kit README). The reading column is 8 of 12 columns (720px at 1440) and stops growing past the Figma width; onboarding's form is 5 columns.
 - **Dark mode:** the Figma *05. My Reviews* page is designed in dark mode; every screen supports both themes.
 - All AI responses are scripted. Nothing calls a model.

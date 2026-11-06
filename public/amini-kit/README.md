@@ -59,6 +59,14 @@ All colours are CSS variables named after the Revised DS tokens, e.g. `--am-bran
 - **Grey or secondary text:** always use `--am-text-support`.
 - **Bridge page background:** `--am-chat-surface` (surface/chat-surface: #fcfcfc light, #282828 dark).
 
+## Layout grid (fluid 12 columns)
+
+Figma frames are drawn at 1440px; code lays them out on a fluid 12-column grid: 32px margins and 32px gutters (24/16 below 1024px, 16/16 below 600px).
+
+- `.am-grid` + `.am-col-1` … `.am-col-12` (and `.am-start-N`) for column layouts.
+- `.am-grid-scope` on a container makes `--am-col` (one column's width) available to everything inside it; `.am-w-4/5/6/8/10` give widths of N columns. Set `--am-grid-max` on the scope to stop the grid growing past the design width.
+- Bridge reading pages (Research, Brief, Skills, Settings) are 8 columns of the main area: exactly 720px at 1440. Onboarding's form is 5 columns of the viewport (555px at 1440).
+
 ## Type
 
 Geist and Geist Mono, matching the Amini text styles:
@@ -75,7 +83,7 @@ Geist and Geist Mono, matching the Amini text styles:
 
 | Figma component | Class(es) |
 |---|---|
-| Button (Primary / Secondary / Tertiary / Danger, Default / Small / Mobile, Has Icon, Loading) | `am-btn` + `--secondary` `--tertiary` `--danger` `--sm` `--mobile` `--lead` (+ `am-btn__lead`), `.is-loading`, `:disabled` |
+| Button (Primary / Secondary / Tertiary / Danger, Default / Small / Mobile, Has Icon, Loading) | `am-btn` + `--secondary` `--tertiary` `--danger` `--sm` (32px) `--xs` (31px compact: Edit, Export, Configure) `--mobile` `--lead` (+ `am-btn__lead`), `.is-loading`, `:disabled` |
 | Icon Only Button, Chip Button, Outline Button, Button Group | `am-icon-btn` (`--sm` `--xs` `--outline`), `am-chip-btn`, `am-outline-btn`, `am-btn-group` |
 | Input / Select / Textarea / With Button / Tags | `am-field`, `am-label`, `am-input`, `am-select`, `am-textarea`, `am-input-wrap`, `am-input-tags` + `am-input-tag`, `am-help`, `am-error-text` |
 | Checkbox, Radio, Amini Switch | `am-checkbox`, `am-radio`, `am-choice`, `am-switch` (`role="switch" aria-checked`) |

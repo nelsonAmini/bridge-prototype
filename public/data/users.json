@@ -15,7 +15,7 @@
     ],
     "priorities": "",
     "answerStyle": "summary",
-    "readAloud": false,
+    "readAloud": true,
     "onboarded": false,
     "language": "English",
     "notifications": true,
@@ -47,6 +47,10 @@
         "display": "0 / 1000"
       }
     ],
-    "order": 0
+    "order": 0,
+    "customTopics": [
+      "Tourism",
+      "Climate resilience"
+    ]
   }
 ]
