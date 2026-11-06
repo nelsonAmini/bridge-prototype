@@ -1,0 +1,48 @@
+[
+  {
+    "_id": "sk-1",
+    "name": "Morning Briefing",
+    "schedule": "Weekdays, 6:30 AM",
+    "on": true,
+    "suggested": false,
+    "description": "Your day, papers and deadlines at 6:30 AM",
+    "order": 0
+  },
+  {
+    "_id": "sk-2",
+    "name": "Cabinet Paper Review",
+    "schedule": "Wednesdays, before Cabinet",
+    "on": true,
+    "suggested": false,
+    "description": "Checks papers against Cabinet paper rules",
+    "order": 1
+  },
+  {
+    "_id": "sk-3",
+    "name": "Signature Tracker",
+    "schedule": "Always",
+    "on": true,
+    "suggested": false,
+    "description": "Flags papers waiting for your signature",
+    "order": 2
+  },
+  {
+    "_id": "sk-4",
+    "name": "Papers to sign, Mon and Wed",
+    "schedule": "Suggested · you ask for this often",
+    "on": false,
+    "suggested": true,
+    "order": 3
+  },
+  {
+    "_id": "sk-5",
+    "name": "Alignment Check",
+    "schedule": "When papers arrive",
+    "on": true,
+    "suggested": false,
+    "onboarding": true,
+    "hidden": true,
+    "description": "Checks new papers against Mission Barbados, the Covenant and past decisions",
+    "order": 4
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "_id": "blank",
+    "steps": [
+      {
+        "trigger": "title",
+        "bridge": "It looks like you’re writing a Cabinet paper. Would you like help drafting the sections?",
+        "suggestions": [
+          "Yes, draft a Cabinet paper",
+          "No, I’ll write it myself"
+        ]
+      },
+      {
+        "trigger": "reply",
+        "bridge": "I’ve drafted the sections a Cabinet paper needs to be compliant. Would you like to rework the Matter for consideration around the Ministry of Finance announcement?",
+        "apply": "draft",
+        "suggestions": [
+          "Yes, rework it",
+          "Add a financial implications table"
+        ]
+      },
+      {
+        "trigger": "reply",
+        "bridge": "I’ve updated the Matter for consideration to set out how the new reporting rules could slow digital identity uptake, and added the financial implications table. What would you like to recommend to Cabinet to offset this?",
+        "apply": "rework",
+        "suggestions": [
+          "Find local and international examples",
+          "Strengthen the recommendations"
+        ]
+      },
+      {
+        "trigger": "reply",
+        "bridge": "Noted. I’ll keep the recommendations as they are for now. Ask me to check the paper against Cabinet paper rules when you’re ready.",
+        "suggestions": [
+          "Check against Cabinet paper rules"
+        ]
+      }
+    ],
+    "order": 0
+  }
+]

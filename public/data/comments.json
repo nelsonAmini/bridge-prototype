@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "c-a",
+    "documentId": "doc-cabinet",
+    "sectionId": "moc",
+    "quote": "The Ministry of Finance’s new financial reporting rules, announced on 5 February 2026…",
+    "status": "open",
+    "author": "p-ac",
+    "comments": [
+      {
+        "author": "p-ac",
+        "time": "11 Feb, 16:40",
+        "body": "Can we put a number on “slowing uptake”? The Minister will ask how many people are affected."
+      },
+      {
+        "author": "p-mt",
+        "time": "11 Feb, 16:52",
+        "body": "The 2025 uptake survey has registration projections. I’ll pull them in."
+      }
+    ],
+    "order": 0
+  },
+  {
+    "_id": "c-b",
+    "documentId": "doc-cabinet",
+    "sectionId": "dec",
+    "bullet": 0,
+    "quote": "approve $15 million from the Contingency Reserve for the NDIF;",
+    "status": "open",
+    "author": "p-kd",
+    "comments": [
+      {
+        "author": "p-kd",
+        "time": "12 Feb, 09:15",
+        "body": "The Contingency Reserve is under pressure this quarter. Can we add reallocation from the capital budget as an alternative?"
+      }
+    ],
+    "order": 1
+  },
+  {
+    "_id": "c-c",
+    "documentId": "doc-cabinet",
+    "sectionId": "fin",
+    "quote": "“4. Financial implications” table",
+    "status": "open",
+    "author": "p-ks",
+    "mentionsMe": true,
+    "comments": [
+      {
+        "author": "p-ks",
+        "time": "12 Feb, 10:02",
+        "body": "@Marcus Thorne the Notes column needs a source for every figure before this goes to Cabinet."
+      }
+    ],
+    "order": 2
+  }
+]

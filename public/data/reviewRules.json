@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "r-1",
+    "sectionId": "moc",
+    "quote": "“…delay disbursement by up to two quarters…”",
+    "body": "“Up to two quarters” has no source. Cite the MoF guidance [3] or soften the claim.",
+    "order": 0
+  },
+  {
+    "_id": "r-2",
+    "sectionId": "dec",
+    "bullet": 2,
+    "quote": "“authorise the Minister to agree revised milestones with the World Bank.”",
+    "body": "Add a deadline for agreeing the milestones so Cabinet can track it.",
+    "order": 1
+  },
+  {
+    "_id": "r-3",
+    "sectionId": "fin",
+    "quote": "“4. Financial implications”",
+    "body": "Rule 239 papers need a “Source of funds” line. Add one under the table.",
+    "order": 2
+  }
+]

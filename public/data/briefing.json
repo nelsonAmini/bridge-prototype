@@ -1,0 +1,76 @@
+[
+  {
+    "_id": "brief-today",
+    "date": "Thursday 29 October",
+    "prepared": "6:30 AM",
+    "listen": "3 min",
+    "song": {
+      "title": "King Tubby Meets Rockers Uptown",
+      "artist": "Augustus Pablo",
+      "note": "picked from your favourites"
+    },
+    "summary": "Six papers came in overnight from four ministries. Three are waiting for your signature, one has waited nine days, and the housing paper conflicts with the Covenant of Hope.",
+    "stats": [
+      {
+        "label": "To sign",
+        "value": "3",
+        "delta": "+1 vs yesterday"
+      },
+      {
+        "label": "Oldest waiting",
+        "value": "9 days",
+        "delta": "Land Administration"
+      },
+      {
+        "label": "Flagged",
+        "value": "1",
+        "delta": "Conflict · housing"
+      },
+      {
+        "label": "New complaints",
+        "value": "14",
+        "delta": "−3 vs last week"
+      }
+    ],
+    "backlogNote": "Most of the backlog is one paper. Land Administration has waited nine days; the others arrived this week.",
+    "waiting": [
+      {
+        "title": "Land Administration System Replacement",
+        "days": 9
+      },
+      {
+        "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+        "days": 3
+      },
+      {
+        "title": "National Housing Programme – Phase 2",
+        "days": 2
+      }
+    ],
+    "alignment": [
+      {
+        "paper": "Digital ID uptake",
+        "mission": "Aligned",
+        "covenant": "Aligned",
+        "manifesto": "Aligned",
+        "past": "No conflict"
+      },
+      {
+        "paper": "Land Administration",
+        "mission": "Aligned",
+        "covenant": "Aligned",
+        "manifesto": "Partly",
+        "past": "No conflict"
+      },
+      {
+        "paper": "Housing Phase 2",
+        "mission": "Aligned",
+        "covenant": "Conflict",
+        "manifesto": "Aligned",
+        "past": "Check 2024 decision"
+      }
+    ],
+    "illustrative": true,
+    "order": 0
+  }
+]

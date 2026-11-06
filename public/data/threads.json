@@ -1,0 +1,81 @@
+[
+  {
+    "_id": "th-land",
+    "question": "The land administration system is failing. How do we protect the data and what are our options to replace it?",
+    "time": "Today, 9:12 AM",
+    "plan": [
+      {
+        "title": "I’ll answer",
+        "text": "How to protect land data and replace the system, in order"
+      },
+      {
+        "title": "I’ll look at",
+        "text": "The 2025 audit, Lands and Surveys reports, two replacement proposals"
+      },
+      {
+        "title": "You’ll get",
+        "text": "Backup first, then open process gaps, then options with risks and a recommended order"
+      }
+    ],
+    "steps": [
+      "Backing up land records sources",
+      "Reviewing open process gaps",
+      "Comparing replacement options",
+      "Writing the answer"
+    ],
+    "answer": {
+      "summary": "The land registry can still be read but is failing under load. Protect the data first: take a full, verified backup off the failing servers, then freeze changes while the two critical audit gaps are closed.",
+      "stats": [
+        {
+          "label": "Parcels on record",
+          "value": "[x]k",
+          "note": "Stable"
+        },
+        {
+          "label": "Last full backup",
+          "value": "[x] days",
+          "note": "Late"
+        },
+        {
+          "label": "Open process gaps",
+          "value": "2 critical",
+          "note": "from audit [2]"
+        }
+      ],
+      "order": [
+        {
+          "title": "Back up and verify every record",
+          "when": "Week 1–2",
+          "text": "Take a full, verified copy off the failing servers and test that it restores."
+        },
+        {
+          "title": "Freeze changes to the old system",
+          "when": "Week 2",
+          "text": "Only fixes that protect data. No new features or fields."
+        },
+        {
+          "title": "Close the process gaps",
+          "when": "Weeks 2–8",
+          "text": "Fix the 2 critical gaps from the audit first, so bad data stops entering."
+        },
+        {
+          "title": "Choose a replacement",
+          "when": "Weeks 4–10",
+          "text": "Compare the options below with Lands and Surveys and Finance."
+        },
+        {
+          "title": "Migrate in stages",
+          "when": "From month 3",
+          "text": "Move parish by parish, running old and new side by side."
+        }
+      ],
+      "sources": [
+        "Lands and Surveys – system status, Oct 2026",
+        "2025 Land Registry audit",
+        "Replacement proposal A",
+        "Replacement proposal B"
+      ]
+    },
+    "order": 0
+  }
+]

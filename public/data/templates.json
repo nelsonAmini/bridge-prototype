@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "tpl-blank",
+    "name": "Blank",
+    "kind": "Blank",
+    "category": "Basic",
+    "description": "Start from an empty page",
+    "order": 0
+  },
+  {
+    "_id": "tpl-cabinet",
+    "name": "Cabinet paper",
+    "kind": "Cabinet Paper",
+    "category": "Cabinet",
+    "description": "Matter for consideration, decision, background, financial implications",
+    "order": 1
+  },
+  {
+    "_id": "tpl-travel",
+    "name": "Travel report",
+    "kind": "Travel",
+    "category": "Reports",
+    "description": "Purpose, delegation, outcomes and costs of official travel",
+    "order": 2
+  },
+  {
+    "_id": "tpl-memo",
+    "name": "Memo",
+    "kind": "Memo",
+    "category": "Letters and memos",
+    "description": "Short internal memo",
+    "order": 3
+  },
+  {
+    "_id": "tpl-report",
+    "name": "Report",
+    "kind": "Report",
+    "category": "Reports",
+    "description": "Structured report with findings and recommendations",
+    "order": 4
+  }
+]

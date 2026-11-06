@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "l-1",
+    "group": "decide",
+    "fact": "Summary first, then the detail",
+    "source": "You told me",
+    "order": 0
+  },
+  {
+    "_id": "l-2",
+    "group": "decide",
+    "fact": "Checks papers against the Covenant of Hope",
+    "source": "Learned from your chats",
+    "order": 1
+  },
+  {
+    "_id": "l-3",
+    "group": "decide",
+    "fact": "Outcomes are approved, deferred or withdrawn",
+    "source": "You told me",
+    "order": 2
+  },
+  {
+    "_id": "l-4",
+    "group": "rhythm",
+    "fact": "Reads early, signs in the afternoon",
+    "source": "Learned this week · is this right?",
+    "confirm": true,
+    "order": 3
+  },
+  {
+    "_id": "l-5",
+    "group": "rhythm",
+    "fact": "Talks rather than types",
+    "source": "Learned from your activity",
+    "order": 4
+  },
+  {
+    "_id": "l-6",
+    "group": "rhythm",
+    "fact": "Lucille and Reva upload papers for you",
+    "source": "From your setup",
+    "order": 5
+  }
+]

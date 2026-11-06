@@ -1,0 +1,52 @@
+[
+  {
+    "_id": "u-pm",
+    "name": "Prime Minister",
+    "office": "Office of the PM",
+    "initials": "PM",
+    "firstName": "Jane",
+    "email": "[account email]",
+    "wallet": "0x…[wallet id]",
+    "agentName": "Bridge",
+    "agentLook": "Gold",
+    "topics": [
+      "Finance",
+      "Health"
+    ],
+    "priorities": "",
+    "answerStyle": "summary",
+    "readAloud": false,
+    "onboarded": false,
+    "language": "English",
+    "notifications": true,
+    "keepLearning": true,
+    "homeCard": "briefing",
+    "usage": [
+      {
+        "label": "Chats",
+        "used": 10,
+        "limit": 100,
+        "display": "10 / 100"
+      },
+      {
+        "label": "Documents",
+        "used": 2,
+        "limit": 500,
+        "display": "2 / 500"
+      },
+      {
+        "label": "Storage",
+        "used": 0,
+        "limit": 1,
+        "display": "0 MB / 1 GB"
+      },
+      {
+        "label": "Tool runs today",
+        "used": 0,
+        "limit": 1000,
+        "display": "0 / 1000"
+      }
+    ],
+    "order": 0
+  }
+]

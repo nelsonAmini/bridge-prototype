@@ -1,0 +1,105 @@
+[
+  {
+    "_id": "rv-1",
+    "folderId": "rf-29oct",
+    "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+    "kind": "Cabinet Paper",
+    "status": "To sign",
+    "meta": "Due Thu",
+    "favourite": true,
+    "documentId": "doc-cabinet",
+    "code": "K(A)",
+    "ministry": "Ministry of Innovation, Science and Technology",
+    "dueSoon": true,
+    "bridge": "Supports 4 of 5 Mission Barbados pillars. No conflict with earlier Cabinet decisions. The costings in §4 rely on one source [5].",
+    "voiceNote": {
+      "title": "Voice note · p. 3",
+      "meta": "0:42 · transcribed",
+      "transcript": "“Ask the Ministry of Finance for revised costings before this goes back to Cabinet.”"
+    },
+    "ink": {
+      "highlightBullet": 0,
+      "note": "ask MoF for revised costings?"
+    },
+    "notes": [],
+    "order": 0
+  },
+  {
+    "_id": "rv-2",
+    "folderId": "rf-29oct",
+    "title": "Land Administration System Replacement",
+    "kind": "Cabinet Paper",
+    "status": "To sign",
+    "meta": "Waiting 9 days",
+    "bridge": "Recommends option B. Matches the 2025 audit findings.",
+    "notes": [],
+    "order": 1
+  },
+  {
+    "_id": "rv-3",
+    "folderId": "rf-29oct",
+    "title": "National Housing Programme – Phase 2",
+    "kind": "Cabinet Paper",
+    "status": "To sign",
+    "meta": "Conflict with Covenant",
+    "bridge": "Conflicts with the Covenant of Hope commitment on affordable units (§2.4).",
+    "notes": [],
+    "order": 2
+  },
+  {
+    "_id": "rv-4",
+    "folderId": "rf-29oct",
+    "title": "PAHO Executive Committee – Travel Report",
+    "kind": "Travel",
+    "status": "To read",
+    "meta": "Voice note",
+    "bridge": "Information only. No decision needed.",
+    "notes": [],
+    "order": 3
+  },
+  {
+    "_id": "rv-5",
+    "folderId": "rf-29oct",
+    "title": "Hurricane Season Preparedness Update",
+    "kind": "Report",
+    "status": "To read",
+    "meta": "Due Fri",
+    "dueSoon": true,
+    "bridge": "Two shelters still lack generators.",
+    "notes": [],
+    "order": 4
+  },
+  {
+    "_id": "rv-6",
+    "folderId": "rf-29oct",
+    "title": "Fiscal Responsibility (Amendment) Bill",
+    "kind": "Memo",
+    "status": "Signed",
+    "meta": "22 Oct",
+    "bridge": "Signed and sent on 22 Oct.",
+    "notes": [],
+    "order": 5
+  },
+  {
+    "_id": "rv-7",
+    "folderId": "rf-22oct",
+    "title": "Customs Waivers – Q3 Summary",
+    "kind": "Report",
+    "status": "Signed",
+    "meta": "22 Oct",
+    "bridge": "",
+    "notes": [],
+    "order": 6
+  },
+  {
+    "_id": "rv-8",
+    "folderId": "rf-land",
+    "title": "Lands and Surveys – System Status",
+    "kind": "Report",
+    "status": "To read",
+    "meta": "Oct 2026",
+    "bridge": "",
+    "notes": [],
+    "order": 7
+  }
+]

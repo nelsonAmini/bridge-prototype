@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "t0",
+    "name": "Finance",
+    "description": "Budgets, revenue and fiscal policy",
+    "order": 0
+  },
+  {
+    "_id": "t1",
+    "name": "Health",
+    "description": "Clinics, public health and staffing",
+    "order": 1
+  },
+  {
+    "_id": "t2",
+    "name": "Agriculture",
+    "description": "Food security, farmers and exports",
+    "order": 2
+  },
+  {
+    "_id": "t3",
+    "name": "Education",
+    "description": "Schools, teachers and results",
+    "order": 3
+  },
+  {
+    "_id": "t4",
+    "name": "Housing",
+    "description": "Programmes, land and construction",
+    "order": 4
+  },
+  {
+    "_id": "t5",
+    "name": "Climate and resilience",
+    "description": "Hurricanes, water and energy",
+    "order": 5
+  },
+  {
+    "_id": "t6",
+    "name": "Justice and policing",
+    "description": "Courts, crime and public safety",
+    "order": 6
+  },
+  {
+    "_id": "t7",
+    "name": "Foreign affairs",
+    "description": "Caricom, partners and missions",
+    "order": 7
+  }
+]

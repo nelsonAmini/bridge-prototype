@@ -1,0 +1,33 @@
+[
+  {
+    "_id": "rf-land",
+    "name": "Land Administration",
+    "pinned": true,
+    "order": 0
+  },
+  {
+    "_id": "rf-29oct",
+    "name": "Cabinet · 29 Oct",
+    "fullName": "Cabinet · 29 Oct 2026",
+    "pinned": true,
+    "filedBy": "Lucille",
+    "bridgeNote": "Lucille added 6 papers here. Bridge tagged 3 “To sign” and left them where she put them.",
+    "order": 1
+  },
+  {
+    "_id": "rf-22oct",
+    "name": "Cabinet · 22 Oct",
+    "fullName": "Cabinet · 22 Oct 2026",
+    "order": 2
+  },
+  {
+    "_id": "rf-notes",
+    "name": "Personal notes",
+    "order": 3
+  },
+  {
+    "_id": "rf-speech",
+    "name": "Speeches",
+    "order": 4
+  }
+]

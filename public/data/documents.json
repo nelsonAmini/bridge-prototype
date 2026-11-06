@@ -1,0 +1,161 @@
+[
+  {
+    "_id": "doc-cabinet",
+    "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+    "template": "Cabinet Paper",
+    "status": "First draft by Bridge · 5 sources",
+    "owner": "You",
+    "modified": "11 Feb 2026, 16:24",
+    "section": "mine",
+    "pinned": true,
+    "sections": [
+      {
+        "id": "meta",
+        "heading": null,
+        "style": "meta",
+        "body": "Cabinet of Barbados · Ministry of Innovation, Science and Technology · Paper code K(A) · For decision"
+      },
+      {
+        "id": "moc",
+        "heading": "1. Matter for consideration",
+        "body": "The Ministry of Finance’s new financial reporting rules, announced on 5 February 2026, add quarterly disclosure steps for capital projects [3]. Applied to the NDIF, they would delay disbursement by up to two quarters, slowing digital identity uptake just as public registration is meant to scale [5]. This paper asks Cabinet to exempt the NDIF from the new cycle until Q1 2027."
+      },
+      {
+        "id": "dec",
+        "heading": "2. Decision requested",
+        "body": "It is recommended that Cabinet:",
+        "bullets": [
+          "approve $15 million from the Contingency Reserve for the NDIF;",
+          "designate the National ID Act Amendment Bill a legislative priority;",
+          "authorise the Minister to agree revised milestones with the World Bank."
+        ]
+      },
+      {
+        "id": "bg",
+        "heading": "3. Background",
+        "body": "The National Digital Identity Framework (NDIF) was approved in 2022 to move paper-based identity systems onto a secure national digital platform [1]. The policy is approved, but procurement is 14 weeks behind because of cross-departmental data integration [2].",
+        "tail": "The delay risks breaching Clause 4.1 of the World Bank Development Loan (P.L. 345/2023), which requires substantial progress by the end of Q1 [4]."
+      },
+      {
+        "id": "fin",
+        "heading": "4. Financial implications",
+        "table": [
+          [
+            "Item",
+            "Q4 Year 1",
+            "Next 3 years",
+            "Notes"
+          ],
+          [
+            "Operational acceleration",
+            "$15M (contingency)",
+            "$0",
+            "Fixed-term specialist consultancy [5]"
+          ],
+          [
+            "Annual maintenance",
+            "$2M",
+            "$6M / year",
+            "Existing Ministry of Technology budget"
+          ],
+          [
+            "Total immediate impact",
+            "+$15M",
+            "—",
+            "Offset by avoiding the $5M penalty"
+          ]
+        ]
+      }
+    ],
+    "sources": [
+      "MoF – Financial reporting changes, 5 Feb 2026",
+      "Digital ID uptake survey 2025",
+      "National Digital Identity Framework (2022)",
+      "World Bank Development Loan P.L. 345/2023",
+      "Nation News – “ID rollout faces reporting hurdle”"
+    ],
+    "messages": [
+      {
+        "role": "user",
+        "text": "Refer to the Ministry of Finance changes to financial reporting announced on 5 February 2026. Draft a policy paper showing how they could slow the uptake of digital identity among the public in Barbados. I’ve attached a few sources to start from."
+      },
+      {
+        "role": "bridge",
+        "time": "16:24",
+        "text": "Your first draft is ready. I filled all five sections from your two files, three links and the Directory, and cited each claim. Review the highlighted assumptions before sharing.",
+        "sources": true
+      }
+    ],
+    "suggestions": [
+      "Strengthen the recommendations",
+      "Check against Cabinet paper rules",
+      "Share with a colleague for review"
+    ],
+    "script": [],
+    "order": 0
+  },
+  {
+    "_id": "doc-2",
+    "title": "Notes – PAHO briefing (annotated)",
+    "template": "Report",
+    "status": "Shared by Horace O. · you can comment",
+    "owner": "Horace O.",
+    "modified": "22 Nov 2024",
+    "section": "shared",
+    "newerVersion": true,
+    "sections": [
+      {
+        "id": "s1",
+        "heading": "Summary",
+        "body": "Notes from the PAHO Executive Committee briefing. §3: should we cite the CARPHA costing here as well?"
+      }
+    ],
+    "sources": [],
+    "messages": [],
+    "suggestions": [],
+    "script": [],
+    "order": 1
+  },
+  {
+    "_id": "doc-3",
+    "title": "Housing paper vs Covenant – comparison",
+    "template": "Report",
+    "status": "Draft",
+    "owner": "You",
+    "modified": "27 Oct 2026",
+    "section": "mine",
+    "sections": [
+      {
+        "id": "s1",
+        "heading": "Summary",
+        "body": "Where Phase 2 of the National Housing Programme departs from the Covenant of Hope commitments."
+      }
+    ],
+    "sources": [],
+    "messages": [],
+    "suggestions": [],
+    "script": [],
+    "order": 2
+  },
+  {
+    "_id": "doc-4",
+    "title": "Speech – CARICOM Heads of Government opening",
+    "template": "Memo",
+    "status": "Draft",
+    "owner": "You",
+    "modified": "20 Oct 2026",
+    "section": "mine",
+    "sections": [
+      {
+        "id": "s1",
+        "heading": null,
+        "body": "Colleagues, friends, it is my honour to welcome you to Bridgetown."
+      }
+    ],
+    "sources": [],
+    "messages": [],
+    "suggestions": [],
+    "script": [],
+    "order": 3
+  }
+]

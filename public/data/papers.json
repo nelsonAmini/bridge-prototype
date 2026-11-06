@@ -1,0 +1,178 @@
+[
+  {
+    "_id": "pa-1",
+    "title": "Report on the Caribbean Public Health Agency Annual Meeting",
+    "topic": "Public health",
+    "related": 3,
+    "code": "K(A)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": "Thu 12 Dec 2024",
+    "created": "12 Dec 2024",
+    "createdBy": "System import",
+    "modified": "3 Feb 2025",
+    "modifiedBy": "K. Best",
+    "classification": "Confidential",
+    "tags": [
+      "Topic: Regional public health",
+      "Policy area: Health",
+      "Stakeholder: CARPHA",
+      "Legislation: Health Services Act, Cap. 44"
+    ],
+    "peopleTags": [
+      "PAHO",
+      "MFEI"
+    ],
+    "pages": 42,
+    "order": 0
+  },
+  {
+    "_id": "pa-2",
+    "title": "Travel Report – World Health Assembly, Geneva",
+    "topic": "Global health",
+    "related": 1,
+    "code": "K(A)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": "Thu 13 Jun 2024",
+    "created": "13 Jun 2024",
+    "createdBy": "System import",
+    "modified": "13 Jun 2024",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Health"
+    ],
+    "peopleTags": [],
+    "pages": 18,
+    "order": 1
+  },
+  {
+    "_id": "pa-3",
+    "title": "Report of the Drug Formulary Committee",
+    "topic": "Pharmaceuticals",
+    "related": 0,
+    "code": "K(B)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": null,
+    "created": "4 Mar 2024",
+    "createdBy": "System import",
+    "modified": "4 Mar 2024",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Health"
+    ],
+    "peopleTags": [],
+    "pages": 26,
+    "order": 2
+  },
+  {
+    "_id": "pa-4",
+    "title": "Report on the Barbados Drug Service Procurement Review",
+    "topic": "Procurement",
+    "related": 2,
+    "code": "K(B)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": "Thu 22 Feb 2024",
+    "created": "22 Feb 2024",
+    "createdBy": "System import",
+    "modified": "22 Feb 2024",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Procurement"
+    ],
+    "peopleTags": [],
+    "pages": 31,
+    "order": 3
+  },
+  {
+    "_id": "pa-5",
+    "title": "Travel Report – PAHO Executive Committee, Washington D.C.",
+    "topic": "Regional public health",
+    "related": 1,
+    "code": "K(A)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": "20 Nov 2024",
+    "created": "20 Nov 2024",
+    "createdBy": "System import",
+    "modified": "22 Nov 2024",
+    "modifiedBy": "Horace O.",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Health"
+    ],
+    "peopleTags": [
+      "PAHO"
+    ],
+    "pages": 12,
+    "order": 4
+  },
+  {
+    "_id": "pa-6",
+    "title": "Report on Hurricane Beryl Recovery Works",
+    "topic": "Resilience",
+    "related": 4,
+    "code": "F(A)",
+    "ministry": "MTW",
+    "ministryName": "Ministry of Transport and Works",
+    "cabinetDate": "Thu 4 Jul 2024",
+    "created": "2 Jul 2024",
+    "createdBy": "System import",
+    "modified": "9 Jul 2024",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Resilience"
+    ],
+    "peopleTags": [],
+    "pages": 54,
+    "order": 5
+  },
+  {
+    "_id": "pa-7",
+    "title": "National ID Act Amendment Bill – Drafting Instructions",
+    "topic": "Digital identity",
+    "related": 2,
+    "code": "I(A)",
+    "ministry": "MIST",
+    "ministryName": "Ministry of Innovation, Science and Technology",
+    "cabinetDate": "Thu 10 Oct 2024",
+    "created": "1 Oct 2024",
+    "createdBy": "System import",
+    "modified": "10 Oct 2024",
+    "modifiedBy": "System import",
+    "classification": "Secret",
+    "tags": [
+      "Policy area: Digital"
+    ],
+    "peopleTags": [],
+    "pages": 9,
+    "order": 6
+  },
+  {
+    "_id": "pa-8",
+    "title": "Fiscal Responsibility (Amendment) Bill",
+    "topic": "Fiscal policy",
+    "related": 3,
+    "code": "F(A)",
+    "ministry": "MFEI",
+    "ministryName": "Ministry of Finance, Economic Affairs and Investment",
+    "cabinetDate": "Thu 22 Oct 2026",
+    "created": "15 Oct 2026",
+    "createdBy": "System import",
+    "modified": "22 Oct 2026",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Finance"
+    ],
+    "peopleTags": [],
+    "pages": 14,
+    "order": 7
+  }
+]

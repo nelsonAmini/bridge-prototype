@@ -1,0 +1,37 @@
+[
+  {
+    "_id": "act",
+    "since": "6:30 AM",
+    "paused": false,
+    "needsYou": [
+      {
+        "id": "n1",
+        "title": "Reply to Ministry of Housing is ready",
+        "body": "Asks for revised costings and explains the August deferral."
+      }
+    ],
+    "working": [
+      {
+        "title": "Land administration brief",
+        "done": 3,
+        "total": 5
+      },
+      {
+        "title": "Checking 3 new papers",
+        "done": 1,
+        "total": 3
+      }
+    ],
+    "scheduled": [
+      {
+        "title": "Morning Briefing",
+        "when": "Tomorrow 6:30 AM"
+      },
+      {
+        "title": "Cabinet Paper Review",
+        "when": "Wed 4:00 PM"
+      }
+    ],
+    "order": 0
+  }
+]

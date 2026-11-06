@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "cd-1",
+    "title": "Travel Report – PAHO Executive Committee, Washington D.C.",
+    "code": "K(A)",
+    "folder": "2024/2024-11-20/",
+    "cabinetDate": "20 Nov 2024",
+    "weekday": "Wednesday",
+    "issue": "notThursday",
+    "order": 0
+  },
+  {
+    "_id": "cd-2",
+    "title": "Report on Hurricane Beryl Recovery Works",
+    "code": "F(A)",
+    "folder": "2024/2024-07-02/",
+    "cabinetDate": "2 Jul 2024",
+    "weekday": "Tuesday",
+    "issue": "notThursday",
+    "order": 1
+  },
+  {
+    "_id": "cd-3",
+    "title": "Report of the Drug Formulary Committee",
+    "code": "K(B)",
+    "folder": "2024/unsorted/",
+    "cabinetDate": null,
+    "weekday": "—",
+    "issue": "noDate",
+    "order": 2
+  },
+  {
+    "_id": "cd-4",
+    "title": "Memo – Customs waiver requests, Q3",
+    "code": "F(B)",
+    "folder": "2024/unsorted/",
+    "cabinetDate": null,
+    "weekday": "—",
+    "issue": "noDate",
+    "order": 3
+  }
+]
