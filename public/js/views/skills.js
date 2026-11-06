@@ -25,7 +25,7 @@ async function home() {
         <button class="settings-row" id="instr"><span class="grow">Instructions</span><span class="val">Summary first; I decide</span>${icon('right', 's16')}</button>
         <a class="settings-row" href="#/skills/how"><span class="grow">How you work</span><span class="val">${learned} things learned</span>${icon('right', 's16')}</a>
         <button class="settings-row" id="ask"><span class="grow">When to act or ask</span><span class="val">Asks before drafting</span>${icon('right', 's16')}</button></div>
-      <div class="row" style="margin-top:16px"><span class="grow small" style="font-weight:500">Skills</span><button class="btn primary sm" id="newSkill">New skill</button></div>
+      <div class="row"><span class="grow sec">Skills</span><button class="btn primary sm" id="newSkill">New skill</button></div>
       <div class="list">${mine.map((s) => `<div class="skill-row"><div class="grow"><b>${esc(s.name)}</b><div class="sub">${esc(s.schedule)}</div></div><button class="btn tertiary sm" data-edit="${s._id}">Edit</button>${sw(s.on, `data-skill="${s._id}" aria-label="${esc(s.name)}"`)}</div>`).join('')}
         ${sugg.map((s) => `<div class="skill-row"><div class="grow"><b>${esc(s.name)}</b><div class="sub suggest">Suggested · you ask for this often</div></div><button class="btn tertiary sm" data-dismiss="${s._id}">Dismiss</button><button class="btn primary sm" data-add="${s._id}">Add</button></div>`).join('')}</div>
     </div>`,
@@ -121,16 +121,16 @@ async function settings() {
     title: 'Account and settings',
     html: `<div class="wide-page">
       <h3 class="page-title">Account and settings</h3>
-      <div class="row" style="--gap:12px"><span class="avatar dark" style="width:48px;height:48px;font-size:18px">${esc(u.initials)}</span><div><b class="small" style="font-weight:500">${esc(u.name)}</b><div class="tiny muted">${esc(u.email)} · ${esc(u.office)}</div></div></div>
-      <span class="small" style="font-weight:500;margin-top:8px">Account</span>
+      <div class="row profile-row"><span class="avatar dark">${esc(u.initials)}</span><div><b>${esc(u.name)}</b><div class="tiny muted">${esc(u.email)} · ${esc(u.office)}</div></div></div>
+      <span class="sec">Account</span>
       <div class="row" style="--gap:16px;align-items:flex-start"><div class="field grow"><label for="em">Email</label><input class="input" id="em" value="${esc(u.email)}" readonly></div><div class="field grow"><label for="wl">Wallet</label><input class="input" id="wl" value="${esc(u.wallet)}" readonly></div></div>
       <button class="btn secondary sm" style="align-self:flex-start" id="pw">Change password</button>
-      <span class="small" style="font-weight:500;margin-top:8px">Usage and quota</span>
-      <div class="list">${u.usage.map((x) => `<div class="usage-row"><div class="row"><span class="grow small">${esc(x.label)}</span><span class="tiny muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(8, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div>
-      <span class="small" style="font-weight:500;margin-top:8px">App</span>
+      <span class="sec">Usage and quota</span>
+      <div class="list">${u.usage.map((x) => `<div class="usage-row"><div class="row"><span class="grow">${esc(x.label)}</span><span class="tiny muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(8, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div>
+      <span class="sec">App</span>
       <div class="row" style="--gap:16px;align-items:flex-end"><div class="field grow"><label for="lang">Language</label><select class="select" id="lang">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div class="card row grow" style="height:40px;padding:0 12px"><span class="grow small">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div></div>
-      <div class="card row" style="height:40px;padding:0 12px;max-width:50%"><span class="grow small">Dark mode</span>${sw(state.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
+        <div class="card row grow tog-card"><span class="grow">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div></div>
+      <div class="card row tog-card" style="max-width:352px"><span class="grow">Dark mode</span>${sw(state.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
       <div class="row"><button class="btn tertiary sm" id="report">Report an issue</button><button class="btn danger sm" id="out">Sign out</button><span class="spacer"></span><button class="btn ghost sm" id="reset">Reset prototype data</button></div>
     </div>`,
     mount(root) {

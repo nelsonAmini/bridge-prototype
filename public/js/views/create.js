@@ -2,7 +2,7 @@ import { api } from '../api.js';
 import { icon, esc, thumb, orb, toast } from '../ui.js';
 import { go } from '../app.js';
 
-const CATS = [['All templates', 'library'], ['Recents', 'calendar'], ['Blank', 'doc'], ['Cabinet papers', 'bank'], ['Travel', 'flight'], ['Police', 'police'], ['Memos & letters', 'mail'], ['-'], ['My templates', 'bookmark']];
+const CATS = [['All templates', 'library'], ['Recents', 'history'], ['Blank', 'doc'], ['Cabinet papers', 'bank'], ['Travel', 'flight'], ['Police', 'police'], ['Memos & letters', 'mail'], ['-'], ['My templates', 'bookmark']];
 
 const SKELETON = [
   { id: 'meta', heading: null, style: 'meta', body: '' },

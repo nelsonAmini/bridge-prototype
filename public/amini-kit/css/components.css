@@ -94,7 +94,7 @@
 .am-btn__lead .am-icon { width: 16px; height: 16px; }
 .am-btn--sm.am-btn--lead { padding: 4px 12px 4px 4px; }
 .am-btn--sm .am-btn__lead { width: 24px; height: 24px; }
-.am-btn--secondary .am-btn__lead { background: var(--am-on-secondary); color: var(--am-secondary); }
+.am-btn--secondary .am-btn__lead { background: #ffffff; color: #1a1a1a; }
 .am-btn--tertiary .am-btn__lead { background: var(--am-neutral); color: var(--am-neutral-surface); }
 .am-btn--danger .am-btn__lead { background: var(--am-on-danger); color: var(--am-danger-action); }
 .am-btn .am-icon { width: 16px; height: 16px; }
@@ -402,7 +402,8 @@
 
 /* ---- Pagination (page: Pagination; Tables v2 footer) --------------------- */
 .am-pagination { display: inline-flex; align-items: center; gap: 16px; }
-.am-pagination button { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--am-text); display: inline-flex; align-items: center; justify-content: center; font: 500 12px/20px var(--am-font); cursor: pointer; }
+.am-pagination button { width: 32px; height: 32px; padding: 8px; border: 0; border-radius: 64px; background: none; color: var(--am-text); display: inline-flex; align-items: center; justify-content: center; font: 500 14px/22px var(--am-font); cursor: pointer; }
+.am-pagination button.is-current { height: 30px; padding: 4px 2px; }
 .am-pagination button:disabled { color: var(--am-text-disabled); cursor: default; }
 .am-pagination button.is-current { background: var(--am-brand); color: var(--am-on-primary); }
 .am-pagination .am-icon { width: 16px; height: 16px; }

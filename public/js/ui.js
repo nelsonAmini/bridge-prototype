@@ -8,7 +8,7 @@ const ALIAS = {
   right: 'chevron_right', left: 'chevron_left', back: 'arrow_back', down: 'expand_more', up: 'expand_less', more: 'more_horiz', moreV: 'more_vert',
   attach: 'attachment', moon: 'bedtime', sunny: 'wb_sunny', eye: 'visibility', eyeOff: 'visibility_off', mail: 'mail_outline', bold: 'format_bold', italic: 'format_italic',
   underline: 'format_underlined', text: 'text_fields', align: 'format_align_left', list: 'format_list_numbered', addComment: 'add_comment', play: 'play_arrow',
-  pause: 'pause', cloud: 'cached', people: 'group', grid: 'tune', sort: 'import_export', arrowDown: 'import_export', arrowRight: 'arrow_forward', note: 'insert_comment',
+  pause: 'pause', cloud: 'cloud_done', people: 'group', grid: 'tune', sort: 'import_export', arrowDown: 'import_export', arrowRight: 'arrow_forward', note: 'insert_comment',
   warning: 'report_problem', bank: 'account_balance', dock: 'dock_left', zoomIn: 'zoom_in', zoomOut: 'zoom_out', web: 'language', sync: 'refresh', wallet: 'account_balance',
   pin: 'push_pin', bookmark: 'bookmark_border', newFolder: 'add_folder', danger: 'privacy_tip', ok: 'check_circle', headset: 'headset', trash: 'delete_outline',
   external: 'open_in_new', copy: 'content_copy', calendar: 'calendar_today', bell: 'notifications_none', globe: 'language', link: 'link', flight: 'flight', police: 'local_police',
@@ -23,7 +23,7 @@ export function icon(name, cls = '') {
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-export const orb = (size = '', look = 'Gold', extra = '') => `<span class="orb ${size} ${look && look !== 'Gold' ? look.toLowerCase() : ''} ${extra}" aria-hidden="true"></span>`;
+export const orb = (size = '', look = 'Gold', extra = '') => `<span class="orb ${size} ${look && look !== 'Gold' ? look.toLowerCase() : ''} ${extra}" aria-hidden="true"><i></i></span>`;
 
 export const avatar = (p, size = '') => `<span class="avatar ${p?.tone || ''} ${size}" title="${esc(p?.name)}">${esc(p?.initials || '?')}</span>`;
 

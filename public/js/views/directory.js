@@ -3,7 +3,7 @@ import { icon, esc, modal, popover, closePopovers, toast, sleep } from '../ui.js
 import { go, render as rerender } from '../app.js';
 
 // Directory v2 (Figma page 03). Data Status for classification, Code Badge for paper codes.
-const classDot = (c) => c ? `<span class="status ${c === 'Private' || c === 'Public' ? 'neutral' : c === 'Secret' ? 'danger' : 'info'}">${esc(c)}</span>` : '—';
+const classDot = (c) => c ? `<span class="status ${c === 'Private' ? 'neutral' : c === 'Secret' ? 'danger' : 'info'}">${esc(c)}</span>` : '—';
 const pager = `<span class="am-pagination"><button disabled aria-label="First">${icon('first_page', 's16')}</button><button disabled aria-label="Previous">${icon('keyboard_arrow_left', 's16')}</button><button class="is-current">1</button><button aria-label="Next">${icon('keyboard_arrow_right', 's16')}</button><button aria-label="Last">${icon('last_page', 's16')}</button></span>`;
 
 export async function render({ view = 'all' }) {
@@ -19,20 +19,19 @@ async function allPapers() {
   const papers = await api.list('papers');
   const codes = ['A03', 'E', 'F', 'F(A)', 'K(A)', 'K(B)', 'K(C)', 'I(A)'];
   const sel = new Set(['K(A)', 'K(B)']);
-  const codeChip = (c) => `<button class="chip ${sel.has(c) ? 'selected' : ''}" data-code="${c}">${sel.has(c) ? icon('check', 's16') : ''}${c}</button>`;
-  const th = (t, sort = true) => `<th>${t}${sort ? icon('sort', 's16') : ''}</th>`;
+  const codeChip = (c) => `<button class="code-chip ${sel.has(c) ? 'selected' : ''}" data-code="${c}">${sel.has(c) ? icon('check', 's16') : ''}${c}</button>`;
+  const th = (t, sort = true) => `<th><span>${t}${sort ? icon('sort', 's16') : ''}</span></th>`;
   return {
     title: 'Directory',
-    html: `<div class="page stack" style="--gap:16px">
+    html: `<div class="page dir-page">
       <h3 class="page-title">Directory</h3>
-      <div class="row wrap" style="--gap:16px"><div class="search" style="width:300px"><input class="input sm" id="q" placeholder="Search titles, codes, tags…" aria-label="Search papers">${icon('search', 's16')}</div>
-        <button class="chip drop">Sort <b>Cabinet date</b>${icon('arrowDown', 's16')}</button><span class="small muted" id="countLine"></span></div>
+      <div class="dir-filters"><div class="dir-toolbar"><div class="search-inset"><input id="q" placeholder="Search titles, codes, tags…" aria-label="Search papers"><button type="button" aria-label="Search">${icon('search')}</button></div>
+        <button class="filter-pill"><span class="l">Sort</span><b>Cabinet date</b>${icon('arrow_downward', 's16')}</button><span class="sp"></span><span class="count-line" id="countLine"></span></div>
       <div class="filter-panel">
-        <div class="frow"><span class="lbl">Paper code</span><span id="codes" class="frow">${codes.map(codeChip).join('')}</span><button class="chip">+ 18 more</button></div>
-        <div class="frow"><span class="lbl">Refine</span><button class="chip drop">Ministry <b>Any</b>${icon('down', 's16')}</button><button class="chip drop">${icon('calendar', 's16')}Cabinet date <b>1 Jan 2024 – 31 Dec 2024</b></button><button class="chip drop">Classification <b>Any</b>${icon('down', 's16')}</button><button class="chip drop">${icon('label', 's16')}Tags <b>Health</b>${icon('close', 's16')}</button></div>
-        <div class="frow"><button class="chip issues" data-issues>${icon('warning', 's16')}Data issues (14)</button></div></div>
-      <div class="table-wrap"><table class="table dir-table"><thead><tr>${th('Title')}<th>Code</th><th>Ministry</th>${th('Cabinet date')}${th('Date created')}${th('Last modified')}${th('Classification')}<th></th></tr></thead><tbody id="rows"></tbody></table></div>
-      <div class="row wrap" style="--gap:16px"><span class="grow" id="footLine"></span><select class="select sm" style="width:150px" aria-label="Rows per page"><option>10 per page</option><option>25 per page</option></select>${pager}</div></div>`,
+        <div class="frow"><span class="lbl">Paper code</span><span id="codes" class="frow">${codes.map(codeChip).join('')}</span><button class="code-chip">+ 18 more</button></div>
+        <div class="frow"><span class="lbl">Refine</span><button class="filter-pill"><span class="l">Ministry</span><b>Any</b>${icon('down', 's16')}</button><button class="filter-pill">${icon('calendar', 's16')}<span class="l">Cabinet date</span><b>1 Jan 2024 – 31 Dec 2024</b></button><button class="filter-pill"><span class="l">Classification</span><b>Any</b>${icon('down', 's16')}</button><button class="filter-pill">${icon('label', 's16')}<span class="l">Tags</span><b>Health</b>${icon('close', 's16')}</button><button class="filter-pill issues" data-issues>${icon('warning', 's16')}<b>Data issues (14)</b></button></div></div></div>
+      <div class="table-wrap"><table class="dir-table"><colgroup><col style="width:228px"><col style="width:64px"><col style="width:64px"><col style="width:144px"><col style="width:135px"><col style="width:135px"><col style="width:135px"><col style="width:88px"></colgroup><thead><tr>${th('Title')}<th>Code</th><th>Ministry</th>${th('Cabinet date')}${th('Date created')}${th('Last modified')}${th('Classification')}<th></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div class="dir-foot"><span class="grow" id="footLine"></span><div class="select-inset"><select aria-label="Rows per page"><option>10 per page</option><option>25 per page</option></select><span>${icon('unfold_more')}</span></div>${pager}</div></div>`,
     mount(root) {
       let issuesOnly = false;
       const draw = () => {
@@ -40,9 +39,9 @@ async function allPapers() {
         const list = papers.filter((p) => (!q || (p.title + p.code + p.tags.join(' ')).toLowerCase().includes(q)) && (q || !sel.size || sel.has(p.code)) && (!issuesOnly || !p.cabinetDate));
         root.querySelector('#countLine').textContent = `Showing 1–${list.length} of ${list.length} (filtered from 4,812)`;
         root.querySelector('#footLine').textContent = `Showing 1–${list.length} of ${list.length} papers`;
-        root.querySelector('#rows').innerHTML = list.map((p) => `<tr class="clickable" data-id="${p._id}"><td><div class="row" style="align-items:flex-start;--gap:8px">${icon('doc', 's16')}<div><div>${esc(p.title)}</div><span class="sub">Topic: ${esc(p.topic)}${p.related ? ' · ' + p.related + ' related' : ''}</span></div></div></td>
-          <td><span class="code-badge">${esc(p.code)}</span></td><td>${esc(p.ministry)}</td><td>${p.cabinetDate ? esc(p.cabinetDate) : '<span class="status danger">No cabinet date</span>'}</td><td>${esc(p.created)}</td><td>${esc(p.modified)}<span class="sub">${esc(p.modifiedBy)}</span></td><td>${classDot(p.classification)}</td>
-          <td><div class="row" style="--gap:0"><button class="icon-btn sm" data-view="${p._id}" aria-label="Open">${icon('eye', 's16')}</button><button class="icon-btn sm" data-share="${p._id}" aria-label="Share">${icon('share', 's16')}</button><button class="icon-btn sm" data-more="${p._id}" aria-label="More" data-popover-anchor>${icon('more', 's16')}</button></div></td></tr>`).join('') || `<tr><td colspan="8" class="muted">No papers match. Clear a filter or search all 4,812 papers.</td></tr>`;
+        root.querySelector('#rows').innerHTML = list.map((p) => `<tr class="clickable" data-id="${p._id}"><td><div class="tcell">${icon('doc', 's16')}<div><div>${esc(p.title)}</div><span class="sub">${p.sub ? esc(p.sub) : `Topic: ${esc(p.topic)}${p.related ? ' · ' + p.related + ' related' : ''}`}</span></div></div></td>
+          <td><span class="code-badge">${esc(p.code)}</span></td><td>${esc(p.ministry)}</td><td>${!p.cabinetDate ? '<span class="status danger">No cabinet date</span>' : p.dateFlag ? `<span class="status warning">${esc(p.dateFlag)}</span><span class="sub small">${esc(p.cabinetDate)}</span>` : esc(p.cabinetDate)}</td><td>${esc(p.created)}</td><td>${esc(p.modified)}<span class="sub">${esc(p.modifiedBy)}</span></td><td>${classDot(p.classification)}</td>
+          <td><div class="acts"><button class="icon-btn sm" data-view="${p._id}" aria-label="Open">${icon('eye', 's16')}</button><button class="icon-btn sm" data-share="${p._id}" aria-label="Share">${icon('share', 's16')}</button><button class="icon-btn sm" data-more="${p._id}" aria-label="More" data-popover-anchor>${icon('more', 's16')}</button></div></td></tr>`).join('') || `<tr><td colspan="8" class="muted">No papers match. Clear a filter or search all 4,812 papers.</td></tr>`;
       };
       draw();
       root.querySelector('#q').oninput = draw;
@@ -117,20 +116,20 @@ async function myPapers() {
   const items = await api.list('myPapers', { folderId: 'fo-health' });
   return {
     title: 'My Papers',
-    html: `<div class="page stack" style="--gap:16px">
+    html: `<div class="page dir-page">
       <h3 class="page-title">Directory</h3>
-      <div class="row"><div class="breadcrumb grow"><a href="#/directory/my">My Papers</a>${icon('right', 's16')}<span class="current">Health reform</span></div>
-        <span class="synced">${icon('cloud', 's16')}Synced with iBridge</span><button class="btn tertiary sm"><span class="lead">${icon('newFolder', 's16')}</span>New folder</button><button class="btn secondary sm" id="upload"><span class="lead">${icon('upload', 's16')}</span>Upload papers</button></div>
-      <div class="drop-strip" id="drop">${icon('upload', 's16')}<p class="grow small">Drop PDFs here to add them to Health reform. Up to 150 MB each, private to you until you share or submit them.</p><div id="uploading" class="row small" style="width:300px"></div></div>
-      <div class="row wrap" style="--gap:16px"><div class="search" style="width:300px"><input class="input sm" placeholder="Search in Health reform…" id="q">${icon('search', 's16')}</div><button class="chip drop">Sort <b>Last modified</b>${icon('arrowDown', 's16')}</button><button class="chip drop">KB status <b>Any</b>${icon('down', 's16')}</button><button class="chip drop">Classification <b>Any</b>${icon('down', 's16')}</button></div>
-      <div class="table-wrap"><table class="table dir-table"><thead><tr><th>Title${icon('sort', 's16')}</th><th>Date created</th><th>Last modified${icon('sort', 's16')}</th><th>Classification</th><th>Knowledge base</th><th>Due${icon('sort', 's16')}</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
-      <div class="row"><span class="grow" id="foot"></span><select class="select sm" style="width:150px" aria-label="Rows per page"><option>10 per page</option></select>${pager}</div></div>`,
+      <div class="my-head"><div class="breadcrumb"><a href="#/directory/my">My Papers</a>${icon('right', 's16')}<span class="current">Health reform</span></div><span class="spacer"></span>
+        <span class="synced">${icon('cloud', 's16')}Synced with iBridge</span><button class="am-btn am-btn--tertiary am-btn--lead"><span class="am-btn__lead">${icon('newFolder', 's16')}</span>New folder</button><button class="am-btn am-btn--secondary am-btn--lead" id="upload"><span class="am-btn__lead">${icon('upload', 's16')}</span>Upload papers</button></div>
+      <div class="drop-strip" id="drop">${icon('upload')}<p class="grow">Drop PDFs here to add them to Health reform. Up to 150 MB each, private to you until you share or submit them.</p><div id="uploading" class="up-prog"></div></div>
+      <div class="dir-toolbar"><div class="search-inset"><input placeholder="Search in Health reform…" id="q" aria-label="Search in Health reform"><button type="button" aria-label="Search">${icon('search')}</button></div><button class="filter-pill"><span class="l">Sort</span><b>Last modified</b>${icon('arrow_downward', 's16')}</button><button class="filter-pill"><span class="l">KB status</span><b>Any</b>${icon('down', 's16')}</button><button class="filter-pill"><span class="l">Classification</span><b>Any</b>${icon('down', 's16')}</button></div>
+      <div class="table-wrap"><table class="dir-table"><colgroup><col style="width:320px"><col span="5" style="width:126px"><col style="width:48px"></colgroup><thead><tr><th><span>Title${icon('sort', 's16')}</span></th><th>Date created</th><th><span>Last modified${icon('sort', 's16')}</span></th><th>Classification</th><th>Knowledge base</th><th><span>Due${icon('sort', 's16')}</span></th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div class="dir-foot"><span class="grow" id="foot"></span><div class="select-inset"><select aria-label="Rows per page"><option>10 per page</option></select><span>${icon('unfold_more')}</span></div>${pager}</div></div>`,
     mount(root) {
       const draw = (list) => {
         root.querySelector('#foot').textContent = `Showing 1 to ${list.length} of ${list.length} items`;
-        root.querySelector('#rows').innerHTML = list.map((p) => `<tr class="${p.due ? 'highlight' : ''}"><td><div class="row" style="align-items:flex-start;--gap:8px">${icon(p.type === 'folder' ? 'folder' : 'doc', 's16')}<div><div>${esc(p.title)}</div><span class="sub">${esc(p.subtitle)}</span></div></div></td>
+        root.querySelector('#rows').innerHTML = list.map((p) => `<tr><td><div class="tcell">${icon(p.type === 'folder' ? 'folder' : 'doc', 's16')}<div><div>${esc(p.title)}</div><span class="sub">${esc(p.subtitle)}</span></div></div></td>
           <td>${esc(p.created)}</td><td>${esc(p.modified)}<span class="sub">${esc(p.modifiedBy)}</span></td><td>${classDot(p.classification)}</td>
-          <td>${p.kb === '—' ? '—' : `<span class="status ${p.kbState}">${esc(p.kb)}</span>`}${p.kbNote ? `<span class="sub">${esc(p.kbNote)}</span>` : ''}</td><td>${esc(p.due || '')}</td>
+          <td>${p.kb === '—' || p.kbState === 'neutral' ? esc(p.kb) : `<span class="status ${p.kbState}">${esc(p.kb)}</span>`}${p.kbNote ? `<span class="sub small">${esc(p.kbNote)}</span>` : ''}</td><td>${esc(p.due || '')}</td>
           <td><button class="icon-btn sm" data-menu="${p._id}" aria-label="Actions" data-popover-anchor>${icon('more', 's16')}</button></td></tr>`).join('');
       };
       draw(items);
@@ -153,7 +152,7 @@ async function myPapers() {
       };
       const upload = async () => {
         const el = root.querySelector('#uploading');
-        el.innerHTML = `<span class="grow">NHI costing model v3.pdf</span><div class="progress" style="width:90px"><span style="width:0%"></span></div><span id="pct">0%</span>`;
+        el.innerHTML = `<span>NHI costing model v3.pdf</span><div class="progress" style="width:115px"><span style="width:0%"></span></div><span id="pct">0%</span>`;
         for (let i = 10; i <= 100; i += 15) { await sleep(250); if (!document.body.contains(el)) return; el.querySelector('.progress span').style.width = i + '%'; el.querySelector('#pct').textContent = Math.min(i, 100) + '%'; }
         await api.create('myPapers', { folderId: 'fo-health', type: 'paper', title: 'NHI costing model v3', subtitle: 'Health reform', created: 'Today', modified: 'Just now', modifiedBy: 'You', classification: 'Private', kb: '—', kbState: 'neutral', due: null });
         toast('NHI costing model v3 uploaded'); rerender();

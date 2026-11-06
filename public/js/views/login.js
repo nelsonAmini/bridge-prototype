@@ -8,25 +8,25 @@ export async function render() {
       <section class="login-brand">
         ${wordmark()}
         <div class="illus"><img src="amini-kit/assets/bridge-mark-white.svg" alt="" width="320" style="height:auto"></div>
-        <div style="max-width:520px">
+        <div class="login-hero">
           <div class="hero-light">Your papers.<br>One trusted assistant.</div>
-          <p class="small" style="opacity:.85">Bridge reads your Cabinet papers, briefings and the Directory so you can decide faster, with your data staying in your government’s own cloud.</p>
+          <p class="login-support">Bridge reads your Cabinet papers, briefings and the Directory so you can decide faster, with your data staying in your government’s own cloud.</p>
         </div>
       </section>
       <section class="login-form-side">
         <div class="row" style="justify-content:flex-end"><button class="icon-btn" id="theme" aria-label="Toggle theme">${icon(state.theme === 'dark' ? 'sunny' : 'moon')}</button></div>
         <form class="login-form" id="form" novalidate>
-          <div class="stack" style="--gap:4px"><h4>Sign in to continue with Bridge</h4><p class="tiny">With your Amini Auth account.</p></div>
+          <div class="login-heading"><h4>Sign in to continue with Bridge</h4><p class="tiny">With your Amini Auth account.</p></div>
           <div id="error"></div>
           <div class="stack">
             <div class="field"><label for="email">Email</label><input class="input" id="email" type="email" placeholder="you@example.org" autocomplete="username" /></div>
             <div class="field"><label for="pw">Password</label><div class="input-wrap"><input class="input" id="pw" type="password" autocomplete="current-password" /><button type="button" class="icon-btn" id="eye" aria-label="Show password">${icon('eye')}</button></div></div>
           </div>
-          <div class="row" style="justify-content:flex-end"><button class="btn primary sm" type="submit" style="height:40px"><span class="lead" style="width:32px;height:32px">${icon('arrowRight', 's16')}</span>Sign in</button></div>
+          <div class="row" style="justify-content:flex-end"><button class="am-btn am-btn--lead login-submit" type="submit"><span class="am-btn__lead">${icon('arrowRight', 's16')}</span>Sign in</button></div>
           <div class="divider-or">or</div>
           <button type="button" class="sso" id="ms"><span class="ms-logo"><i style="background:#f25022"></i><i style="background:#7fba00"></i><i style="background:#00a4ef"></i><i style="background:#ffb900"></i></span>Sign in with Microsoft</button>
           <p class="tiny muted">Your account is managed by Amini Auth. Ask your administrator to reset a password or to give you access.</p>
-          <p class="tiny muted" style="margin-top:-12px">Prototype: any email and a password of 4+ characters signs you in. Type <b>wrong</b> as the password to see the error.</p>
+          <p class="tiny muted proto-note">Prototype: any email and a password of 4+ characters signs you in. Type <b>wrong</b> as the password to see the error.</p>
         </form>
       </section>
     </div>`,

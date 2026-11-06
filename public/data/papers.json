@@ -27,10 +27,96 @@
     "order": 0
   },
   {
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "classification": "Public",
+    "pages": 18,
+    "peopleTags": [],
+    "tags": [
+      "Policy area: Health"
+    ],
+    "_id": "pa-9",
+    "title": "Annual Report of the Queen Elizabeth Hospital 2023–2024",
+    "topic": "Health",
+    "sub": "Policy area: Health",
+    "code": "K(B)",
+    "cabinetDate": "Thu 28 Nov 2024",
+    "created": "28 Nov 2024",
+    "createdBy": "System import",
+    "modified": "28 Nov 2024",
+    "modifiedBy": "System import",
+    "order": 1
+  },
+  {
+    "_id": "pa-5",
+    "title": "Travel Report – PAHO Executive Committee, Washington D.C.",
+    "topic": "Regional health",
+    "related": 0,
+    "code": "K(A)",
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "cabinetDate": "Wed 20 Nov 2024",
+    "created": "20 Nov 2024",
+    "createdBy": "System import",
+    "modified": "20 Nov 2024",
+    "modifiedBy": "System import",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Health"
+    ],
+    "peopleTags": [
+      "PAHO"
+    ],
+    "pages": 12,
+    "order": 2,
+    "dateFlag": "Not a Thursday"
+  },
+  {
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "classification": "Confidential",
+    "pages": 18,
+    "peopleTags": [],
+    "tags": [
+      "Policy area: Health"
+    ],
+    "_id": "pa-10",
+    "title": "National Health Insurance Feasibility Study – Interim Report",
+    "topic": "Health financing",
+    "sub": "Added via KB submission · T. Holder",
+    "code": "K(B)",
+    "cabinetDate": "Thu 14 Nov 2024",
+    "created": "6 Jan 2025",
+    "createdBy": "T. Holder",
+    "modified": "6 Jan 2025",
+    "modifiedBy": "J. Clarke",
+    "order": 3
+  },
+  {
+    "ministry": "MHW",
+    "ministryName": "Ministry of Health and Wellness",
+    "classification": "Confidential",
+    "pages": 18,
+    "peopleTags": [],
+    "tags": [
+      "Policy area: Health"
+    ],
+    "_id": "pa-11",
+    "title": "Report on the Mental Health Services Review",
+    "topic": "Mental health",
+    "code": "K(B)",
+    "cabinetDate": "Thu 31 Oct 2024",
+    "created": "31 Oct 2024",
+    "createdBy": "System import",
+    "modified": "14 Nov 2024",
+    "modifiedBy": "Tags edited",
+    "order": 4
+  },
+  {
     "_id": "pa-2",
     "title": "Travel Report – World Health Assembly, Geneva",
     "topic": "Global health",
-    "related": 1,
+    "related": 0,
     "code": "K(A)",
     "ministry": "MHW",
     "ministryName": "Ministry of Health and Wellness",
@@ -45,7 +131,7 @@
     ],
     "peopleTags": [],
     "pages": 18,
-    "order": 1
+    "order": 5
   },
   {
     "_id": "pa-3",
@@ -66,13 +152,13 @@
     ],
     "peopleTags": [],
     "pages": 26,
-    "order": 2
+    "order": 6
   },
   {
     "_id": "pa-4",
     "title": "Report on the Barbados Drug Service Procurement Review",
     "topic": "Procurement",
-    "related": 2,
+    "related": 0,
     "code": "K(B)",
     "ministry": "MHW",
     "ministryName": "Ministry of Health and Wellness",
@@ -87,30 +173,7 @@
     ],
     "peopleTags": [],
     "pages": 31,
-    "order": 3
-  },
-  {
-    "_id": "pa-5",
-    "title": "Travel Report – PAHO Executive Committee, Washington D.C.",
-    "topic": "Regional public health",
-    "related": 1,
-    "code": "K(A)",
-    "ministry": "MHW",
-    "ministryName": "Ministry of Health and Wellness",
-    "cabinetDate": "20 Nov 2024",
-    "created": "20 Nov 2024",
-    "createdBy": "System import",
-    "modified": "22 Nov 2024",
-    "modifiedBy": "Horace O.",
-    "classification": "Confidential",
-    "tags": [
-      "Policy area: Health"
-    ],
-    "peopleTags": [
-      "PAHO"
-    ],
-    "pages": 12,
-    "order": 4
+    "order": 7
   },
   {
     "_id": "pa-6",
@@ -131,7 +194,7 @@
     ],
     "peopleTags": [],
     "pages": 54,
-    "order": 5
+    "order": 8
   },
   {
     "_id": "pa-7",
@@ -152,7 +215,7 @@
     ],
     "peopleTags": [],
     "pages": 9,
-    "order": 6
+    "order": 9
   },
   {
     "_id": "pa-8",
@@ -173,6 +236,6 @@
     ],
     "peopleTags": [],
     "pages": 14,
-    "order": 7
+    "order": 10
   }
 ]

@@ -104,6 +104,7 @@
   --am-primary-hover: #ffffff;      /* …/hover (white fill on hover) */
   --am-primary-active: #ffce50;     /* …/active */
   --am-primary-active-brand: #202020; /* …/active-brand (breadcrumb current) */
+  --am-chat-surface: #fcfcfc;       /* surface/chat-surface (Bridge page background) */
   --am-primary-loading: #ffd363;    /* …/loading */
   --am-primary-disabled: #d0d0d0;   /* …/disabled */
   --am-on-primary: #1a1a1a;         /* …/on-primary */
@@ -225,6 +226,7 @@
   --am-text-white: #ffffff;
 
   --am-primary-active-brand: #ffce50;
+  --am-chat-surface: #282828;
   --am-tab-active: #ffc83c;
 
   --am-secondary: #ececec;

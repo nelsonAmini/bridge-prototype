@@ -5,7 +5,7 @@ Coded components that match the Amini design system in Figma. Use it in any Amin
 | Figma file | What the kit takes from it |
 |---|---|
 | 01. Amini DS Tokens | Revised DS colours (Light + Dark), spacing, radius, Geist type styles, Small Shadow effects |
-| 02. Amini Icons + Flags + Currency | 88 icons as inline SVG (Material Rounded + Amini-Custom) |
+| 02. Amini Icons + Flags + Currency | 90 icons as inline SVG (Material Rounded + Amini-Custom) |
 | 03. Amini Main Components | Every component below, with its variants and states |
 
 Open `index.html` for the live gallery (light/dark toggle top left). Inspect any example to copy its markup.
@@ -57,6 +57,7 @@ All colours are CSS variables named after the Revised DS tokens, e.g. `--am-bran
 - **Radius:** `--am-radius-xs 4`, `s 8`, `m 16`, `l 24`, `xl 32`, `circle 64`.
 - **Shadows:** `--am-shadow` (Default-Tucked), `--am-shadow-hover`, `--am-shadow-focus`.
 - **Grey or secondary text:** always use `--am-text-support`.
+- **Bridge page background:** `--am-chat-surface` (surface/chat-surface: #fcfcfc light, #282828 dark).
 
 ## Type
 
