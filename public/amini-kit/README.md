@@ -95,7 +95,7 @@ Geist and Geist Mono, matching the Amini text styles:
 | Amini Breadcrumb | `am-breadcrumb` (current item gets `aria-current`) |
 | Amini Tabs | `am-tabs` + `am-tab[aria-selected]` (add `data-tabs` for auto-switching) |
 | Standard-Card, Content Slot | `am-card` (`--pad` `--flat` `--interactive`), `am-content-slot` |
-| Directory: Section Title, List Item, Folder, Folder Card, File with Preview, counter | `am-dir-title`, `am-dir-item` (`.is-active` `.is-focus`), `am-dir-folder`, `am-folder-card`, `am-file` (`--failed` `--partial`), `am-file-grid`, `am-counter` |
+| Directory: Section Title, List Item, Folder, Folder Card, File with Preview, counter | `am-dir-title`, `am-dir-item` (`.is-active` `.is-focus`), `am-dir-folder`, `am-folder-card`, `am-file` (`--failed` `--partial` `--audio` `--video`; parts `__player` `__play` `__wave` `__dur` `__badge`; glyphs in `assets/emoji/` pdf / mp3 / mp4), `am-file-grid`, `am-counter` |
 | Document Viewer: tag, classification tag, linked document, panel | `am-tag`, `am-class-tag`, `am-linked-doc`, `am-viewer-panel` |
 | Dropdown / Pop Up, row menu | `am-dropdown`, `am-dropdown__item`, `am-menu`, `am-menu__item`; `popover()` and `menu()` in JS |
 | Modal Box, modal-bg | `modal({ title, iconName, body, foot, size })` in JS, or `am-scrim` + `am-modal` markup |

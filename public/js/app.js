@@ -8,6 +8,7 @@ import * as create from './views/create.js';
 import * as editor from './views/editor.js';
 import * as reviews from './views/reviews.js';
 import * as skills from './views/skills.js';
+import { openSearch, closeSearch } from './views/search.js';
 
 // ---------------------------------------------------------------- app state
 export const state = {
@@ -128,7 +129,8 @@ async function sidebar(route) {
   const curRecent = location.hash;
   return `<nav class="sidebar am-dark" aria-label="Main">
     <div class="brand-row">${wordmark()}<button class="collapse-btn" data-action="collapse" aria-label="${state.collapsed ? 'Expand' : 'Collapse'} sidebar">${icon('dock', 's16')}<span class="cl-label">${state.collapsed ? 'Expand' : 'Collapse'}</span></button></div>
-    ${item('research', '#/research', 'search', 'Research')}
+    <a class="nav-item" href="#" data-action="search" title="Search (⌘K)">${icon('search', 's16')}<span>Search</span><span class="count kbd-count">⌘K</span></a>
+    ${item('research', '#/research', 'chat_bubble_outline', 'Research')}
     ${item('briefing', '#/research/brief', 'sun', 'Briefing')}
     ${item('create', '#/create', 'edit', 'Create')}
     ${nav === 'create' ? subnav : ''}
@@ -187,6 +189,7 @@ export async function render() {
   applyTheme();
   const id = ++renderId;
   closePopovers();
+  closeSearch();
   document.getElementById('overlay-root').innerHTML = '';
   const path = location.hash.replace(/^#\/?/, '');
   if (!isAuthed() && !path.startsWith('login')) return go('#/login');
@@ -204,6 +207,7 @@ export async function render() {
     app.querySelector('.sidebar').addEventListener('click', (e) => {
       const b = e.target.closest('[data-action]');
       if (b?.dataset.action === 'activity') { e.preventDefault(); toggleActivity(); }
+      if (b?.dataset.action === 'search') { e.preventDefault(); openSearch(); }
       if (b?.dataset.action === 'collapse') { e.preventDefault(); state.collapsed = !state.collapsed; render(); }
       if (b?.dataset.action === 'recent') { e.preventDefault(); state.recentClosed = !state.recentClosed; render(); }
       if (b?.dataset.action === 'newchat') { e.preventDefault(); go('#/research'); }
@@ -220,6 +224,11 @@ export async function render() {
 
 window.addEventListener('hashchange', render);
 render();
+
+// ⌘K / Ctrl+K opens Search from anywhere in the app (not on sign-in or setup)
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k' && isAuthed() && !/^#\/(login|onboarding)/.test(location.hash)) { e.preventDefault(); openSearch(); }
+});
 
 // Expose a reset helper for testers: run bridgeReset() in the console
 window.bridgeReset = async () => { await api.reset(); state.user = null; render(); };

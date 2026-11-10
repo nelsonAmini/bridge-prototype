@@ -134,9 +134,9 @@
   --am-on-secondary-disabled: #717171;        /* action/brand/secondary/on-disabled */
 
   /* ---- Actions: danger ---- */
-  --am-danger-action: #e64336;                /* action/brand/danger/default */
-  --am-danger-hover: #ff0000;                 /* action/brand/danger/hover */
-  --am-danger-active: #861d2c;                /* action/brand/danger/active */
+  --am-danger-action: #861d2c;                /* action/brand/danger/default */
+  --am-danger-hover: #53241d;                 /* action/brand/danger/hover */
+  --am-danger-active: #281715;                /* action/brand/danger/active */
   --am-danger-loading: #53241d;               /* action/brand/danger/loading */
   --am-on-danger: #ffffff;                    /* action/brand/danger/on-danger */
 
@@ -319,9 +319,9 @@
   --am-on-secondary-disabled: #717171;
 
   /* Actions: danger */
-  --am-danger-action: #e64336;
-  --am-danger-hover: #ff0000;
-  --am-danger-active: #861d2c;
+  --am-danger-action: #861d2c;
+  --am-danger-hover: #53241d;
+  --am-danger-active: #281715;
   --am-danger-loading: #53241d;
   --am-on-danger: #ffffff;
 

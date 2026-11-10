@@ -52,10 +52,12 @@
     "title": "PAHO Executive Committee – Travel Report",
     "kind": "Travel",
     "status": "To read",
-    "meta": "Voice note",
+    "meta": "Added Mon",
     "bridge": "Information only. No decision needed.",
     "notes": [],
-    "order": 3
+    "order": 3,
+    "media": "audio",
+    "duration": "3:20"
   },
   {
     "_id": "rv-5",

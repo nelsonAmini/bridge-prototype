@@ -237,5 +237,70 @@
     "peopleTags": [],
     "pages": 14,
     "order": 10
+  },
+  {
+    "_id": "pa-12",
+    "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+    "topic": "Digital identity",
+    "related": 1,
+    "code": "K(A)",
+    "ministry": "MIST",
+    "ministryName": "Ministry of Innovation, Science and Technology",
+    "cabinetDate": "Thu 29 Oct 2026",
+    "created": "20 Oct 2026",
+    "createdBy": "Cabinet Office",
+    "modified": "20 Oct 2026",
+    "modifiedBy": "Cabinet Office",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Digital",
+      "Finance"
+    ],
+    "peopleTags": [],
+    "pages": 12,
+    "order": 12
+  },
+  {
+    "_id": "pa-13",
+    "title": "National ID Act Amendment Bill 2026",
+    "topic": "Digital identity",
+    "related": 1,
+    "code": "I(A)",
+    "ministry": "AGC",
+    "ministryName": "Attorney General’s Chambers",
+    "cabinetDate": "Thu 15 Oct 2026",
+    "created": "14 Oct 2026",
+    "createdBy": "Cabinet Office",
+    "modified": "14 Oct 2026",
+    "modifiedBy": "Cabinet Office",
+    "classification": "Secret",
+    "tags": [
+      "Policy area: Digital",
+      "Legislation"
+    ],
+    "peopleTags": [],
+    "pages": 9,
+    "order": 13
+  },
+  {
+    "_id": "pa-14",
+    "title": "Budget Estimates 2026/27 – Head 42",
+    "topic": "Budget",
+    "related": 1,
+    "code": "F(A)",
+    "ministry": "MFEI",
+    "ministryName": "Ministry of Finance, Economic Affairs and Investment",
+    "cabinetDate": "Thu 5 Nov 2026",
+    "created": "2 Nov 2026",
+    "createdBy": "Cabinet Office",
+    "modified": "2 Nov 2026",
+    "modifiedBy": "Cabinet Office",
+    "classification": "Confidential",
+    "tags": [
+      "Policy area: Finance"
+    ],
+    "peopleTags": [],
+    "pages": 24,
+    "order": 14
   }
 ]

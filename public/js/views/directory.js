@@ -59,6 +59,9 @@ async function allPapers() {
         const tr = e.target.closest('tr[data-id]');
         if (tr) viewer(papers.find((p) => p._id === tr.dataset.id));
       };
+      // Arrived from Search: open that paper in the viewer
+      const want = sessionStorage.getItem('bridge-open-paper');
+      if (want) { sessionStorage.removeItem('bridge-open-paper'); const p = papers.find((x) => x._id === want); if (p) viewer(p); }
     },
   };
 }

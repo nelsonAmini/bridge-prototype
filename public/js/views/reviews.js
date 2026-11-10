@@ -21,13 +21,23 @@ async function folderView(params, route) {
   if (query) items = items.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()));
   const name = tag || folder.fullName || folder.name;
 
-  const card = (r) => `<button class="file" data-open="${r._id}" title="${esc(r.title)}">
-    <div class="top"><img class="pdf-ic" src="img/emoji/pdf.svg" alt="PDF" width="16" height="16"><span class="row" style="--gap:0">${r.favourite ? `<span class="star">${icon('star', 's16')}</span>` : ''}<span class="icon-btn xs" data-more="${r._id}">${icon('more', 's16')}</span></span></div>
-    <div class="preview">${thumb(r.kind)}</div>
-    <div class="name">${esc(r.title)}</div>
-    <div class="meta">${esc(r.meta)}</div><span class="status ${statusClass(r.status)}">${esc(r.status)}</span></button>`;
-
   const grouped = groupBy === 'status' && !tag;
+  // Status pills only where they add information: none inside status groups or a single-status tag;
+  // mixed lists (Due soon, ungrouped) get a plain neutral text label. Never colour alone (WCAG 1.4.1).
+  const mixed = !grouped && tag !== 'To sign' && tag !== 'To read';
+  const WAVE = [6, 12, 18, 10, 22, 28, 16, 24, 30, 20, 12, 26, 18, 8, 14, 22, 10, 16];
+  const glyph = (m) => m === 'audio' ? ['mp3', 'MP3'] : m === 'video' ? ['mp4', 'MP4'] : ['pdf', 'PDF'];
+  const preview = (r) => r.media === 'audio'
+    ? `<div class="preview am-file__preview"><span class="am-file__player"><span class="am-file__play" role="img" aria-label="Voice note">${icon('play')}</span><span class="am-file__wave" aria-hidden="true">${WAVE.map((h) => `<i style="height:${h}px"></i>`).join('')}</span></span><span class="am-file__dur">${esc(r.duration)}</span></div>`
+    : r.media === 'video'
+      ? `<div class="preview am-file__preview">${thumb(r.kind)}<span class="am-file__play" role="img" aria-label="Video">${icon('play')}</span><span class="am-file__badge">${esc(r.duration)}</span></div>`
+      : `<div class="preview">${thumb(r.kind)}</div>`;
+  const card = (r) => { const [g, alt] = glyph(r.media); return `<button class="file ${r.media ? 'am-file--' + r.media : ''}" data-open="${r._id}" title="${esc(r.title)}">
+    <div class="top"><img class="pdf-ic" src="img/emoji/${g}.svg" alt="${alt}" width="16" height="16"><span class="row" style="--gap:0">${r.favourite ? `<span class="star">${icon('star', 's16')}</span>` : ''}<span class="icon-btn xs" data-more="${r._id}">${icon('more', 's16')}</span></span></div>
+    ${preview(r)}
+    <div class="name">${esc(r.title)}</div>
+    <div class="meta">${esc(r.meta)}</div>${mixed ? `<span class="status-label">${esc(r.status)}</span>` : ''}</button>`; };
+
   const body = !items.length ? `<div class="card pad muted">${query ? 'No papers match “' + esc(query) + '”.' : 'This folder is empty. Add papers or drag them here.'}</div>`
     : grouped ? GROUPS.map((g) => {
         const list = items.filter((r) => r.status === g);

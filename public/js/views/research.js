@@ -55,12 +55,14 @@ export async function render(params, { route }) {
       <div class="greeting">${orb('lg', u.agentLook)}
       <h1>${greet}, ${esc(u.name)}</h1>
       <p class="greet-sub">${toSign} papers need your signature today.</p></div>
-      ${askbar()}
+      ${askbar('Ask Bridge anything', sessionStorage.getItem('bridge-ask') || '')}
       <div class="suggestions">${['Papers to sign', 'Check a paper', 'Dictate a letter'].map((s) => `<button class="prompt-chip" data-suggest="${s}">${icon('add', 's16')}${s}</button>`).join('')}</div>
       ${u.homeCard === 'nothing' ? '' : `<div class="home-card">${cards[u.homeCard] || cards.briefing}<button class="card square" id="cardSettings" aria-label="Home card settings">${icon('tune')}</button></div>`}
     </div>`,
     mount(root) {
       bindAsk(root);
+      // Arrived from Search → "Ask Bridge": the question is filled in, ready to send
+      if (sessionStorage.getItem('bridge-ask')) { sessionStorage.removeItem('bridge-ask'); const q = root.querySelector('#q'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
       root.querySelectorAll('[data-go]').forEach((b) => (b.onclick = () => go(b.dataset.go)));
       root.querySelectorAll('[data-suggest]').forEach((b) => (b.onclick = () => { root.querySelector('#q').value = b.dataset.suggest; root.querySelector('#q').focus(); }));
       root.querySelector('#cardSettings')?.addEventListener('click', () => {

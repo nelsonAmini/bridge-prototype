@@ -13,7 +13,8 @@ The UI is built on the **Amini Kit** (`public/amini-kit/`): the design tokens, c
 | Research | Home with ask bar and configurable home card, plan → working → answer thread, Daily brief, Document panel (ask “Draft a Cabinet note” in a thread: Bridge writes it in a resizable side panel, v2 on request, close/reopen from its card, Open in Create) |
 | Directory | All Papers with viewer and Share dialog, My Papers (upload, row menu), By Ministry, KB submissions, Cabinet dates |
 | Create | Template chooser, Blank flow (scripted Bridge), Cabinet paper flow (attachments → live drafting → Draft ready), comments with @mentions, @Bridge suggested edits (Accept/Reject), Bridge review against Cabinet paper rules |
-| My Reviews | Folders and tags in the sidebar, collapsible status groups, paper view with iPad ink toggle, highlight/note/Ask Bridge on selection, voice note, Sign dialog |
+| Search | Sidebar “Search ⌘K” or ⌘K / Ctrl+K anywhere: palette with Recent (empty), then Ask Bridge + results grouped Papers · My Reviews · Research · Documents · People, filter tabs, ↑↓ ⏎ ⌘⏎ esc (Figma 07. Search) |
+| My Reviews | Folders and tags in the sidebar, collapsible status groups, cards without status pills inside groups (plain label only in mixed lists such as Due soon), audio card for voice notes (play, waveform, length), paper view with iPad ink toggle, highlight/note/Ask Bridge on selection, voice note, Sign dialog |
 | Skills | Skills list and suggestions, 3-step New skill, How you work (forget/confirm), Settings, Activity panel (agent card in the sidebar) |
 
 Theme: follows the Figma file until you choose one: Login in light, every app page in dark (as the designs are presented). Switch with the moon button on login, or Settings → Dark mode.
@@ -58,6 +59,15 @@ Change the JSON in `public/data/` (one file per collection), then `npm run reset
 1. Create a repo and push this folder to `main`.
 2. Repo → Settings → Pages → Source: **GitHub Actions**.
 3. The included workflow (`.github/workflows/pages.yml`) deploys `public/` on every push. The site runs in static mode.
+
+## What changed in this version (11 Nov 2026)
+
+- **Search** (⌘K): new palette and sidebar item, built from the Figma *07. Search* frames. Seed data: `data/searchIndex.json`.
+- **My Reviews cards:** no status pill inside status groups; the detail line carries the deadline in words. Mixed lists show a plain “To sign / To read” label. Colour never carries status on its own.
+- **Audio and video files:** the kit's file card (`am-file`) gains `--audio` and `--video` (Figma *Amini File with Preview*, `Media=Audio | Video`). The PAHO travel report is now an audio card.
+- **Tokens re-read from Figma:** `tokens.css` regenerated from a fresh Revised DS dump (danger button colours changed in Figma: default #861d2c, hover #53241d, active #281715).
+- Apple Pencil ink now uses `text/default/information`.
+- Saved browser data uses a new key, so this version starts from fresh seed data.
 
 ## Notes
 

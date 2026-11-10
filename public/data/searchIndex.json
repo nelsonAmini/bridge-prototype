@@ -1,0 +1,466 @@
+[
+  {
+    "_id": "s-r1",
+    "type": "review",
+    "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+    "path": "My Reviews › Cabinet · 29 Oct · To sign",
+    "meta": "Due Thu",
+    "route": "#/reviews/paper/rv-1",
+    "keywords": "",
+    "order": 0,
+    "recent": {
+      "meta": "Today",
+      "idx": 0
+    }
+  },
+  {
+    "_id": "s-r2",
+    "type": "research",
+    "title": "Tourism arrivals: Q3 2026 vs 2024",
+    "path": "Research",
+    "meta": "Yesterday",
+    "route": "ask",
+    "keywords": "tourism arrivals",
+    "order": 1,
+    "recent": {
+      "meta": "Yesterday",
+      "idx": 1
+    }
+  },
+  {
+    "_id": "s-r3",
+    "type": "document",
+    "title": "Speaking notes – Hurricane season briefing",
+    "path": "Create › My documents",
+    "meta": "Yesterday",
+    "route": "#/create/my",
+    "keywords": "",
+    "order": 2,
+    "recent": {
+      "meta": "Yesterday",
+      "idx": 2
+    }
+  },
+  {
+    "_id": "s-r4",
+    "type": "paper",
+    "title": "Budget Estimates 2026/27 – Head 42",
+    "path": "Directory › Ministry of Finance",
+    "meta": "5 Nov",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 3,
+    "recent": {
+      "meta": "Mon",
+      "idx": 3
+    },
+    "paperId": "pa-14"
+  },
+  {
+    "_id": "s-r5",
+    "type": "folder",
+    "title": "Cabinet · 29 Oct 2026",
+    "path": "My Reviews › Folders · 6 papers",
+    "meta": "6 papers",
+    "route": "#/reviews/folder/rf-29oct",
+    "keywords": "",
+    "order": 4,
+    "recent": {
+      "meta": "Mon",
+      "idx": 4
+    }
+  },
+  {
+    "_id": "s-p1",
+    "type": "paper",
+    "title": "Impact of the 2026 Financial Reporting Changes on Digital ID Uptake",
+    "path": "Directory › Ministry of Innovation, Science and Technology",
+    "meta": "29 Oct",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 5,
+    "paperId": "pa-12"
+  },
+  {
+    "_id": "s-p2",
+    "type": "paper",
+    "title": "National ID Act Amendment Bill 2026",
+    "path": "Directory › Attorney General’s Chambers",
+    "meta": "14 Oct",
+    "route": "#/directory",
+    "keywords": "digital id identity",
+    "order": 6,
+    "paperId": "pa-13"
+  },
+  {
+    "_id": "s-t1",
+    "type": "research",
+    "title": "Digital ID uptake risks",
+    "path": "Research",
+    "meta": "Yesterday",
+    "route": "ask",
+    "keywords": "",
+    "order": 7
+  },
+  {
+    "_id": "s-d1",
+    "type": "document",
+    "title": "Speaking notes – Digital ID launch",
+    "path": "Create › My documents",
+    "meta": "2 Nov",
+    "route": "#/create/my",
+    "keywords": "",
+    "order": 8
+  },
+  {
+    "_id": "s-pa-1",
+    "type": "paper",
+    "title": "Report on the Caribbean Public Health Agency Annual Meeting",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "12 Dec",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 9,
+    "paperId": "pa-1"
+  },
+  {
+    "_id": "s-pa-9",
+    "type": "paper",
+    "title": "Annual Report of the Queen Elizabeth Hospital 2023–2024",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "28 Nov",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 10,
+    "paperId": "pa-9"
+  },
+  {
+    "_id": "s-pa-5",
+    "type": "paper",
+    "title": "Travel Report – PAHO Executive Committee, Washington D.C.",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "Wed 20",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 11,
+    "paperId": "pa-5"
+  },
+  {
+    "_id": "s-pa-10",
+    "type": "paper",
+    "title": "National Health Insurance Feasibility Study – Interim Report",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "14 Nov",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 12,
+    "paperId": "pa-10"
+  },
+  {
+    "_id": "s-pa-11",
+    "type": "paper",
+    "title": "Report on the Mental Health Services Review",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "31 Oct",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 13,
+    "paperId": "pa-11"
+  },
+  {
+    "_id": "s-pa-2",
+    "type": "paper",
+    "title": "Travel Report – World Health Assembly, Geneva",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "13 Jun",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 14,
+    "paperId": "pa-2"
+  },
+  {
+    "_id": "s-pa-3",
+    "type": "paper",
+    "title": "Report of the Drug Formulary Committee",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 15,
+    "paperId": "pa-3"
+  },
+  {
+    "_id": "s-pa-4",
+    "type": "paper",
+    "title": "Report on the Barbados Drug Service Procurement Review",
+    "path": "Directory › Ministry of Health and Wellness",
+    "meta": "22 Feb",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 16,
+    "paperId": "pa-4"
+  },
+  {
+    "_id": "s-pa-6",
+    "type": "paper",
+    "title": "Report on Hurricane Beryl Recovery Works",
+    "path": "Directory › Ministry of Transport and Works",
+    "meta": "4 Jul",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 17,
+    "paperId": "pa-6"
+  },
+  {
+    "_id": "s-pa-7",
+    "type": "paper",
+    "title": "National ID Act Amendment Bill – Drafting Instructions",
+    "path": "Directory › Ministry of Innovation, Science and Technology",
+    "meta": "10 Oct",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 18,
+    "paperId": "pa-7"
+  },
+  {
+    "_id": "s-pa-8",
+    "type": "paper",
+    "title": "Fiscal Responsibility (Amendment) Bill",
+    "path": "Directory › Ministry of Finance, Economic Affairs and Investment",
+    "meta": "22 Oct",
+    "route": "#/directory",
+    "keywords": "",
+    "order": 19,
+    "paperId": "pa-8"
+  },
+  {
+    "_id": "s-rv-2",
+    "type": "review",
+    "title": "Land Administration System Replacement",
+    "path": "My Reviews › Cabinet · 29 Oct · To sign",
+    "meta": "Waiting 9 days",
+    "route": "#/reviews/paper/rv-2",
+    "keywords": "",
+    "order": 20
+  },
+  {
+    "_id": "s-rv-3",
+    "type": "review",
+    "title": "National Housing Programme – Phase 2",
+    "path": "My Reviews › Cabinet · 29 Oct · To sign",
+    "meta": "Conflict with Covenant",
+    "route": "#/reviews/paper/rv-3",
+    "keywords": "",
+    "order": 21
+  },
+  {
+    "_id": "s-rv-4",
+    "type": "review",
+    "title": "PAHO Executive Committee – Travel Report",
+    "path": "My Reviews › Cabinet · 29 Oct · To read",
+    "meta": "Added Mon",
+    "route": "#/reviews/paper/rv-4",
+    "keywords": "",
+    "order": 22
+  },
+  {
+    "_id": "s-rv-5",
+    "type": "review",
+    "title": "Hurricane Season Preparedness Update",
+    "path": "My Reviews › Cabinet · 29 Oct · To read",
+    "meta": "Due Fri",
+    "route": "#/reviews/paper/rv-5",
+    "keywords": "",
+    "order": 23
+  },
+  {
+    "_id": "s-rv-6",
+    "type": "review",
+    "title": "Fiscal Responsibility (Amendment) Bill",
+    "path": "My Reviews › Cabinet · 29 Oct · Signed",
+    "meta": "22 Oct",
+    "route": "#/reviews/paper/rv-6",
+    "keywords": "",
+    "order": 24
+  },
+  {
+    "_id": "s-rv-7",
+    "type": "review",
+    "title": "Customs Waivers – Q3 Summary",
+    "path": "My Reviews › Cabinet · 22 Oct · Signed",
+    "meta": "22 Oct",
+    "route": "#/reviews/paper/rv-7",
+    "keywords": "",
+    "order": 25
+  },
+  {
+    "_id": "s-rv-8",
+    "type": "review",
+    "title": "Lands and Surveys – System Status",
+    "path": "My Reviews › Land Administration · To read",
+    "meta": "Oct 2026",
+    "route": "#/reviews/paper/rv-8",
+    "keywords": "",
+    "order": 26
+  },
+  {
+    "_id": "s-rf-land",
+    "type": "folder",
+    "title": "Land Administration",
+    "path": "My Reviews › Folders",
+    "meta": "",
+    "route": "#/reviews/folder/rf-land",
+    "keywords": "",
+    "order": 27
+  },
+  {
+    "_id": "s-rf-22oct",
+    "type": "folder",
+    "title": "Cabinet · 22 Oct 2026",
+    "path": "My Reviews › Folders",
+    "meta": "",
+    "route": "#/reviews/folder/rf-22oct",
+    "keywords": "",
+    "order": 28
+  },
+  {
+    "_id": "s-rf-notes",
+    "type": "folder",
+    "title": "Personal notes",
+    "path": "My Reviews › Folders",
+    "meta": "",
+    "route": "#/reviews/folder/rf-notes",
+    "keywords": "",
+    "order": 29
+  },
+  {
+    "_id": "s-rf-speech",
+    "type": "folder",
+    "title": "Speeches",
+    "path": "My Reviews › Folders",
+    "meta": "",
+    "route": "#/reviews/folder/rf-speech",
+    "keywords": "",
+    "order": 30
+  },
+  {
+    "_id": "s-t2",
+    "type": "research",
+    "title": "Land administration options",
+    "path": "Research",
+    "meta": "Today",
+    "route": "#/research/thread/th-land",
+    "keywords": "",
+    "order": 31
+  },
+  {
+    "_id": "s-t3",
+    "type": "research",
+    "title": "UN speeches, one place",
+    "path": "Research",
+    "meta": "Mon",
+    "route": "ask",
+    "keywords": "",
+    "order": 32
+  },
+  {
+    "_id": "s-doc-2",
+    "type": "document",
+    "title": "Notes – PAHO briefing (annotated)",
+    "path": "Create › Shared with me",
+    "meta": "",
+    "route": "#/create/doc/doc-2",
+    "keywords": "",
+    "order": 33
+  },
+  {
+    "_id": "s-doc-3",
+    "type": "document",
+    "title": "Housing paper vs Covenant – comparison",
+    "path": "Create › My documents",
+    "meta": "",
+    "route": "#/create/doc/doc-3",
+    "keywords": "",
+    "order": 34
+  },
+  {
+    "_id": "s-doc-4",
+    "type": "document",
+    "title": "Speech – CARICOM Heads of Government opening",
+    "path": "Create › My documents",
+    "meta": "",
+    "route": "#/create/doc/doc-4",
+    "keywords": "",
+    "order": 35
+  },
+  {
+    "_id": "s-p-ac",
+    "type": "person",
+    "title": "Andrea Clarke",
+    "path": "People",
+    "meta": "Permanent Secretary",
+    "route": "person",
+    "keywords": "",
+    "order": 36
+  },
+  {
+    "_id": "s-p-mt",
+    "type": "person",
+    "title": "Marcus Thorne",
+    "path": "People",
+    "meta": "Policy Adviser",
+    "route": "person",
+    "keywords": "",
+    "order": 37
+  },
+  {
+    "_id": "s-p-kd",
+    "type": "person",
+    "title": "Kemar Daniel",
+    "path": "People",
+    "meta": "Ministry of Finance",
+    "route": "person",
+    "keywords": "",
+    "order": 38
+  },
+  {
+    "_id": "s-p-ks",
+    "type": "person",
+    "title": "Kerry-Ann Small",
+    "path": "People",
+    "meta": "Cabinet Office",
+    "route": "person",
+    "keywords": "",
+    "order": 39
+  },
+  {
+    "_id": "s-p-lu",
+    "type": "person",
+    "title": "Lucille",
+    "path": "People",
+    "meta": "Assistant to the PM",
+    "route": "person",
+    "keywords": "",
+    "order": 40
+  },
+  {
+    "_id": "s-p-ho",
+    "type": "person",
+    "title": "Horace O.",
+    "path": "People",
+    "meta": "Ministry of Health",
+    "route": "person",
+    "keywords": "",
+    "order": 41
+  },
+  {
+    "_id": "s-p-kb",
+    "type": "person",
+    "title": "Kerry Best",
+    "path": "People",
+    "meta": "Health Policy Unit",
+    "route": "person",
+    "keywords": "",
+    "order": 42
+  }
+]
