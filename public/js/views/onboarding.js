@@ -1,6 +1,6 @@
 import { api } from '../api.js';
 import { icon, orb, esc, sleep, wordmark } from '../ui.js';
-import { go, refreshUser, render as rerender } from '../app.js';
+import { go, refreshUser, render as rerender, state } from '../app.js';
 import { askbar } from './research.js';
 
 // LC / Onboarding (Figma page "01. Home (Onboarding)", frames 90:47 … 90:2622).
@@ -15,10 +15,10 @@ const STEPS = [
 const LOOKS = ['Gold', 'Coral', 'Violet', 'Ocean'];
 const PICKS = ['Papers to sign', 'Morning briefing', 'Check against commitments', 'Drafting letters', 'Big decisions', 'Speech prep'];
 const SKILLS = [
-  ['Morning Briefing', 'Your day, papers and deadlines at 6:30 AM', 'calendar', '#ffc83c'],
-  ['Signature Tracker', 'Flags papers waiting for your signature', 's-signature', '#0040c1'],
-  ['Alignment Check', 'Checks drafts against past commitments', 's-alignment', '#f25c05'],
-  ['Cabinet Paper Review', 'Summarises and critiques cabinet papers', 's-review', '#693ec9'],
+  ['Morning Briefing', 'Your day, papers and deadlines at 6:30 AM', 'calendar', 'var(--am-brand)'],
+  ['Signature Tracker', 'Flags papers waiting for your signature', 's-signature', 'var(--am-badge-blue-bg)'],
+  ['Alignment Check', 'Checks drafts against past commitments', 's-alignment', 'var(--am-badge-orange-bg)'],
+  ['Cabinet Paper Review', 'Summarises and critiques cabinet papers', 's-review', 'var(--am-badge-purple-bg)'],
 ];
 const emoji = (name, size = 32) => `<img src="img/emoji/${name}.svg" alt="" width="${size}" height="${size}">`;
 const head = (em, title, sub) => `<div class="onb-head"><span class="onb-emoji">${emoji(em)}</span><h2>${title}</h2><p>${sub}</p></div>`;
@@ -30,7 +30,7 @@ export async function render({ step }) {
   const done = n > 5;
 
   const rail = `<aside class="onb-rail">
-    ${wordmark(false)}
+    ${wordmark(document.documentElement.dataset.theme === 'dark')}
     <div class="onb-intro"><b>Set up your agent</b><span>${done ? 'All done · 5 of 5' : `About 2 minutes · Step ${n} of 5`}</span></div>
     <ol class="onb-steps">${STEPS.map(([t, s], i) => {
       const st = i + 1 < n ? 'done' : i + 1 === n ? 'current' : '';

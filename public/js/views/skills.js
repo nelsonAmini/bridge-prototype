@@ -130,13 +130,13 @@ async function settings() {
       <span class="sec">App</span>
       <div class="row" style="--gap:16px;align-items:flex-end"><div class="field grow"><label for="lang">Language</label><select class="select" id="lang">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
         <div class="card row grow tog-card"><span class="grow">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div></div>
-      <div class="card row tog-card" style="max-width:352px"><span class="grow">Dark mode</span>${sw(state.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
+      <div class="card row tog-card" style="max-width:352px"><span class="grow">Dark mode</span>${sw(document.documentElement.dataset.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
       <div class="row"><button class="btn tertiary sm" id="report">Report an issue</button><button class="btn danger sm" id="out">Sign out</button><span class="spacer"></span><button class="btn ghost sm" id="reset">Reset prototype data</button></div>
     </div>`,
     mount(root) {
       root.querySelector('#lang').onchange = async (e) => { await api.update('users', 'u-pm', { language: e.target.value }); toast('Language saved'); };
       root.querySelector('#notif').onclick = async (e) => { const v = e.currentTarget.getAttribute('aria-checked') !== 'true'; e.currentTarget.setAttribute('aria-checked', v); await api.update('users', 'u-pm', { notifications: v }); };
-      root.querySelector('#dark').onclick = () => { setTheme(state.theme === 'dark' ? 'light' : 'dark'); rerender(); };
+      root.querySelector('#dark').onclick = () => { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); rerender(); };
       root.querySelector('#pw').onclick = () => { const m = modal({ title: 'Change password', iconName: 'lock', body: '<div class="stack"><div class="field"><label>Current password</label><input class="input" type="password"></div><div class="field"><label>New password</label><input class="input" type="password"></div></div>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Update</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Password updated (prototype)'); }; };
       root.querySelector('#report').onclick = () => { const m = modal({ title: 'Report an issue', iconName: 'warning', body: '<textarea class="textarea" style="min-height:120px" placeholder="What happened?"></textarea>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Send</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Thanks. Your report was sent.'); }; };
       root.querySelector('#reset').onclick = async () => { await api.reset(); sessionStorage.clear(); toast('Prototype data reset'); location.hash = '#/login'; location.reload(); };

@@ -94,7 +94,7 @@ async function paper(id) {
   // re-apply saved highlights
   const hl = (text) => {
     let out = esc(text);
-    for (const n of notes) if (n.quote && text.includes(n.quote)) out = out.replace(esc(n.quote), `<mark style="background:${n.color || '#ffe9a8'}">${esc(n.quote)}</mark>`);
+    for (const n of notes) if (n.quote && text.includes(n.quote)) out = out.replace(esc(n.quote), `<mark style="background:${n.color || 'var(--am-warning-subtle)'}; color: var(--am-text-black)">${esc(n.quote)}</mark>`);
     return out;
   };
 
@@ -138,7 +138,7 @@ async function paper(id) {
         closePopovers();
         if (text.length < 3 || !root.querySelector('#sheet').contains(sel.anchorNode)) return;
         const rect = sel.getRangeAt(0).getBoundingClientRect();
-        const colors = ['#ffe9a8', '#c5e8cb', '#c5c8e7', '#f6c6c1'];
+        const colors = ['var(--am-warning-subtle)', 'var(--am-success-subtle)', 'var(--am-info-subtle)', 'var(--am-danger-subtle)'];
         const pop = popover({ getBoundingClientRect: () => rect }, `<div class="row" style="padding:6px 8px;gap:6px">${colors.map((c) => `<button data-c="${c}" aria-label="Highlight" style="width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:${c};cursor:pointer"></button>`).join('')}</div>
           <button class="menu-item" data-note>${icon('note', 's16')} Add note</button><button class="menu-item" data-ask>${orb('sm', state.user.agentLook)} Ask ${esc(state.user.agentName)}</button>`);
         pop.querySelectorAll('[data-c]').forEach((b) => (b.onclick = async () => { closePopovers(); notes.push({ quote: text, color: b.dataset.c, time: 'Just now' }); await saveNotes(); redraw(); }));
@@ -148,11 +148,11 @@ async function paper(id) {
           slot.innerHTML = `<div class="card pad stack" style="--gap:8px"><div class="quote"><span>“${esc(text)}”</span></div><textarea class="textarea" id="nt" placeholder="Write a note…" style="min-height:60px"></textarea><div class="row" style="justify-content:flex-end"><button class="btn tertiary sm" id="nc">Cancel</button><button class="btn primary sm" id="ns">Save note</button></div></div>`;
           slot.querySelector('#nt').focus();
           slot.querySelector('#nc').onclick = () => (slot.innerHTML = '');
-          slot.querySelector('#ns').onclick = async () => { notes.push({ quote: text, text: slot.querySelector('#nt').value.trim(), color: '#ffe9a8', time: 'Just now' }); await saveNotes(); redraw(); };
+          slot.querySelector('#ns').onclick = async () => { notes.push({ quote: text, text: slot.querySelector('#nt').value.trim(), color: 'var(--am-warning-subtle)', time: 'Just now' }); await saveNotes(); redraw(); };
         };
         pop.querySelector('[data-ask]').onclick = async () => {
           closePopovers();
-          notes.push({ quote: text, text: `${state.user.agentName}: this claim is supported by the Digital ID uptake survey 2025. No conflict with earlier Cabinet decisions.`, color: '#c5c8e7', time: 'Just now' });
+          notes.push({ quote: text, text: `${state.user.agentName}: this claim is supported by the Digital ID uptake survey 2025. No conflict with earlier Cabinet decisions.`, color: 'var(--am-info-subtle)', time: 'Just now' });
           await saveNotes(); redraw();
         };
       };

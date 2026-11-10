@@ -28,14 +28,14 @@
       "stats": [
         {
           "label": "Parcels on record",
-          "value": "[x]k",
+          "value": "128k",
           "note": "in the registry",
           "trend": "Stable",
           "tone": "good"
         },
         {
           "label": "Last full backup",
-          "value": "[x] days",
+          "value": "41 days",
           "note": "ago",
           "trend": "Late",
           "tone": "bad"

@@ -65,7 +65,7 @@ async function allPapers() {
 
 // LC / Directory v2 / Document Viewer (+ Paper Details Panel)
 function viewer(p) {
-  const lines = (n) => Array.from({ length: n }, (_, i) => `<div style="height:8px;border-radius:4px;background:#d9d9d9;width:${[100, 94, 98, 62, 100, 90][i % 6]}%"></div>`).join('');
+  const lines = (n) => Array.from({ length: n }, (_, i) => `<div style="height:8px;border-radius:4px;background:var(--am-surface-neutral-subtle);width:${[100, 94, 98, 62, 100, 90][i % 6]}%"></div>`).join('');
   const m = modal({
     title: p.title, iconName: 'doc', wide: true,
     body: `<div class="row wrap"><span class="class-tag">${esc(p.classification)}</span><span class="small muted">${esc(p.code)} · ${esc(p.ministry)} · ${p.pages} pages</span><span class="spacer"></span><button class="chip-btn" id="dl">${icon('download', 's16')}Download</button><button class="chip-btn" id="share">${icon('share', 's16')}Share</button><button class="btn secondary sm" id="toCreate">Open in Create</button></div>

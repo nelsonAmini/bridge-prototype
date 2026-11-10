@@ -21,7 +21,7 @@
       {
         "label": "Oldest waiting",
         "value": "9 days",
-        "delta": "[Paper A]",
+        "delta": "Primary Care Reform",
         "trend": "+1d",
         "tone": "bad"
       },
@@ -40,38 +40,38 @@
         "tone": "good"
       }
     ],
-    "backlogNote": "Most of the backlog is one paper. [Paper A] has waited nine days and is on Thursday’s agenda, so it is the one to clear first. The other two arrived this week.",
+    "backlogNote": "Most of the backlog is one paper. Primary Care Reform has waited nine days and is on Thursday’s agenda, so it is the one to clear first. The other two arrived this week.",
     "waiting": [
       {
-        "title": "[Paper A]",
+        "title": "Primary Care Reform",
         "days": 9
       },
       {
-        "title": "[Paper B]",
+        "title": "Coastal Zone Bill",
         "days": 3
       },
       {
-        "title": "[Housing paper]",
+        "title": "Affordable Housing Phase 2",
         "days": 2
       }
     ],
     "alignment": [
       {
-        "paper": "[Paper A]",
+        "paper": "Primary Care Reform",
         "mission": 4,
         "covenant": 5,
         "manifesto": 4,
         "past": "OK"
       },
       {
-        "paper": "[Paper B]",
+        "paper": "Coastal Zone Bill",
         "mission": 5,
         "covenant": 5,
         "manifesto": 3,
         "past": "OK"
       },
       {
-        "paper": "[Housing paper]",
+        "paper": "Affordable Housing Phase 2",
         "mission": 3,
         "covenant": 4,
         "manifesto": 3,
@@ -82,49 +82,49 @@
     "order": 0,
     "alignmentNote": "The housing paper asks again for funding Cabinet deferred in August, without new costings. Both passages are quoted in [2]. You may want to send it back or raise it on Thursday.",
     "economy": {
-      "asOf": "Latest data as of [date]",
-      "text": "Growth is holding at [x]% and inflation is [x]%. Reserves cover [x] weeks of imports. Tourism, the main driver this quarter, is running ahead of last year.",
+      "asOf": "Latest data as of 31 October 2026",
+      "text": "Growth is holding at 4.1% and inflation is 2.9%. Reserves cover 31 weeks of imports. Tourism, the main driver this quarter, is running ahead of last year.",
       "stats": [
         {
           "label": "Real GDP growth",
-          "value": "[x]%",
+          "value": "4.1%",
           "delta": "vs last quarter",
-          "trend": "+[x]pp",
+          "trend": "+0.3pp",
           "tone": "good"
         },
         {
           "label": "Inflation",
-          "value": "[x]%",
+          "value": "2.9%",
           "delta": "easing",
-          "trend": "-[x]pp",
+          "trend": "-0.6pp",
           "tone": "good"
         },
         {
           "label": "Unemployment",
-          "value": "[x]%",
+          "value": "7.2%",
           "delta": "vs last year",
-          "trend": "-[x]pp",
+          "trend": "-0.8pp",
           "tone": "good"
         },
         {
           "label": "FX reserves",
-          "value": "BBD [x]",
+          "value": "BBD 3.1bn",
           "delta": "of imports",
-          "trend": "[x] wk",
+          "trend": "31 wk",
           "tone": "good"
         },
         {
           "label": "Debt to GDP",
-          "value": "[x]%",
+          "value": "112%",
           "delta": "slowly falling",
           "trend": "High",
           "tone": "bad"
         },
         {
           "label": "Tourist arrivals",
-          "value": "[x]k",
+          "value": "612k",
           "delta": "vs last year",
-          "trend": "+[x]%",
+          "trend": "+8%",
           "tone": "good"
         }
       ],
@@ -164,8 +164,8 @@
       "How does growth compare to the region?"
     ],
     "citations": [
-      "Cabinet paper - [Paper A], Ministry of [X].pdf",
-      "Cabinet minutes - [August 2026 meeting].pdf",
+      "Cabinet paper - Primary Care Reform, Ministry of Health and Wellness.pdf",
+      "Cabinet minutes - 27 August 2026 meeting.pdf",
       "Covenant of Hope.pdf",
       "PMO complaints log - October 2026.xlsx",
       "Central Bank - latest economic review and Statistical Service releases"

@@ -2,8 +2,9 @@
    Amini Kit · Design tokens
    Source of truth: Figma "01. Amini DS Tokens" → collection "Revised DS"
    (Light mode / Dark mode) and the Amini text + effect styles.
-   Every value here was read from Figma. Don't hand-edit colours; update
-   Figma and regenerate (see README → "Updating tokens").
+   Colours are GENERATED from the Revised DS dump (_source/revised-ds.txt) by
+   _source/tools/gen_tokens.py, light and dark mode resolved from Figma.
+   Don't hand-edit colours: update Figma, re-dump, regenerate.
    ========================================================================== */
 
 /* Geist is bundled (assets/fonts, SIL Open Font License) so the kit works
@@ -36,183 +37,248 @@
   --am-radius-xl: 32px;
   --am-radius-circle: 64px;
 
-  /* ---- Backgrounds & surfaces ---------------------------------------- */
-  --am-bg-default: #ffffff;          /* background/default */
-  --am-bg-grey: #ececec;             /* background/grey */
-  --am-bg-dark: #1a1a1a;             /* background/dark */
-  --am-bg-secondary-grey: #fcfcfc;   /* background/secondary-grey */
-  --am-bg-page: #fafafa;             /* app page background (Bridge screens) */
-  --am-canvas: #ffffff;              /* surface/canvas */
-  --am-panel: #ffffff;               /* surface/panel */
-  --am-panel-border: #ffffff1f;      /* surface/panel-border */
-  --am-card: #ffffff;                /* surface/component-card */
-  --am-popup: #ffffff;               /* surface/popup-surface */
-  --am-chatbox-inner: #ffffff;       /* surface/chatbox-inner */
-  --am-read-only: #d0d0d0;           /* surface/read-only */
-  --am-menu-surface: #1a1a1a;        /* app sidebar (Bridge "menu-surface") */
+  /* ---- Backgrounds & surfaces ---- */
+  --am-bg-default: #ffffff;                   /* background/default */
+  --am-bg-grey: #ececec;                      /* background/grey */
+  --am-bg-dark: #1a1a1a;                      /* background/dark */
+  --am-bg-secondary-grey: #fcfcfc;            /* background/secondary-grey */
+  --am-bg-zebra: #f9f9f9;                     /* background/Zebra */
+  --am-chat-surface: #fcfcfc;                 /* surface/chat-surface */
+  --am-bg-page: #fcfcfc;                      /* surface/chat-surface */
+  --am-canvas: #ffffff;                       /* surface/canvas */
+  --am-panel: #ffffff;                        /* surface/panel */
+  --am-panel-border: #ffffff1f;               /* surface/panel-border */
+  --am-card: #ffffff;                         /* surface/component-card */
+  --am-popup: #ffffff;                        /* surface/popup-surface */
+  --am-chatbox-inner: #ffffff;                /* surface/chatbox-inner */
+  --am-response-surface: #fcfcfc;             /* surface/response-surface */
+  --am-read-only: #d0d0d0;                    /* surface/read-only */
+  --am-menu-surface: #1a1a1a;                 /* surface/menu-surface */
+  --am-surface-primary: #ffffff;              /* surface/primary-default */
+  --am-on-surface-primary: #1a1a1a;           /* surface/on-primary-default */
+  --am-surface-secondary: #1a1a1a;            /* surface/secondary-default */
+  --am-on-surface-secondary: #ffffff;         /* surface/on-secondary-default */
+  --am-surface-secondary-gray: #e1e1e1;       /* surface/secondary-gray */
+  --am-surface-tertiary: #d0d0d0;             /* surface/tertiary-default */
+  --am-surface-tertiary-subtle: #fcfcfc;      /* surface/tertiary-subtle */
+  --am-surface-neutral: #717171;              /* surface/neutral */
+  --am-surface-neutral-subtle: #d0d0d0;       /* surface/neutral-subtle */
+  --am-on-neutral-subtle: #000000;            /* surface/on-neutral-subtle */
+  --am-surface-disabled: #d0d0d0;             /* surface/disabled */
+  --am-on-disabled: #898989;                  /* surface/on-disabled */
+  --am-brand: #ffc83c;                        /* surface/brand-primary */
+  --am-brand-secondary: #1a1a1a;              /* surface/brand-secondary */
+  --am-on-brand-secondary: #ffffff;           /* surface/on-brand-secondary */
+  --am-icons-misc: #000000;                   /* surface/icons-misc */
+  --am-icons-misc-reverse: #ffffff;           /* surface/icons-misc-reverse */
+  --am-icon-black: #1a1a1a;                   /* icon/black */
 
-  --am-surface-primary: #ffffff;           /* surface/primary-default */
-  --am-on-surface-primary: #1a1a1a;        /* surface/on-primary-default */
-  --am-surface-secondary: #1a1a1a;         /* surface/secondary-default */
-  --am-on-surface-secondary: #ffffff;      /* surface/on-secondary-default */
-  --am-surface-tertiary: #d0d0d0;          /* surface/tertiary-default */
-  --am-surface-tertiary-subtle: #fcfcfc;   /* surface/tertiary-subtle */
-  --am-surface-neutral: #717171;           /* surface/neutral */
-  --am-surface-neutral-subtle: #d0d0d0;    /* surface/neutral-subtle */
-  --am-on-neutral-subtle: #000000;         /* surface/on-neutral-subtle */
-  --am-surface-disabled: #d0d0d0;          /* surface/disabled */
-  --am-on-disabled: #898989;               /* surface/on-disabled */
-  --am-brand: #ffc83c;                     /* surface/brand-primary */
+  /* ---- Feedback surfaces ---- */
+  --am-danger: #ff0000;                       /* surface/danger-default */
+  --am-danger-subtle: #ffcccc;                /* surface/danger-subtle */
+  --am-on-danger-subtle: #861d2c;             /* surface/on-danger-subtle */
+  --am-warning: #ffc83c;                      /* surface/warning-default */
+  --am-warning-subtle: #ffe49e;               /* surface/warning-subtle */
+  --am-on-warning-subtle: #997824;            /* surface/on-warning-subtle */
+  --am-warning-emphasis: #b38c2a;             /* surface/warning-emphasis */
+  --am-success: #2ec348;                      /* surface/success-default */
+  --am-success-emphasis: #1d792d;             /* surface/success-emphasis */
+  --am-success-subtle: #97e1a4;               /* surface/success-subtle */
+  --am-on-success-subtle: #1d792d;            /* surface/on-success-subtle */
+  --am-info-subtle: #c5c8e7;                  /* surface/information-subtle */
+  --am-on-info-subtle: #2a327b;               /* surface/on-information-subtle */
+  --am-status-success: #97e1a44d;             /* surface/status-success */
+  --am-status-warning: #ffe49e4d;             /* surface/status-warning */
+  --am-status-danger: #ffcccc4d;              /* surface/status-danger */
+  --am-status-info: #c5c8e74d;                /* surface/status-info */
+  --am-status-neutral: #d0d0d04d;             /* surface/status-neutral */
 
-  /* Feedback surfaces */
-  --am-danger: #ff0000;                    /* surface/danger-default */
-  --am-danger-subtle: #ffcccc;             /* surface/danger-subtle */
-  --am-warning-subtle: #ffe49e;            /* surface/warning-subtle */
-  --am-on-warning-subtle: #997824;         /* surface/on-warning-subtle */
-  --am-warning-emphasis: #b38c2a;          /* surface/warning-emphasis */
-  --am-success: #2ec348;                   /* surface/success-default */
-  --am-success-emphasis: #1d792d;          /* surface/success-emphasis */
-  --am-success-subtle: #97e1a4;            /* surface/success-subtle */
-  --am-on-success-subtle: #1d792d;         /* surface/on-success-subtle */
-  --am-info-subtle: #c5c8e7;               /* surface/information-subtle */
-  --am-on-info-subtle: #2a327b;            /* surface/on-information-subtle */
+  /* ---- Text ---- */
+  --am-text: #000000;                         /* text/default/primary */
+  --am-text-reverse: #ffffff;                 /* text/default/secondary */
+  --am-text-tertiary: #595959;                /* text/default/tertiary */
+  --am-text-support: #717171;                 /* text/default/support */
+  --am-text-readonly: #414141;                /* text/default/readonly */
+  --am-text-disabled: #898989;                /* text/default/disabled */
+  --am-text-danger: #e64336;                  /* text/default/danger */
+  --am-text-success: #1d792d;                 /* text/default/success */
+  --am-text-warning: #cca030;                 /* text/default/warning */
+  --am-text-info: #2a327b;                    /* text/default/information */
+  --am-text-alert: #000000;                   /* text/default/alerts-text */
+  --am-text-black: #000000;                   /* text/default/black */
+  --am-text-white: #fcfcfc;                   /* text/default/white */
+  --am-text-on-warning-subtle: #997824;       /* text/warning/on-warning-subtle */
+  --am-change-deleted: #861d2c;               /* text/change/deleted */
+  --am-change-inserted: #085d3a;              /* text/change/inserted */
+  --am-change-highlight-deleted: #861d2c;     /* text/change/highlight-deleted */
+  --am-change-highlight-inserted: #085d3a;    /* text/change/highlight-inserted */
 
-  /* Row / cell status tints (30% alpha) */
-  --am-status-success: #97e1a44d;
-  --am-status-warning: #ffe49e4d;
-  --am-status-danger: #ffcccc4d;
-  --am-status-info: #c5c8e74d;
-  --am-status-neutral: #d0d0d04d;
+  /* ---- Actions: brand primary ---- */
+  --am-primary: #ffc83c;                      /* action/brand/primary/default */
+  --am-primary-hover: #ffffff;                /* action/brand/primary/hover */
+  --am-primary-active: #ffce50;               /* action/brand/primary/active */
+  --am-primary-active-brand: #202020;         /* action/brand/primary/active-brand */
+  --am-primary-loading: #ffd363;              /* action/brand/primary/loading */
+  --am-primary-disabled: #d0d0d0;             /* action/brand/primary/disabled */
+  --am-on-primary: #1a1a1a;                   /* action/brand/primary/on-primary */
+  --am-on-primary-disabled: #717171;          /* action/brand/primary/on-disabled */
+  --am-tab-active: #1a1a1a;                   /* action/brand/primary/tab-active */
 
-  /* ---- Text ------------------------------------------------------------ */
-  --am-text: #000000;               /* text/default/primary */
-  --am-text-reverse: #ffffff;       /* text/default/secondary (on dark) */
-  --am-text-tertiary: #595959;      /* text/default/tertiary */
-  --am-text-support: #717171;       /* text/default/support  ← use for grey/secondary text */
-  --am-text-readonly: #414141;      /* text/default/readonly */
-  --am-text-disabled: #898989;      /* text/default/disabled */
-  --am-text-danger: #e64336;        /* text/default/danger */
-  --am-text-success: #1d792d;       /* text/default/success */
-  --am-text-warning: #cca030;       /* text/default/warning */
-  --am-text-info: #2a327b;          /* text/default/information */
-  --am-text-alert: #000000;         /* text/default/alerts-text */
-  --am-text-black: #000000;
-  --am-text-white: #fcfcfc;
+  /* ---- Actions: brand secondary ---- */
+  --am-secondary: #1a1a1a;                    /* action/brand/secondary/default */
+  --am-secondary-hover: #202020;              /* action/brand/secondary/hover */
+  --am-secondary-active: #000000;             /* action/brand/secondary/active */
+  --am-secondary-loading: #1a1a1a;            /* action/brand/secondary/loading */
+  --am-secondary-disabled: #d0d0d0;           /* action/brand/secondary/disabled */
+  --am-on-secondary: #ffffff;                 /* action/brand/secondary/on-secondary */
+  --am-on-secondary-disabled: #717171;        /* action/brand/secondary/on-disabled */
 
-  /* ---- Actions: brand primary (yellow) -------------------------------- */
-  --am-primary: #ffc83c;            /* action/brand/primary/default */
-  --am-primary-hover: #ffffff;      /* …/hover (white fill on hover) */
-  --am-primary-active: #ffce50;     /* …/active */
-  --am-primary-active-brand: #202020; /* …/active-brand (breadcrumb current) */
-  --am-chat-surface: #fcfcfc;       /* surface/chat-surface (Bridge page background) */
-  --am-primary-loading: #ffd363;    /* …/loading */
-  --am-primary-disabled: #d0d0d0;   /* …/disabled */
-  --am-on-primary: #1a1a1a;         /* …/on-primary */
-  --am-on-primary-disabled: #717171;
-  --am-tab-active: #1a1a1a;         /* …/tab-active */
+  /* ---- Actions: danger ---- */
+  --am-danger-action: #e64336;                /* action/brand/danger/default */
+  --am-danger-hover: #ff0000;                 /* action/brand/danger/hover */
+  --am-danger-active: #861d2c;                /* action/brand/danger/active */
+  --am-danger-loading: #53241d;               /* action/brand/danger/loading */
+  --am-on-danger: #ffffff;                    /* action/brand/danger/on-danger */
 
-  /* ---- Actions: brand secondary (dark) -------------------------------- */
-  --am-secondary: #1a1a1a;
-  --am-secondary-hover: #202020;
-  --am-secondary-active: #000000;
-  --am-secondary-loading: #1a1a1a;
-  --am-secondary-disabled: #d0d0d0;
-  --am-on-secondary: #ffffff;
-  --am-on-secondary-disabled: #717171;
+  /* ---- Actions: neutral (outline / tertiary) ---- */
+  --am-neutral: #414141;                      /* action/neutral/default */
+  --am-neutral-hover: #202020;                /* action/neutral/hover */
+  --am-neutral-active: #000000;               /* action/neutral/active */
+  --am-neutral-loading: #1a1a1a;              /* action/neutral/loading */
+  --am-neutral-disabled: #d0d0d0;             /* action/neutral/disabled */
+  --am-neutral-on-disabled: #717171;          /* action/neutral/on-disabled */
+  --am-neutral-readonly: #202020;             /* action/neutral/readonly */
+  --am-neutral-surface: #ffffff;              /* action/neutral/surface */
+  --am-neutral-on-surface: #fcfcfc;           /* action/neutral/on-surface-default */
+  --am-neutral-on-surface-active: #ffc83c;    /* action/neutral/on-surface-active */
+  --am-neutral-on-surface-reverse: #202020;   /* action/neutral/on-surface-reverse */
 
-  /* ---- Actions: danger ------------------------------------------------ */
-  --am-danger-action: #e64336;
-  --am-danger-hover: #ff0000;
-  --am-danger-active: #861d2c;
-  --am-danger-loading: #ff0000;
-  --am-on-danger: #ffffff;
+  /* ---- Buttons (fixed in both modes) ---- */
+  --am-button-white: #ffffff;                 /* button/button-white */
+  --am-button-black: #1a1a1a;                 /* button/button-black */
 
-  /* ---- Actions: neutral (outline / tertiary) -------------------------- */
-  --am-neutral: #414141;            /* action/neutral/default */
-  --am-neutral-hover: #202020;
-  --am-neutral-active: #000000;
-  --am-neutral-disabled: #d0d0d0;
-  --am-neutral-on-disabled: #717171;
-  --am-neutral-surface: #ffffff;
-  --am-neutral-on-surface-active: #ffc83c;
+  /* ---- Inputs ---- */
+  --am-input-surface: #ffffff;                /* input/all-surfaces */
+  --am-input-field-surface: #ffffff;          /* input/surface */
+  --am-input-select-surface: #ececec;         /* input/select-surface */
+  --am-input-disabled: #d0d0d0;               /* input/disabled */
+  --am-input-border: #717171;                 /* input/border-default */
+  --am-input-border-filled: #1a1a1a;          /* input/border-filled */
+  --am-input-border-highlight: #1a1a1a;       /* input/border-highlight */
+  --am-input-border-error: #ff0000;           /* input/border-error */
+  --am-input-border-disabled: #717171;        /* input/border-disabled */
 
-  /* ---- Inputs --------------------------------------------------------- */
-  --am-input-surface: #ffffff;      /* input/all-surfaces */
-  --am-input-select-surface: #ececec;
-  --am-input-disabled: #d0d0d0;
-  --am-input-border: #717171;       /* input/border-default */
-  --am-input-border-filled: #1a1a1a;
-  --am-input-border-highlight: #1a1a1a;
-  --am-input-border-error: #ff0000;
-  --am-input-border-disabled: #717171;
+  /* ---- State ---- */
+  --am-state-success: #2ec348;                /* state/success */
+  --am-state-warning: #ffc83c;                /* state/warning */
+  --am-state-default: #898989;                /* state/default */
+  --am-state-active: #1a1a1a;                 /* state/active */
+  --am-state-disabled: #a0a0a0;               /* state/disabled */
 
-  /* ---- State ---------------------------------------------------------- */
-  --am-state-success: #2ec348;
-  --am-state-default: #898989;
-  --am-state-active: #1a1a1a;
-  --am-state-disabled: #a0a0a0;
+  /* ---- Tables ---- */
+  --am-table-zebra: #ffffff;                  /* table/table-zebra */
+  --am-table-zebra-alt: #fcfcfc;              /* table/table-zebra-alternate */
 
-  /* ---- Tables --------------------------------------------------------- */
-  --am-table-zebra: #ffffff;
-  --am-table-zebra-alt: #fcfcfc;
-  --am-table-active: #d0d0d0;
-  --am-table-hover: #b8b8b8;
-  --am-table-line: #ececec;
+  /* ---- Badges ---- */
+  --am-badge-blue-bg: #0040c1;                /* badge/blue/bg */
+  --am-badge-blue-border: #3c47b0;            /* badge/blue/border */
+  --am-badge-blue-text: #fcfcfc;              /* badge/blue/text */
+  --am-badge-green-bg: #29b041;               /* badge/green/bg */
+  --am-badge-green-border: #29b041;           /* badge/green/border */
+  --am-badge-green-text: #fcfcfc;             /* badge/green/text */
+  --am-badge-red-bg: #e64336;                 /* badge/red/bg */
+  --am-badge-red-border: #ff6e63;             /* badge/red/border */
+  --am-badge-red-text: #fcfcfc;               /* badge/red/text */
+  --am-badge-grey-bg: #ececec;                /* badge/grey/bg */
+  --am-badge-grey-border: #d0d0d0;            /* badge/grey/border */
+  --am-badge-grey-text: #111111;              /* badge/grey/text */
+  --am-badge-orange-bg: #f25c05;              /* badge/orange/bg */
+  --am-badge-orange-border: #f79d69;          /* badge/orange/border */
+  --am-badge-orange-text: #fcfcfc;            /* badge/orange/text */
+  --am-badge-yellow-bg: #ffc83c;              /* badge/yellow/bg */
+  --am-badge-yellow-border: #ffde8a;          /* badge/yellow/border */
+  --am-badge-yellow-text: #111111;            /* badge/yellow/text */
+  --am-badge-purple-bg: #693ec9;              /* badge/electric-purple/bg */
+  --am-badge-purple-border: #e6dbfe;          /* badge/electric-purple/border */
+  --am-badge-purple-text: #fcfcfc;            /* badge/electric-purple/text */
 
-  /* ---- Badges (code badge / status pills) ----------------------------- */
-  --am-badge-blue-bg: #0040c1;   --am-badge-blue-border: #3c47b0;   --am-badge-blue-text: #fcfcfc;
-  --am-badge-green-bg: #29b041;  --am-badge-green-border: #29b041;  --am-badge-green-text: #fcfcfc;
-  --am-badge-red-bg: #e64336;    --am-badge-red-border: #ff6e63;    --am-badge-red-text: #fcfcfc;
-  --am-badge-grey-bg: #ececec;   --am-badge-grey-border: #d0d0d0;   --am-badge-grey-text: #111111;
-  --am-badge-orange-bg: #f25c05; --am-badge-orange-border: #f79d69; --am-badge-orange-text: #fcfcfc;
-  --am-badge-yellow-bg: #ffc83c; --am-badge-yellow-border: #ffde8a; --am-badge-yellow-text: #111111;
-  --am-badge-purple-bg: #693ec9; --am-badge-purple-border: #e6dbfe; --am-badge-purple-text: #fcfcfc;
+  /* ---- Shadows ---- */
+  --am-shadow-colour: #0000001f;              /* shadows/default-shadow */
 
-  /* ---- Misc ----------------------------------------------------------- */
-  --am-icons-misc: #000000;
-  --am-scrim: rgba(0, 0, 0, 0.32);          /* Amini modal-bg */
-  --am-barbados-blue: #00267f;
-  --am-barbados-yellow: #ffc72c;
-
-  /* ---- Effects (Small Shadow/*) -------------------------------------- */
-  --am-shadow: 0 0 4px rgba(0, 0, 0, 0.12);              /* Default-Tucked */
-  --am-shadow-hover: 0 4px 9px 2px rgba(0, 0, 0, 0.12);  /* Hover */
-  --am-shadow-focus: 0 0 4px #ffc83c;                     /* Focus-Active / Card-Active */
+  /* ---- Effects: Small Shadow/* (colour = shadows/default-shadow) ---- */
+  --am-shadow: 0 0 4px var(--am-shadow-colour);              /* Default-Tucked */
+  --am-shadow-hover: 0 4px 9px 2px var(--am-shadow-colour);  /* Hover */
+  --am-shadow-focus: 0 0 4px var(--am-brand);                /* Focus-Active / Card-Active */
   --am-focus-ring: 0 0 0 2px var(--am-bg-default), 0 0 0 3px var(--am-input-border-highlight);
+
+  /* ---- Documented exceptions (not Revised-DS variables) ------------- */
+  /* Amini modal-bg (03. Amini Main Components): black 32% + 3.5 background blur, same in both modes. */
+  --am-scrim: rgb(0 0 0 / 0.32);
+  --am-scrim-blur: 2px;
 }
 
-/* ---- Dark mode (Revised DS "Dark mode") --------------------------------
-   Applies to the whole app with <html data-theme="dark">, or to one region
-   with class="am-dark" (the app sidebar uses this, as in Figma). */
+/* ---- Dark mode = Revised DS "Dark mode" column, nothing chosen by eye.
+   <html data-theme="dark">, or class="am-dark" for one region (the app sidebar). */
 :root[data-theme='dark'],
 .am-dark {
   color-scheme: dark;
+  /* Backgrounds & surfaces */
   --am-bg-default: #202020;
   --am-bg-grey: #242424;
   --am-bg-dark: #ffffff;
   --am-bg-secondary-grey: #202020;
-  --am-bg-page: #202020;
+  --am-bg-zebra: #717171;
+  --am-chat-surface: #282828;
+  --am-bg-page: #282828;
   --am-canvas: #1e1e1e;
   --am-panel: #2d2d2d;
   --am-panel-border: #ececec1a;
   --am-card: #2d2d2d;
   --am-popup: #282828;
   --am-chatbox-inner: #2d2d2d;
+  --am-response-surface: #1a1a1a;
   --am-read-only: #202020;
   --am-menu-surface: #1a1a1a;
-
   --am-surface-primary: #1a1a1a;
   --am-on-surface-primary: #ffffff;
   --am-surface-secondary: #ffffff;
   --am-on-surface-secondary: #1a1a1a;
+  --am-surface-secondary-gray: #202020;
   --am-surface-tertiary: #414141;
   --am-surface-tertiary-subtle: #595959;
   --am-surface-neutral: #b8b8b8;
+  --am-surface-neutral-subtle: #d0d0d0;
   --am-on-neutral-subtle: #ececec;
-  --am-on-warning-subtle: #ffc83c;
-  --am-on-success-subtle: #97e1a4;
-  --am-on-info-subtle: #c5c8e7;
+  --am-surface-disabled: #d0d0d0;
+  --am-on-disabled: #898989;
+  --am-brand: #ffc83c;
+  --am-brand-secondary: #1a1a1a;
+  --am-on-brand-secondary: #ffffff;
+  --am-icons-misc: #ffffff;
+  --am-icons-misc-reverse: #000000;
+  --am-icon-black: #1a1a1a;
 
+  /* Feedback surfaces */
+  --am-danger: #ff0000;
+  --am-danger-subtle: #ffcccc;
+  --am-on-danger-subtle: #861d2c;
+  --am-warning: #ffc83c;
+  --am-warning-subtle: #ffe49e;
+  --am-on-warning-subtle: #ffc83c;
+  --am-warning-emphasis: #b38c2a;
+  --am-success: #2ec348;
+  --am-success-emphasis: #1d792d;
+  --am-success-subtle: #97e1a4;
+  --am-on-success-subtle: #97e1a4;
+  --am-info-subtle: #c5c8e7;
+  --am-on-info-subtle: #2a327b;
+  --am-status-success: #97e1a44d;
+  --am-status-warning: #ffe49e4d;
+  --am-status-danger: #ffcccc4d;
+  --am-status-info: #c5c8e74d;
+  --am-status-neutral: #d0d0d04d;
+
+  /* Text */
   --am-text: #ffffff;
   --am-text-reverse: #000000;
   --am-text-tertiary: #ececec;
@@ -220,28 +286,65 @@
   --am-text-readonly: #ececec;
   --am-text-disabled: #d0d0d0;
   --am-text-danger: #ff6e63;
-  --am-text-success: #82db91;
+  --am-text-success: #a7f3d0;
   --am-text-warning: #ffc83c;
-  --am-text-info: #8a91d0;
+  --am-text-info: #bfdbfe;
+  --am-text-alert: #000000;
+  --am-text-black: #000000;
   --am-text-white: #ffffff;
+  --am-text-on-warning-subtle: #997824;
+  --am-change-deleted: #ffcccc;
+  --am-change-inserted: #82db91;
+  --am-change-highlight-deleted: #281715;
+  --am-change-highlight-inserted: #11261f;
 
+  /* Actions: brand primary */
+  --am-primary: #ffc83c;
+  --am-primary-hover: #ffffff;
+  --am-primary-active: #ffce50;
   --am-primary-active-brand: #ffce50;
-  --am-chat-surface: #282828;
+  --am-primary-loading: #ffd363;
+  --am-primary-disabled: #d0d0d0;
+  --am-on-primary: #1a1a1a;
+  --am-on-primary-disabled: #717171;
   --am-tab-active: #ffc83c;
 
+  /* Actions: brand secondary */
   --am-secondary: #ececec;
   --am-secondary-hover: #e1e1e1;
   --am-secondary-active: #000000;
   --am-secondary-loading: #fcfcfc;
-  --am-on-secondary: #1a1a1a;
+  --am-secondary-disabled: #d0d0d0;
+  --am-on-secondary: #ffffff;
+  --am-on-secondary-disabled: #717171;
 
+  /* Actions: danger */
+  --am-danger-action: #e64336;
+  --am-danger-hover: #ff0000;
+  --am-danger-active: #861d2c;
+  --am-danger-loading: #53241d;
+  --am-on-danger: #ffffff;
+
+  /* Actions: neutral (outline / tertiary) */
   --am-neutral: #ffffff;
   --am-neutral-hover: #ececec;
   --am-neutral-active: #fcfcfc;
+  --am-neutral-loading: #ececec;
   --am-neutral-disabled: #ececec;
+  --am-neutral-on-disabled: #717171;
+  --am-neutral-readonly: #d0d0d0;
   --am-neutral-surface: #1a1a1a;
+  --am-neutral-on-surface: #1a1a1a;
+  --am-neutral-on-surface-active: #ffc83c;
+  --am-neutral-on-surface-reverse: #fcfcfc;
 
+  /* Buttons (fixed in both modes) */
+  --am-button-white: #ffffff;
+  --am-button-black: #1a1a1a;
+
+  /* Inputs */
   --am-input-surface: #2d2d2d;
+  --am-input-field-surface: #1a1a1a;
   --am-input-select-surface: #414141;
   --am-input-disabled: #414141;
   --am-input-border: #b8b8b8;
@@ -250,21 +353,40 @@
   --am-input-border-error: #ff6e63;
   --am-input-border-disabled: #414141;
 
+  /* State */
+  --am-state-success: #2ec348;
+  --am-state-warning: #ffc83c;
+  --am-state-default: #898989;
+  --am-state-active: #1a1a1a;
+  --am-state-disabled: #a0a0a0;
+
+  /* Tables */
   --am-table-zebra: #1a1a1a;
   --am-table-zebra-alt: #595959;
-  --am-table-active: #414141;
-  --am-table-hover: #898989;
-  --am-table-line: #414141;
 
-  --am-badge-blue-bg: #002266;   --am-badge-blue-border: #0040c1;   --am-badge-blue-text: #b2ccff;
-  --am-badge-green-bg: #053321;  --am-badge-green-border: #085d3a;  --am-badge-green-text: #75e0a7;
-  --am-badge-red-bg: #281715;    --am-badge-red-border: #53241d;    --am-badge-red-text: #fecdca;
-  --am-badge-grey-bg: #1a1a1a;   --am-badge-grey-border: #ececec;   --am-badge-grey-text: #ececec;
-  --am-badge-orange-bg: #301201; --am-badge-orange-border: #612502; --am-badge-orange-text: #fcdecd;
-  --am-badge-yellow-bg: #b38c2a; --am-badge-yellow-border: #e6b436; --am-badge-yellow-text: #fcfcfc;
-  --am-badge-purple-bg: #341f64; --am-badge-purple-border: #693ec9; --am-badge-purple-text: #e6dbfe;
+  /* Badges */
+  --am-badge-blue-bg: #002266;
+  --am-badge-blue-border: #0040c1;
+  --am-badge-blue-text: #b2ccff;
+  --am-badge-green-bg: #053321;
+  --am-badge-green-border: #085d3a;
+  --am-badge-green-text: #75e0a7;
+  --am-badge-red-bg: #281715;
+  --am-badge-red-border: #53241d;
+  --am-badge-red-text: #fecdca;
+  --am-badge-grey-bg: #1a1a1a;
+  --am-badge-grey-border: #ececec;
+  --am-badge-grey-text: #ececec;
+  --am-badge-orange-bg: #301201;
+  --am-badge-orange-border: #612502;
+  --am-badge-orange-text: #fcdecd;
+  --am-badge-yellow-bg: #b38c2a;
+  --am-badge-yellow-border: #e6b436;
+  --am-badge-yellow-text: #fcfcfc;
+  --am-badge-purple-bg: #341f64;
+  --am-badge-purple-border: #693ec9;
+  --am-badge-purple-text: #e6dbfe;
 
-  --am-icons-misc: #ffffff;
-  --am-shadow: 0 0 4px rgba(255, 255, 255, 0.12);
-  --am-shadow-hover: 0 4px 9px 2px rgba(0, 0, 0, 0.4);
+  /* Shadows */
+  --am-shadow-colour: #ffffff1f;
 }

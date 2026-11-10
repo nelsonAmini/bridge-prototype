@@ -123,10 +123,11 @@ Icons inherit `currentColor`. Names match the Figma layer names (`chevron_right`
 
 ## Updating tokens from Figma
 
-Values were read from the Figma variables via the Figma API.
+Colours are generated, never hand-edited.
 
-1. When the Revised DS collection changes, update the matching lines in `css/tokens.css`. Each line names its Figma token in a comment.
-2. Check the gallery in both themes.
+1. Dump the Revised DS collection from Figma (Light mode / Dark mode, aliases resolved) into `_source/revised-ds.txt` (one `token/name=#light|#dark` per line).
+2. Run `python3 _source/tools/gen_tokens.py _source/revised-ds.txt` and paste the output over the colour section of `css/tokens.css` (each `--am-*` line names its Figma token).
+3. Check the gallery in both themes. Dark mode is only ever the Dark column: no `[data-theme='dark']` overrides in component or app CSS.
 
 Keep component CSS on tokens only; don't hard-code colours.
 

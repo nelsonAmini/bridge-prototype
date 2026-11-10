@@ -1,5 +1,5 @@
 import { api } from './api.js';
-import { icon, esc, orb, wordmark, closePopovers } from './ui.js';
+import { icon, esc, orb, wordmark, closePopovers, toast } from './ui.js';
 import * as login from './views/login.js';
 import * as onboarding from './views/onboarding.js';
 import * as research from './views/research.js';
@@ -12,7 +12,8 @@ import * as skills from './views/skills.js';
 // ---------------------------------------------------------------- app state
 export const state = {
   user: null,
-  theme: localStorage.getItem('bridge-theme') || 'light',
+  // Figma: Login is drawn in Light mode, every app page in Dark mode. Until the user picks a theme, follow that.
+  theme: (() => { try { return localStorage.getItem('bridge-theme'); } catch { return null; } })() || 'auto',
   collapsed: false,
   activityOpen: false,
 };
@@ -20,9 +21,18 @@ export const state = {
 export function setTheme(t) {
   state.theme = t;
   try { localStorage.setItem('bridge-theme', t); } catch {}
-  document.documentElement.dataset.theme = t;
+  applyTheme();
 }
-setTheme(state.theme);
+export function applyTheme() {
+  const t = state.theme === 'auto' ? (location.hash.startsWith('#/login') || !location.hash ? 'light' : 'dark') : state.theme;
+  document.documentElement.dataset.theme = t;
+  state.resolvedTheme = t;
+}
+applyTheme();
+window.addEventListener('hashchange', applyTheme);
+// Narrow windows: the sidebar collapses to its icon rail first (see css "Layout config").
+let wasNarrow = innerWidth < 1100;
+window.addEventListener('resize', () => { const n = innerWidth < 1100; if (n !== wasNarrow) { wasNarrow = n; document.querySelector('.shell')?.classList.toggle('collapsed', n || state.collapsed); } });
 
 export const isAuthed = () => sessionStorage.getItem('bridge-auth') === '1';
 export function signIn() { sessionStorage.setItem('bridge-auth', '1'); }
@@ -81,7 +91,7 @@ async function sidebar(route) {
   ]);
   const toSign = revs.filter((r) => r.status === 'To sign').length;
   const item = (key, href, ic, label, extra = '') =>
-    `<a class="nav-item ${nav === key ? 'active' : ''}" href="${href}" title="${label}">${icon(ic, 's16')}<span>${label}</span>${extra}</a>`;
+    `<a class="nav-item ${nav === key && !(key === 'research' && location.hash.includes('/thread/')) ? 'active' : ''}" href="${href}" title="${label}">${icon(ic, 's16')}<span>${label}</span>${extra}</a>`;
   const subItem = (active, href, ic, label, count) =>
     `<a class="nav-item ${active ? 'active' : ''}" href="${href}">${icon(ic, 's16')}<span>${esc(label)}</span>${count != null ? `<span class="count">${count}</span>` : ''}</a>`;
 
@@ -116,7 +126,7 @@ async function sidebar(route) {
   }
   const u = state.user;
   const curRecent = location.hash;
-  return `<nav class="sidebar" aria-label="Main">
+  return `<nav class="sidebar am-dark" aria-label="Main">
     <div class="brand-row">${wordmark()}<button class="collapse-btn" data-action="collapse" aria-label="${state.collapsed ? 'Expand' : 'Collapse'} sidebar">${icon('dock', 's16')}<span class="cl-label">${state.collapsed ? 'Expand' : 'Collapse'}</span></button></div>
     ${item('research', '#/research', 'search', 'Research')}
     ${item('briefing', '#/research/brief', 'sun', 'Briefing')}
@@ -129,7 +139,7 @@ async function sidebar(route) {
     ${item('library', '#/library', 'library', 'Library')}
     ${item('skills', '#/skills', 'sparkle', 'Skills')}
     <div class="recent"><button class="recent-title" data-action="recent" aria-expanded="${!state.recentClosed}">Recent ${icon(state.recentClosed ? 'up' : 'down', 's16')}</button>
-      ${state.recentClosed || nav === 'reviews' ? '' : recent.map((r) => `<a class="${curRecent === r.route && r.route.includes("thread") ? "active" : ""}" href="${r.route}">${icon('article', 's10')}<span>${esc(r.title)}</span></a>`).join('')}</div>
+      ${state.recentClosed || nav === 'reviews' ? '' : recent.map((r) => { const on = curRecent === r.route && r.route.includes('thread'); return `<a class="${on ? 'active' : ''}" href="${r.route}">${icon('article', 's10')}<span>${esc(r.title)}</span>${on ? `<span class="recent-acts"><button type="button" class="chip-btn" data-action="newchat" aria-label="New chat">${icon('add', 's16')}</button><button type="button" class="chip-btn" data-action="recentmore" aria-label="More">${icon('more_vert', 's16')}</button></span>` : ''}</a>`; }).join('')}</div>
     <div class="sidebar-bottom">
       <button class="agent-card" data-action="activity" aria-label="What ${esc(u?.agentName || 'Bridge')} is doing">${orb('md', u?.agentLook)}<span class="grow"><b>${esc(u?.agentName || 'Bridge')}</b><br><span class="sub">Working · 1 needs you</span></span><span class="dot"></span></button>
       <a class="profile" href="#/settings"><span class="avatar">${esc(u?.initials)}</span><span class="grow"><b>${esc(u?.name)}</b><br><span class="sub">${esc(u?.office)}</span></span>${icon('settings', 's16')}</a>
@@ -174,6 +184,7 @@ const app = document.getElementById('app');
 let renderId = 0;
 
 export async function render() {
+  applyTheme();
   const id = ++renderId;
   closePopovers();
   document.getElementById('overlay-root').innerHTML = '';
@@ -189,12 +200,14 @@ export async function render() {
   if (id !== renderId) return; // a newer navigation started
   const shell = route.opts.shell !== false;
   if (shell) {
-    app.innerHTML = `<div class="shell ${state.collapsed ? 'collapsed' : ''}">${await sidebar(route)}<main class="main" id="main">${view.html}</main></div>`;
+    app.innerHTML = `<div class="shell ${state.collapsed || innerWidth < 1100 ? 'collapsed' : ''}">${await sidebar(route)}<main class="main" id="main">${view.html}</main></div>`;
     app.querySelector('.sidebar').addEventListener('click', (e) => {
       const b = e.target.closest('[data-action]');
       if (b?.dataset.action === 'activity') { e.preventDefault(); toggleActivity(); }
       if (b?.dataset.action === 'collapse') { e.preventDefault(); state.collapsed = !state.collapsed; render(); }
       if (b?.dataset.action === 'recent') { e.preventDefault(); state.recentClosed = !state.recentClosed; render(); }
+      if (b?.dataset.action === 'newchat') { e.preventDefault(); go('#/research'); }
+      if (b?.dataset.action === 'recentmore') { e.preventDefault(); toast('Rename, pin or delete this chat (prototype)'); }
     });
     view.mount && view.mount(app.querySelector('#main'));
   } else {

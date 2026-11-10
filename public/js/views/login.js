@@ -14,7 +14,7 @@ export async function render() {
         </div>
       </section>
       <section class="login-form-side">
-        <div class="row" style="justify-content:flex-end"><button class="icon-btn" id="theme" aria-label="Toggle theme">${icon(state.theme === 'dark' ? 'sunny' : 'moon')}</button></div>
+        <div class="row" style="justify-content:flex-end"><button class="icon-btn" id="theme" aria-label="Toggle theme">${icon(document.documentElement.dataset.theme === 'dark' ? 'sunny' : 'moon')}</button></div>
         <form class="login-form" id="form" novalidate>
           <div class="login-heading"><h4>Sign in to continue with Bridge</h4><p class="tiny">With your Amini Auth account.</p></div>
           <div id="error"></div>
@@ -31,7 +31,7 @@ export async function render() {
       </section>
     </div>`,
     mount(root) {
-      root.querySelector('#theme').onclick = () => { setTheme(state.theme === 'dark' ? 'light' : 'dark'); root.querySelector('#theme').innerHTML = icon(state.theme === 'dark' ? 'sunny' : 'moon'); };
+      root.querySelector('#theme').onclick = () => { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); root.querySelector('#theme').innerHTML = icon(document.documentElement.dataset.theme === 'dark' ? 'sunny' : 'moon'); };
       root.querySelector('#eye').onclick = () => { const p = root.querySelector('#pw'); p.type = p.type === 'password' ? 'text' : 'password'; };
       const done = async () => { signIn(); const u = await refreshUser(); go(u.onboarded ? '#/research' : '#/onboarding/1'); };
       root.querySelector('#ms').onclick = done;

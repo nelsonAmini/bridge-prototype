@@ -1,5 +1,5 @@
 import { api } from '../api.js';
-import { icon, orb, esc, modal, sleep, toast } from '../ui.js';
+import { icon, orb, esc, modal, sleep, toast, popover, closePopovers } from '../ui.js';
 import { state, go, render as rerender } from '../app.js';
 
 // Ask bar = Amini Kit "AI Chatbox" (Config=Default)
@@ -121,6 +121,43 @@ async function brief() {
   };
 }
 
+// ---------------------------------------------------------------- Document panel (Figma 02 Research, flow 5)
+// A draft Bridge writes from a thread opens in a secondary panel beside the chat
+// (LC / Research / Chat with Document). The panel can be resized, closed and reopened from its card.
+const DOC_TITLE = 'Cabinet note: Land administration system';
+const DOC = {
+  title: 'Protecting and replacing the land administration system',
+  meta: 'Cabinet of Barbados · Ministry of Housing, Lands and Maintenance · Paper code K(A) · For decision',
+  v1: [
+    { id: 'moc', heading: '1. Matter for consideration', body: 'The land registry still works but is failing under load. The last full backup is 41 days old, and an audit found 6 process gaps, 2 of them critical [1][2]. This paper asks Cabinet to approve a staged plan to protect the data first, then replace the system.' },
+    { id: 'dec', heading: '2. Decision requested', body: 'It is recommended that Cabinet:', bullets: ['approve an immediate full backup and a freeze on changes to the current system;', 'direct Lands and Surveys to close the 2 critical gaps within 8 weeks;', 'approve procurement of an off-the-shelf registry, funded in the 2026 Estimates [3].'] },
+    { id: 'bg', heading: '3. Background', body: 'The registry holds 128k parcels. Three options were compared: repairing the current system, buying an off-the-shelf registry, or joining the CARICOM regional platform [4]. Repair is cheapest now but carries high risk; the off-the-shelf route balances speed and control.' },
+    { id: 'fin', heading: '4. Financial implications', body: 'The backup and the gap fixes are met from the Ministry’s existing budget. The off-the-shelf registry is estimated at BBD 4.2 million over three years and is provided for in the 2026 Estimates [3].' },
+  ],
+  v2: [
+    { id: 'moc', heading: '1. Matter for consideration', body: 'The land registry is failing under load, the last full backup is 41 days old, and 2 critical process gaps are open [1][2]. This paper asks Cabinet to approve a staged plan.' },
+    { id: 'dec', heading: '2. Decision requested', body: 'It is recommended that Cabinet:', bullets: ['approve an immediate backup and a change freeze;', 'approve procurement of an off-the-shelf registry [3].'] },
+    { id: 'tl', heading: '3. Timeline', lines: ['Weeks 1–2: back up and verify every record.', 'Week 2: freeze changes to the old system.', 'Weeks 2–8: close the 2 critical gaps.', 'Weeks 4–10: choose the replacement.', 'From month 3: migrate one parish at a time.'] },
+  ],
+};
+const docSections = (d) => (d.version === 2 ? DOC.v2 : DOC.v1).slice(0, d.stage === 'writing' ? d.shown || 1 : undefined);
+const docMeta = (d, closed) => d.stage === 'writing' ? `Writing… ${d.shown || 1} of 4 sections` : `Document · v${d.version} · 4 sources${closed ? ' · Click to open' : ''}`;
+const docCard = (d, v, closed) => `<button class="doc-card" data-open-doc="${v}"><span class="doc-tile">${icon('list')}</span><span class="txt"><b>${DOC_TITLE}</b><span>${esc(docMeta({ ...d, version: v, stage: v === d.version ? d.stage : 'ready' }, closed))}</span></span><span class="icon-btn" data-doc-more aria-label="More">${icon('more')}</span></button>`;
+function docPanel(d) {
+  const w = d.stage === 'writing';
+  const sub = w ? 'Bridge is writing · from “Land administration options”' : d.version === 2 ? 'Draft by Bridge · v2 · updated just now' : 'Draft by Bridge · v1 · from “Land administration options”';
+  const pill = w ? 'Bridge is writing…' : d.version === 2 ? 'Updated by Bridge · v2' : 'Drafted by Bridge · 4 sources';
+  const foot = w ? 'Writing · 4 sources' : d.version === 2 ? '184 words · 4 sources cited · v2' : '312 words · 4 sources cited';
+  const secs = docSections(d).map((s) => `<h2>${esc(s.heading)}</h2>${s.body ? `<p>${esc(s.body)}</p>` : ''}${s.bullets ? `<ul>${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}${s.lines ? `<p>${s.lines.map(esc).join('<br>')}</p>` : ''}`).join('');
+  return `<aside class="doc-panel" aria-label="${DOC_TITLE}">
+    <div class="doc-panel-head"><div class="title"><b>${DOC_TITLE}</b><span>${sub}</span></div>
+      ${w ? '<button class="am-btn am-btn--tertiary am-btn--xs" id="stopDoc">Stop writing</button>' : '<button class="am-btn am-btn--tertiary am-btn--xs" id="openCreate">Open in Create</button>'}
+      <button class="icon-btn" id="docHistory" aria-label="Version history" data-popover-anchor>${icon('history')}</button><button class="icon-btn" id="docMore" aria-label="More" data-popover-anchor>${icon('more')}</button>
+      <button class="chip-btn" id="closeDoc" aria-label="Close document">${icon('close', 's16')}</button></div>
+    <div class="doc-panel-scroll"><article class="sheet"><span class="status-chip doc-pill">${pill}</span><h1>${esc(DOC.title)}</h1><p class="meta">${esc(DOC.meta)}</p>${secs}${w ? '<p class="writing-caret" aria-hidden="true"></p>' : ''}</article></div>
+    <div class="doc-foot">${foot}</div></aside>`;
+}
+
 async function thread(id) {
   const t = await api.get('threads', id);
   if (!t) return { html: '<div class="page">Not found</div>' };
@@ -135,7 +172,7 @@ async function thread(id) {
   if (stage === 'answered') {
     const a = t.answer;
     body = `${bl(`Here’s what I found. ${a.sources.length} sources, about 2 minutes.`)}
-      <div class="answer"><p>${esc(a.summary)}</p>
+      <div class="answer ${(t.extra || []).length ? 'flat' : ''}"><p>${esc(a.summary)}</p>
       <h4>Where things stand</h4><div class="stat-grid">${a.stats.map(statCard).join('')}</div>
       <h4>Recommended order</h4><div class="order">${a.order.map((o, i) => `<div class="item"><span class="num">${i + 1}</span><div class="txt"><div class="tr"><b>${esc(o.title)}</b><span class="when">${esc(o.when)}</span></div><p>${esc(o.text)}</p></div></div>`).join('')}</div>
       ${a.options ? `<h4>Options compared</h4><div class="opt-grid">${a.options.map((o) => `<div class="opt-card"><span class="emoji">${/\.svg$/.test(o.icon) ? `<img src="${o.icon}" alt="" width="24" height="24">` : o.icon}</span><b>${esc(o.name)}</b><span class="d">${esc(o.text)}</span><span class="status ${o.tone}">${esc(o.risk)}</span></div>`).join('')}</div>` : ''}
@@ -144,12 +181,83 @@ async function thread(id) {
       ${citations(a.sources)}
       ${actions}</div>`;
   }
+  const d = t.doc;
+  const open = d && d.open;
+  const extra = (t.extra || []).map((m) => m.role === 'user' ? `<div class="bubble-user">${esc(m.text)}</div>`
+    : `<div class="bridge-line">${orb('sm', state.user.agentLook, d && d.stage === 'writing' && m.doc === d.version ? 'thinking' : '')}<span>${esc(m.doc && m.doc === d.version && d.stage === 'writing' ? 'Drafting a Cabinet note. You can keep chatting.' : m.doc === 1 && !open && !(t.extra || []).some((x) => x.doc === 2) ? 'Done. Your draft is in the card below.' : m.text)}</span><span class="time">${esc(m.time)}</span></div>${m.doc ? docCard(d, m.doc, !open) : ''}`).join('');
   return {
     title: 'Ask Bridge',
-    html: `<div class="thread"><div class="bubble-user">${esc(t.question)}</div>${body}</div>
-      <div class="thread-composer">${askbar('Reply to Bridge')}<p class="note">Bridge can make mistakes. Double check or cross reference.</p></div>`,
+    html: `<div class="chat-layout ${open ? 'has-doc' : ''}" style="${d && d.width ? `--doc-w:${d.width}px` : ''}"><section class="chat-col"><div class="chat-scroll"><div class="thread"><div class="bubble-user">${esc(t.question)}</div>${body}${extra}</div></div>
+      <div class="thread-composer">${askbar('Reply to Bridge')}<p class="note">Bridge can make mistakes. Double check or cross reference.</p></div></section>
+      ${open ? `<div class="resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize document panel" tabindex="0"><span></span></div>${docPanel(d)}` : ''}</div>`,
     async mount(root) {
-      bindAsk(root); bindActions(root);
+      bindActions(root);
+      root.querySelectorAll('.askbar .switch').forEach((sw) => (sw.onclick = () => sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true')));
+      const q = root.querySelector('#q');
+      const now = () => 'Today, ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      const save = (f) => api.update('threads', id, f);
+      const write = async (version) => {
+        for (let n = 1; n <= (version === 2 ? 3 : 4); n++) {
+          await save({ doc: { ...((await api.get('threads', id)).doc), stage: 'writing', version, shown: n, open: true } });
+          if (location.hash !== '#/research/thread/' + id) return; rerender(); await sleep(900);
+          const cur = (await api.get('threads', id)).doc; if (cur.stage !== 'writing') return;
+        }
+        await save({ doc: { ...((await api.get('threads', id)).doc), stage: 'ready' } });
+        if (location.hash === '#/research/thread/' + id) rerender();
+      };
+      q.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); root.querySelector('#ask').requestSubmit(); } });
+      root.querySelector('#ask').onsubmit = async (e) => {
+        e.preventDefault();
+        const text = q.value.trim(); if (!text) return q.focus();
+        const ex = t.extra || [];
+        if (/cabinet note|draft/i.test(text) && !d) {
+          await save({ extra: [...ex, { role: 'user', text }, { role: 'bridge', text: 'Done. The draft is open on the right.', time: now(), doc: 1 }], doc: { version: 1, stage: 'writing', shown: 1, open: true } });
+          rerender(); return write(1);
+        }
+        if (d && d.stage === 'ready') {
+          await save({ extra: [...ex, { role: 'user', text }, { role: 'bridge', text: 'Updated to v2: shorter, with a timeline.', time: now(), doc: 2 }], doc: { ...d, version: 2, stage: 'writing', shown: 1, open: true } });
+          rerender(); return write(2);
+        }
+        const tpl = await api.get('threads', 'th-land');
+        const { _id, createdAt, updatedAt, extra: _e, doc: _d, ...rest } = tpl;
+        const nt = await api.create('threads', { ...rest, question: text, stage: 'plan', time: now() });
+        go('#/research/thread/' + nt._id);
+      };
+      root.querySelectorAll('[data-follow]').forEach((b) => (b.onclick = () => {
+        q.value = b.dataset.follow === 'Draft a Cabinet note' ? 'Draft a Cabinet note from this for Thursday’s meeting.' : b.dataset.follow; q.focus();
+      }));
+      root.querySelectorAll('[data-open-doc]').forEach((b) => (b.onclick = async (e) => {
+        if (e.target.closest('[data-doc-more]')) { const pop = popover(e.target.closest('[data-doc-more]'), `<button class="menu-item" data-a="open">${icon('eye', 's16')}Open</button><button class="menu-item" data-a="create">${icon('edit', 's16')}Open in Create</button>`, { align: 'right' }); pop.onclick = (ev) => { const a = ev.target.closest('[data-a]')?.dataset.a; closePopovers(); if (a === 'open') b.click(); if (a === 'create') openInCreate(); }; return; }
+        await save({ doc: { ...d, version: +b.dataset.openDoc, open: true } }); rerender();
+      }));
+      const openInCreate = async () => {
+        const v = (await api.get('threads', id)).doc.version;
+        const nd = await api.create('documents', { title: DOC.title, template: 'Cabinet Paper', status: `Draft by Bridge · v${v}`, owner: 'You', modified: 'Just now', section: 'mine', sections: [{ id: 'meta', heading: null, style: 'meta', body: DOC.meta }, ...(v === 2 ? DOC.v2 : DOC.v1).map((x) => ({ ...x, body: x.lines ? x.lines.join(' ') : x.body, lines: undefined }))], sources: t.answer.sources, messages: [], suggestions: [], order: -1 });
+        go('#/create/doc/' + nd._id);
+      };
+      root.querySelector('#openCreate')?.addEventListener('click', openInCreate);
+      root.querySelector('#stopDoc')?.addEventListener('click', async () => { await save({ doc: { ...d, stage: 'ready' } }); rerender(); });
+      root.querySelector('#closeDoc')?.addEventListener('click', async () => { await save({ doc: { ...d, open: false } }); rerender(); });
+      root.querySelector('#docHistory')?.addEventListener('click', (e) => {
+        const has2 = (t.extra || []).some((m) => m.doc === 2);
+        const pop = popover(e.currentTarget, `<div class="menu-label">Versions</div>${(has2 ? [2, 1] : [1]).map((v) => `<button class="menu-item ${v === d.version ? 'active' : ''}" data-v="${v}">v${v}${v === 2 ? ' · shorter, with a timeline' : ' · first draft'}</button>`).join('')}`, { align: 'right' });
+        pop.onclick = async (ev) => { const b = ev.target.closest('[data-v]'); if (!b) return; closePopovers(); await save({ doc: { ...d, version: +b.dataset.v, stage: 'ready' } }); rerender(); };
+      });
+      root.querySelector('#docMore')?.addEventListener('click', (e) => {
+        const pop = popover(e.currentTarget, `<button class="menu-item" data-a="copy">${icon('copy', 's16')}Copy text</button><button class="menu-item" data-a="export">${icon('download', 's16')}Download as PDF</button>`, { align: 'right' });
+        pop.onclick = (ev) => { const a = ev.target.closest('[data-a]')?.dataset.a; if (!a) return; closePopovers(); toast(a === 'copy' ? 'Copied to clipboard' : 'Downloading PDF (prototype)'); };
+      });
+      // Resizable panel: drag the handle (default 560px, min 400, max 60% of the main area)
+      const h = root.querySelector('.resize-handle');
+      if (h) {
+        const lay = root.querySelector('.chat-layout');
+        const setW = (w) => { const max = lay.clientWidth * 0.6; w = Math.max(400, Math.min(max, w)); lay.style.setProperty('--doc-w', w + 'px'); return w; };
+        h.onpointerdown = (ev) => { h.setPointerCapture(ev.pointerId); const r = lay.getBoundingClientRect(); h.onpointermove = (m) => setW(r.right - 32 - m.clientX); h.onpointerup = async () => { h.onpointermove = null; await save({ doc: { ...(await api.get('threads', id)).doc, width: parseInt(lay.style.getPropertyValue('--doc-w')) } }); }; };
+        h.onkeydown = (ev) => { if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') { const cur = parseInt(getComputedStyle(lay).getPropertyValue('--doc-w')) || 560; setW(cur + (ev.key === 'ArrowLeft' ? 24 : -24)); } };
+      }
+      const sc = root.querySelector('.chat-scroll'); if (sc && d) sc.scrollTop = sc.scrollHeight;
+      if (d && !open) { const m = root.closest('.main') || root; m.scrollTop = m.scrollHeight; }
+      const ds = root.querySelector('.doc-panel-scroll'); if (ds && d && d.stage === 'writing') ds.scrollTop = ds.scrollHeight;
       root.querySelector('#approve')?.addEventListener('click', async () => { await api.update('threads', id, { stage: 'working' }); rerender(); });
       root.querySelector('#scope')?.addEventListener('click', () => { root.querySelector('#q').value = 'Focus only on protecting the data for now.'; root.querySelector('#q').focus(); });
       if (stage === 'working') {
