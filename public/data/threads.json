@@ -112,6 +112,7 @@
         "Show the audit gaps"
       ]
     },
-    "order": 0
+    "order": 0,
+    "name": "Land administration options"
   }
 ]

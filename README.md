@@ -10,12 +10,13 @@ The UI is built on the **Amini Kit** (`public/amini-kit/`): the design tokens, c
 |---|---|
 | Login | Email/password with validation (password `wrong` shows the error), Microsoft SSO |
 | Onboarding | 5 steps: name and look, topics, priorities, answer style, skills, then "All set" |
-| Research | Home with ask bar and configurable home card, plan → working → answer thread, Daily brief, Document panel (ask “Draft a Cabinet note” in a thread: Bridge writes it in a resizable side panel, v2 on request, close/reopen from its card, Open in Create) |
+| Research | Conversation header on every chat (Research › name · Knowledge trace · Export · Share · ⋯ rename/pin/delete), Knowledge trace page (loading → map → item selected, zoom/pan/filters), Home with ask bar and configurable home card, plan → working → answer thread, Daily brief, Document panel (ask “Draft a Cabinet note” in a thread: Bridge writes it in a resizable side panel, v2 on request, close/reopen from its card, Open in Create) |
 | Directory | All Papers with viewer and Share dialog, My Papers (upload, row menu), By Ministry, KB submissions, Cabinet dates |
 | Create | Template chooser, Blank flow (scripted Bridge), Cabinet paper flow (attachments → live drafting → Draft ready), comments with @mentions, @Bridge suggested edits (Accept/Reject), Bridge review against Cabinet paper rules |
 | Search | Sidebar “Search ⌘K” or ⌘K / Ctrl+K anywhere: palette with Recent (empty), then Ask Bridge + results grouped Papers · My Reviews · Research · Documents · People, filter tabs, ↑↓ ⏎ ⌘⏎ esc (Figma 07. Search) |
 | My Reviews | Folders and tags in the sidebar, collapsible status groups, cards without status pills inside groups (plain label only in mixed lists such as Due soon), audio card for voice notes (play, waveform, length), paper view with iPad ink toggle, highlight/note/Ask Bridge on selection, voice note, Sign dialog |
-| Skills | Skills list and suggestions, 3-step New skill, How you work (forget/confirm), Settings, Activity panel (agent card in the sidebar) |
+| Library | Library home (search, sort), Create a library, inside a library: ask box that saves chats here, chats list, Instructions and Files panel |
+| Skills | Skills list and suggestions, 3-step New skill, How you work (forget/confirm), Settings with one notification switch per type, Activity panel with Earlier today (agent card in the sidebar) |
 
 Theme: follows the Figma file until you choose one: Login in light, every app page in dark (as the designs are presented). Switch with the moon button on login, or Settings → Dark mode.
 
@@ -48,7 +49,7 @@ DELETE /api/:collection/:id
 POST   /api/reset
 ```
 
-Collections: users, people, topics, briefing, threads, papers, folders, myPapers, cabinetDates, templates, documents, scripts, comments, reviewRules, reviewFolders, reviews, skills, learned, activity, recent.
+Collections: libraries, traces, users, people, topics, briefing, threads, papers, folders, myPapers, cabinetDates, templates, documents, scripts, comments, reviewRules, reviewFolders, reviews, skills, learned, activity, recent.
 
 ## Edit the data
 
@@ -60,7 +61,29 @@ Change the JSON in `public/data/` (one file per collection), then `npm run reset
 2. Repo → Settings → Pages → Source: **GitHub Actions**.
 3. The included workflow (`.github/workflows/pages.yml`) deploys `public/` on every push. The site runs in static mode.
 
-## What changed in this version (11 Nov 2026)
+## What changed in this version (v4, 11 Nov 2026)
+
+Built from the Experimental Bridge Figma frames added since v3 (pages 02. Research flow 6, 13. Library, 06. Skills and Account flows 4–5) and the Notion page *Bridge Experimental (v2 Proposal)*.
+
+- **Conversation header** (`organism / research / conversation header`): every Research chat has a top bar. With the document panel open it spans both panels. Knowledge trace is disabled until Bridge has answered.
+- **Knowledge trace** (`#/research/thread/:id/trace`, `LC / Research / Knowledge Trace`): Loading (4 steps, about 5 s; leave and a toast tells you when it's ready), Ready (53 items, 71 links at the Figma positions; zoom, fit, drag to pan, ⌘/Ctrl + scroll), Item selected (path in yellow, the rest faded, map shifts 200 left, details panel). Filters: Answer (all / one answer) and Show (Everything / Without passages). Seed data: `data/traces.json`. The links are drawn in code from the connection list rather than the Figma SVG export.
+- **Library** (`#/library`, `13. Library`): home grid with search and sort, Create a library, library page with ask box, chats, Instructions and Files. Seed data: `data/libraries.json`.
+- **Activity panel**: list cards as in Figma plus **Earlier today** (rows link to the item).
+- **Account settings**: Language helper text, **Notifications** with one switch per type, footnote about web and mobile.
+- **Kit:** seven Knowledge trace tokens added to `tokens.css` (marked block, read from Figma; the light value of `surface/on-tertiary-default` is inferred), five Material icons added to `icons.js` (lightbulb_outline, format_quote, forum, live_help, zoom_out_map). Fold both into the next token/icon regeneration.
+- **Fix:** at 900 px or narrower the main pane was squeezed to 88 px (the collapsed rail column stayed); it now takes the full width.
+- Saved browser data uses a new key (`bridge-proto-v4`), so this version starts from fresh seed data.
+
+### Decisions and stand-ins (not in the designs)
+
+- Figma placeholders "[x]" in two findings use v3's figures: backup 41 days old, 128k parcels.
+- The Figma details panel uses three unbound hex colours; the prototype uses `surface/component-card`, `input/border-default` and `text/default/support`.
+- Details-panel content exists in Figma only for the Auditor General paper; the other 52 items have written content following the same pattern (per type: Source, Passage, Finding, Answer, Question, Ministry or body).
+- The Show filter options, empty library states, rename/delete dialogs, Export menus and the "+ Files" menu (upload, Directory, My Reviews) are prototype stand-ins.
+- The library Files panel says "6 files" with four cards, as drawn.
+- Opening a chat row in a library that has no conversation yet starts one from the scripted thread.
+
+## Changes in v3 (11 Nov 2026)
 
 - **Search** (⌘K): new palette and sidebar item, built from the Figma *07. Search* frames. Seed data: `data/searchIndex.json`.
 - **My Reviews cards:** no status pill inside status groups; the detail line carries the deadline in words. Mixed lists show a plain “To sign / To read” label. Colour never carries status on its own.

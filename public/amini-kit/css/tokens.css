@@ -215,6 +215,16 @@
   /* Amini modal-bg (03. Amini Main Components): black 32% + 3.5 background blur, same in both modes. */
   --am-scrim: rgb(0 0 0 / 0.32);
   --am-scrim-blur: 2px;
+  /* ---- Added for Knowledge trace (v4). Read from Figma (Experimental Bridge,
+     get_variable_defs on "6. Research / Knowledge trace") because the Revised DS
+     dump that gen_tokens.py reads is not in this repo. Fold into the next regeneration. */
+  --am-info-emphasis: #2a327b;                /* surface/information-emphasis */
+  --am-info-default: #3c47b0;                 /* surface/information-default */
+  --am-on-info-emphasis: #ffffff;             /* surface/on-information-emphasis */
+  --am-on-success-emphasis: #ffffff;          /* text/success/on-success-emphasis */
+  --am-on-brand-primary: #1a1a1a;             /* surface/on-brand-primary */
+  --am-on-tertiary: #1a1a1a;                  /* surface/on-tertiary-default (light value inferred, see README) */
+  --am-canvas-alternate: #ffffff;             /* surface/canvas-alternate */
 }
 
 /* ---- Dark mode = Revised DS "Dark mode" column, nothing chosen by eye.
@@ -222,6 +232,14 @@
 :root[data-theme='dark'],
 .am-dark {
   color-scheme: dark;
+  /* Knowledge trace tokens (v4), Dark mode column read from Figma */
+  --am-info-emphasis: #636cc0;
+  --am-info-default: #8a91d0;
+  --am-on-info-emphasis: #ffffff;
+  --am-on-success-emphasis: #ffffff;
+  --am-on-brand-primary: #1a1a1a;
+  --am-on-tertiary: #fcfcfc;
+  --am-canvas-alternate: #121212;
   /* Backgrounds & surfaces */
   --am-bg-default: #202020;
   --am-bg-grey: #242424;

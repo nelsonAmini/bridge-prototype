@@ -8,6 +8,8 @@ import * as create from './views/create.js';
 import * as editor from './views/editor.js';
 import * as reviews from './views/reviews.js';
 import * as skills from './views/skills.js';
+import * as trace from './views/trace.js';
+import * as library from './views/library.js';
 import { openSearch, closeSearch } from './views/search.js';
 
 // ---------------------------------------------------------------- app state
@@ -53,6 +55,10 @@ const routes = [
   ['research', research, { nav: 'research' }],
   ['research/brief', research, { nav: 'briefing' }],
   ['research/thread/:id', research, { nav: 'research' }],
+  ['research/thread/:id/trace', trace, { nav: 'research', full: true }],
+  ['library', library, { nav: 'library' }],
+  ['library/new', library, { nav: 'library' }],
+  ['library/:id', library, { nav: 'library' }],
   ['directory', directory, { nav: 'directory', sub: 'all' }],
   ['directory/:view', directory, { nav: 'directory' }],
   ['create', create, { nav: 'create', sub: 'templates' }],
@@ -158,15 +164,17 @@ async function toggleActivity(force) {
   el.className = 'activity-panel';
   el.setAttribute('aria-label', 'What Bridge is doing');
   el.innerHTML = `
-    <div class="row">${orb('', state.user?.agentLook)}<div class="grow"><b>${esc(state.user?.agentName)}</b><div class="small muted">${a.paused ? 'Paused' : 'Working since ' + a.since}</div></div>
+    <div class="row act-head">${orb('', state.user?.agentLook)}<div class="grow"><b>${esc(state.user?.agentName)}</b><div class="tiny muted">${a.paused ? 'Paused' : 'Working since ' + a.since}</div></div>
       <button class="btn tertiary sm" data-act="pause">${a.paused ? 'Resume' : 'Pause'}</button><button class="icon-btn" data-act="close" aria-label="Close">${icon('close')}</button></div>
-    ${a.needsYou.length ? `<div class="small muted">Needs you</div>` : ''}
-    ${a.needsYou.map((n) => `<div class="card pad stack" style="--gap:8px;background:var(--grey);border:0"><b>${esc(n.title)}</b><p class="muted">${esc(n.body)}</p>
+    ${a.needsYou.length ? `<div class="act-cap">Needs you</div>` : ''}
+    ${a.needsYou.map((n) => `<div class="act-need"><b>${esc(n.title)}</b><p>${esc(n.body)}</p>
       <div class="row"><button class="btn primary sm" data-act="review" data-id="${n.id}">Review</button><button class="btn tertiary sm" data-act="later" data-id="${n.id}">Later</button></div></div>`).join('')}
-    <div class="small muted">Working on</div>
-    <div class="list">${a.working.map((w) => `<div class="stack" style="--gap:6px;padding:12px 14px"><div class="row"><span class="grow">${esc(w.title)}</span><span class="small muted">${w.done} of ${w.total}</span></div><div class="progress"><span style="width:${(w.done / w.total) * 100}%"></span></div></div>`).join('')}</div>
-    <div class="small muted">Scheduled</div>
-    <div class="list">${a.scheduled.map((s) => `<div class="list-row"><span class="grow">${esc(s.title)}</span><span class="small muted">${esc(s.when)}</span></div>`).join('')}</div>
+    <div class="act-cap">Working on</div>
+    <div class="act-list">${a.working.map((w) => `<div class="act-task"><div class="act-row"><span class="grow">${esc(w.title)}</span><span class="tiny muted">${w.done} of ${w.total}</span></div><div class="progress"><span style="width:${(w.done / w.total) * 100}%"></span></div></div>`).join('')}</div>
+    <div class="act-cap">Scheduled</div>
+    <div class="act-list">${a.scheduled.map((x) => `<div class="act-row"><span class="grow">${esc(x.title)}</span><span class="tiny muted">${esc(x.when)}</span></div>`).join('')}</div>
+    ${(a.earlier || []).length ? `<div class="act-cap">Earlier today</div>
+    <div class="act-list">${a.earlier.map((x) => `<a class="act-row" href="${esc(x.route)}"><span class="grow">${esc(x.title)}</span><span class="tiny muted">${esc(x.when)}</span></a>`).join('')}</div>` : ''}
     <a class="btn tertiary sm" style="align-self:flex-start" href="#/skills">Manage skills</a>`;
   el.addEventListener('click', async (e) => {
     const b = e.target.closest('[data-act]');
@@ -194,7 +202,6 @@ export async function render() {
   const path = location.hash.replace(/^#\/?/, '');
   if (!isAuthed() && !path.startsWith('login')) return go('#/login');
   if (!path) return go(isAuthed() ? '#/research' : '#/login');
-  if (path === 'library') { go('#/research'); return; }
   if (!state.user) await refreshUser();
   const route = match(path);
   if (!route) return go('#/research');

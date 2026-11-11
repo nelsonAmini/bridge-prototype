@@ -1,0 +1,88 @@
+[
+ {
+  "_id": "lib-land",
+  "name": "Land administration reform",
+  "description": "Cabinet papers, the 2019 audit and stakeholder letters on the land registry bill.",
+  "goal": "Prepare the Cabinet note on the Land Registration Bill and track which parcels are still disputed after the 2019 audit.",
+  "updated": "Updated 2 hours ago",
+  "instructions": "Answer as a policy adviser to the Cabinet Office. Cite the paper code for every claim and flag anything older than 2020.",
+  "chats": [
+   {
+    "q": "Which parcels are still disputed after the 2019 audit?",
+    "when": "Last message 2 hours ago"
+   },
+   {
+    "q": "Draft the Cabinet note on the Land Registration Bill",
+    "when": "Last message yesterday",
+    "thread": "th-land"
+   },
+   {
+    "q": "Compare the bill with the 2019 audit recommendations",
+    "when": "Last message 3 days ago"
+   },
+   {
+    "q": "Summarise stakeholder objections by parish",
+    "when": "Last message last week"
+   }
+  ],
+  "files": [
+   {
+    "name": "Land Registration Bill 2026.pdf",
+    "size": "18 pages",
+    "type": "PDF"
+   },
+   {
+    "name": "2019 Land Registry Audit.pdf",
+    "size": "64 pages",
+    "type": "PDF"
+   },
+   {
+    "name": "Stakeholder letters.docx",
+    "size": "12 pages",
+    "type": "DOC"
+   },
+   {
+    "name": "Parcel disputes by parish.xlsx",
+    "size": "4 sheets",
+    "type": "XLS"
+   }
+  ],
+  "order": 0,
+  "fileCount": 6
+ },
+ {
+  "_id": "lib-budget",
+  "name": "Budget 2027 preparation",
+  "description": "Ministry submissions, revenue forecasts and last year's estimates.",
+  "updated": "Updated yesterday",
+  "order": 1
+ },
+ {
+  "_id": "lib-tourism",
+  "name": "Tourism recovery plan",
+  "description": "Arrivals data, airline agreements and the 2025 tourism strategy.",
+  "updated": "Updated 3 days ago",
+  "order": 2
+ },
+ {
+  "_id": "lib-water",
+  "name": "Water security",
+  "description": "Drought response papers and the Barbados Water Authority capital plan.",
+  "updated": "Updated last week",
+  "order": 3
+ },
+ {
+  "_id": "lib-un",
+  "name": "UN speeches",
+  "description": "Every address to the UN General Assembly since 2018, in one place.",
+  "updated": "Updated 2 weeks ago",
+  "order": 4
+ },
+ {
+  "_id": "lib-climate",
+  "name": "Climate finance",
+  "description": "Bridgetown Initiative notes, loan terms and partner correspondence.",
+  "updated": "Updated last month",
+  "order": 5
+ }
+]

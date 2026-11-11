@@ -18,7 +18,13 @@
     "readAloud": true,
     "onboarded": false,
     "language": "English",
-    "notifications": true,
+    "notifications": {
+      "sign": true,
+      "brief": true,
+      "answers": true,
+      "comments": true,
+      "shared": true
+    },
     "keepLearning": true,
     "homeCard": "briefing",
     "usage": [

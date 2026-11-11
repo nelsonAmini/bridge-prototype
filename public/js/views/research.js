@@ -28,8 +28,8 @@ function bindAsk(root) {
 const trend = (s) => s.trend ? `<span class="trend ${s.tone === 'bad' ? 'down' : ''}">${icon(s.tone === 'bad' ? 'trendDown' : 'trendUp', 's16')}${esc(s.trend)}</span>` : '';
 const statCard = (s) => `<div class="stat"><div class="k">${esc(s.label)}</div><div class="vv"><div class="v ${s.tone === 'bad' ? 'bad' : 'good'}">${esc(s.value)}${trend(s)}</div><div class="n">${esc(s.delta ?? s.note ?? '')}</div></div></div>`;
 const actions = `<div class="answer-actions"><button type="button" data-act="copy">${icon('copy', 's16')}Copy</button><button type="button" data-act="export">${icon('export', 's16')}Export</button><button type="button" data-act="save">${icon('bookmark', 's16')}Save to My Reviews</button><button type="button" data-act="regen">${icon('regenerate', 's16')}Regenerate</button><span class="spacer"></span><button type="button" data-act="trace">${icon('trace', 's16')}Knowledge trace</button></div>`;
-function bindActions(root) {
-  root.querySelectorAll('.answer-actions [data-act]').forEach((b) => (b.onclick = () => toast({ copy: 'Copied to clipboard', export: 'Exported as PDF (prototype)', save: 'Saved to My Reviews', regen: 'Regenerating… (prototype)', trace: 'Knowledge trace opens the sources graph (prototype)' }[b.dataset.act])));
+function bindActions(root, threadId) {
+  root.querySelectorAll('.answer-actions [data-act]').forEach((b) => (b.onclick = () => b.dataset.act === 'trace' && threadId ? go(`#/research/thread/${threadId}/trace`) : toast({ copy: 'Copied to clipboard', export: 'Exported as PDF (prototype)', save: 'Saved to My Reviews', regen: 'Regenerating… (prototype)', trace: 'Knowledge trace opens the sources graph (prototype)' }[b.dataset.act])));
   root.querySelectorAll('[data-follow]').forEach((b) => (b.onclick = () => { const q = root.querySelector('#q'); q.value = b.dataset.follow; q.focus(); }));
 }
 const followups = (list) => `<div class="stack" style="--gap:8px"><h5>What would you like to know next?</h5><div class="follow-chips">${list.map((f) => `<button class="prompt-chip" data-follow="${esc(f)}"><span class="plus">+</span>${esc(f)}</button>`).join('')}</div></div>`;
@@ -160,6 +160,42 @@ function docPanel(d) {
     <div class="doc-foot">${foot}</div></aside>`;
 }
 
+// Conversation header (Figma: organism / research / conversation header). Spans the chat and the document panel.
+const convoHeader = (id, name, answered) => `<header class="convo-head">
+  <nav class="breadcrumb" aria-label="Path"><a href="#/research">Research</a>${icon('right', 's16')}<span class="current">${esc(name)}</span></nav>
+  <span class="spacer"></span>
+  <button class="btn tertiary sm" id="hTrace" ${answered ? '' : 'disabled title="Available once Bridge has answered"'}>Knowledge trace</button>
+  <button class="btn tertiary sm" id="hExport" data-popover-anchor>Export</button>
+  <button class="btn secondary sm" id="hShare">Share</button>
+  <button class="icon-btn" id="hMore" aria-label="More" data-popover-anchor>${icon('more')}</button></header>`;
+const threadName = (t) => t.name || (t.question.length > 40 ? t.question.slice(0, 38).trim() + '…' : t.question);
+
+function bindHeader(root, t, id) {
+  root.querySelector('#hTrace')?.addEventListener('click', () => go(`#/research/thread/${id}/trace`));
+  root.querySelector('#hShare').onclick = () => toast('Link copied. Only people in your government can open it (prototype)');
+  root.querySelector('#hExport').onclick = (e) => {
+    const pop = popover(e.currentTarget, `<button class="menu-item" data-f="PDF">${icon('download', 's16')}PDF</button><button class="menu-item" data-f="Word">${icon('download', 's16')}Word</button>`, { align: 'right' });
+    pop.onclick = (ev) => { const f = ev.target.closest('[data-f]')?.dataset.f; if (f) { closePopovers(); toast(`Conversation exported as ${f} (prototype)`); } };
+  };
+  root.querySelector('#hMore').onclick = (e) => {
+    const pop = popover(e.currentTarget, `<button class="menu-item" data-a="rename">${icon('edit', 's16')}Rename</button><button class="menu-item" data-a="pin">${icon('pin', 's16')}${t.pinned ? 'Unpin' : 'Pin'}</button><div class="menu-sep"></div><button class="menu-item danger" data-a="delete">${icon('trash', 's16')}Delete</button>`, { align: 'right' });
+    pop.onclick = async (ev) => {
+      const a = ev.target.closest('[data-a]')?.dataset.a; if (!a) return; closePopovers();
+      if (a === 'pin') { await api.update('threads', id, { pinned: !t.pinned }); toast(t.pinned ? 'Unpinned' : 'Pinned to the top of Recent'); rerender(); }
+      if (a === 'rename') {
+        const m = modal({ title: 'Rename conversation', iconName: 'edit', body: `<div class="field"><label for="rn">Name</label><input class="input" id="rn" value="${esc(threadName(t))}"></div>`, foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="rnSave">Save</button>' });
+        const inp = m.el.querySelector('#rn'); inp.focus(); inp.select();
+        const saveName = async () => { const v = inp.value.trim(); if (!v) return inp.focus(); await api.update('threads', id, { name: v }); const rc = (await api.list('recent')).find((r) => r.route === '#/research/thread/' + id); if (rc) await api.update('recent', rc._id, { title: v }); m.close(); rerender(); };
+        m.el.querySelector('#rnSave').onclick = saveName; inp.onkeydown = (k) => { if (k.key === 'Enter') saveName(); };
+      }
+      if (a === 'delete') {
+        const m = modal({ title: 'Delete conversation?', iconName: 'trash', body: `<p class="muted">“${esc(threadName(t))}” and its drafts will be deleted. This can’t be undone.</p>`, foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn danger sm" id="del">Delete</button>' });
+        m.el.querySelector('#del').onclick = async () => { await api.remove('threads', id); const rc = (await api.list('recent')).find((r) => r.route === '#/research/thread/' + id); if (rc) await api.remove('recent', rc._id); m.close(); toast('Conversation deleted'); go('#/research'); };
+      }
+    };
+  };
+}
+
 async function thread(id) {
   const t = await api.get('threads', id);
   if (!t) return { html: '<div class="page">Not found</div>' };
@@ -189,13 +225,15 @@ async function thread(id) {
     : `<div class="bridge-line">${orb('sm', state.user.agentLook, d && d.stage === 'writing' && m.doc === d.version ? 'thinking' : '')}<span>${esc(m.doc && m.doc === d.version && d.stage === 'writing' ? 'Drafting a Cabinet note. You can keep chatting.' : m.doc === 1 && !open && !(t.extra || []).some((x) => x.doc === 2) ? 'Done. Your draft is in the card below.' : m.text)}</span><span class="time">${esc(m.time)}</span></div>${m.doc ? docCard(d, m.doc, !open) : ''}`).join('');
   return {
     title: 'Ask Bridge',
-    html: `<div class="chat-layout ${open ? 'has-doc' : ''}" style="${d && d.width ? `--doc-w:${d.width}px` : ''}"><section class="chat-col"><div class="chat-scroll"><div class="thread"><div class="bubble-user">${esc(t.question)}</div>${body}${extra}</div></div>
+    html: `<div class="chat-layout ${open ? 'has-doc' : ''}" style="${d && d.width ? `--doc-w:${d.width}px` : ''}">${convoHeader(id, threadName(t), stage === 'answered')}<div class="chat-body"><section class="chat-col"><div class="chat-scroll"><div class="thread"><div class="bubble-user">${esc(t.question)}</div>${body}${extra}</div></div>
       <div class="thread-composer">${askbar('Reply to Bridge')}<p class="note">Bridge can make mistakes. Double check or cross reference.</p></div></section>
-      ${open ? `<div class="resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize document panel" tabindex="0"><span></span></div>${docPanel(d)}` : ''}</div>`,
+      ${open ? `<div class="resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize document panel" tabindex="0"><span></span></div>${docPanel(d)}` : ''}</div></div>`,
     async mount(root) {
-      bindActions(root);
+      bindActions(root, id); bindHeader(root, t, id);
       root.querySelectorAll('.askbar .switch').forEach((sw) => (sw.onclick = () => sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true')));
       const q = root.querySelector('#q');
+      const fu = sessionStorage.getItem('bridge-followup');
+      if (fu) { sessionStorage.removeItem('bridge-followup'); q.value = fu; setTimeout(() => { q.focus(); q.setSelectionRange(fu.length, fu.length); }, 0); }
       const now = () => 'Today, ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       const save = (f) => api.update('threads', id, f);
       const write = async (version) => {
@@ -252,9 +290,9 @@ async function thread(id) {
       // Resizable panel: drag the handle (default 560px, min 400, max 60% of the main area)
       const h = root.querySelector('.resize-handle');
       if (h) {
-        const lay = root.querySelector('.chat-layout');
-        const setW = (w) => { const max = lay.clientWidth * 0.6; w = Math.max(400, Math.min(max, w)); lay.style.setProperty('--doc-w', w + 'px'); return w; };
-        h.onpointerdown = (ev) => { h.setPointerCapture(ev.pointerId); const r = lay.getBoundingClientRect(); h.onpointermove = (m) => setW(r.right - 32 - m.clientX); h.onpointerup = async () => { h.onpointermove = null; await save({ doc: { ...(await api.get('threads', id)).doc, width: parseInt(lay.style.getPropertyValue('--doc-w')) } }); }; };
+        const lay = root.querySelector('.chat-layout'); const body = root.querySelector('.chat-body');
+        const setW = (w) => { const max = body.clientWidth * 0.6; w = Math.max(400, Math.min(max, w)); lay.style.setProperty('--doc-w', w + 'px'); return w; };
+        h.onpointerdown = (ev) => { h.setPointerCapture(ev.pointerId); const r = body.getBoundingClientRect(); h.onpointermove = (m) => setW(r.right - m.clientX); h.onpointerup = async () => { h.onpointermove = null; await save({ doc: { ...(await api.get('threads', id)).doc, width: parseInt(lay.style.getPropertyValue('--doc-w')) } }); }; };
         h.onkeydown = (ev) => { if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight') { const cur = parseInt(getComputedStyle(lay).getPropertyValue('--doc-w')) || 560; setW(cur + (ev.key === 'ArrowLeft' ? 24 : -24)); } };
       }
       const sc = root.querySelector('.chat-scroll'); if (sc && d) sc.scrollTop = sc.scrollHeight;

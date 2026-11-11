@@ -115,8 +115,12 @@ async function how() {
   };
 }
 
+// Account settings → Notifications: one switch per type (Figma 06, flow 5)
+const NOTIFS = [['sign', 'Papers to sign', 'When a paper is filed for your signature'], ['brief', 'Daily brief ready', 'Each weekday at 6:30 AM'], ['answers', 'Answers and plans', 'When a long answer is ready or a plan needs you'], ['comments', 'Comments and mentions', 'When someone comments or Bridge suggests a change'], ['shared', 'Shared with you', 'When a paper is shared or updated']];
+
 async function settings() {
   const u = await refreshUser();
+  const notif = typeof u.notifications === 'object' && u.notifications ? u.notifications : Object.fromEntries(NOTIFS.map(([k]) => [k, u.notifications !== false]));
   return {
     title: 'Account and settings',
     html: `<div class="wide-page">
@@ -126,16 +130,19 @@ async function settings() {
       <div class="row" style="--gap:16px;align-items:flex-start"><div class="field grow"><label for="em">Email</label><input class="input" id="em" value="${esc(u.email)}" readonly></div><div class="field grow"><label for="wl">Wallet</label><input class="input" id="wl" value="${esc(u.wallet)}" readonly></div></div>
       <button class="btn secondary sm" style="align-self:flex-start" id="pw">Change password</button>
       <span class="sec">Usage and quota</span>
-      <div class="list">${u.usage.map((x) => `<div class="usage-row"><div class="row"><span class="grow">${esc(x.label)}</span><span class="tiny muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(8, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div>
+      <div class="list set-list">${u.usage.map((x) => `<div class="usage-row"><div class="row"><span class="grow">${esc(x.label)}</span><span class="tiny muted">${esc(x.display)}</span></div><div class="progress"><span style="width:${Math.max(8, (x.used / x.limit) * 100)}%"></span></div></div>`).join('')}</div>
       <span class="sec">App</span>
-      <div class="row" style="--gap:16px;align-items:flex-end"><div class="field grow"><label for="lang">Language</label><select class="select" id="lang">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
-        <div class="card row grow tog-card"><span class="grow">Notifications</span>${sw(u.notifications, 'id="notif" aria-label="Notifications"')}</div></div>
-      <div class="card row tog-card" style="max-width:352px"><span class="grow">Dark mode</span>${sw(document.documentElement.dataset.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
+      <div class="field"><label for="lang" class="set-label">Language</label><select class="select" id="lang">${['English', 'Français', 'Español'].map((l) => `<option ${l === u.language ? 'selected' : ''}>${l}</option>`).join('')}</select>
+        <p class="set-help">Default for your deployment. Changing it applies on web and mobile.</p></div>
+      <span class="sec">Notifications</span>
+      <div class="list set-list">${NOTIFS.map(([k, t, d]) => `<div class="notif-row"><div class="grow"><span>${t}</span><span class="tiny muted">${d}</span></div>${sw(notif[k], `data-notif="${k}" aria-label="${t}"`)}</div>`).join('')}</div>
+      <p class="tiny muted">These settings apply on web and on the Bridge mobile app.</p>
+      <div class="card row tog-card proto-only" style="max-width:352px"><span class="grow">Dark mode <span class="tiny muted">(prototype only)</span></span>${sw(document.documentElement.dataset.theme === 'dark', 'id="dark" aria-label="Dark mode"')}</div>
       <div class="row"><button class="btn tertiary sm" id="report">Report an issue</button><button class="btn danger sm" id="out">Sign out</button><span class="spacer"></span><button class="btn ghost sm" id="reset">Reset prototype data</button></div>
     </div>`,
     mount(root) {
       root.querySelector('#lang').onchange = async (e) => { await api.update('users', 'u-pm', { language: e.target.value }); toast('Language saved'); };
-      root.querySelector('#notif').onclick = async (e) => { const v = e.currentTarget.getAttribute('aria-checked') !== 'true'; e.currentTarget.setAttribute('aria-checked', v); await api.update('users', 'u-pm', { notifications: v }); };
+      root.querySelectorAll('[data-notif]').forEach((b) => (b.onclick = async () => { const v = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', v); notif[b.dataset.notif] = v; await api.update('users', 'u-pm', { notifications: { ...notif } }); }));
       root.querySelector('#dark').onclick = () => { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); rerender(); };
       root.querySelector('#pw').onclick = () => { const m = modal({ title: 'Change password', iconName: 'lock', body: '<div class="stack"><div class="field"><label>Current password</label><input class="input" type="password"></div><div class="field"><label>New password</label><input class="input" type="password"></div></div>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Update</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Password updated (prototype)'); }; };
       root.querySelector('#report').onclick = () => { const m = modal({ title: 'Report an issue', iconName: 'warning', body: '<textarea class="textarea" style="min-height:120px" placeholder="What happened?"></textarea>', foot: '<button class="btn tertiary sm" data-close>Cancel</button><button class="btn primary sm" id="ok">Send</button>' }); m.el.querySelector('#ok').onclick = () => { m.close(); toast('Thanks. Your report was sent.'); }; };

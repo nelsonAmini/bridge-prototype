@@ -32,6 +32,23 @@
         "when": "Wed 4:00 PM"
       }
     ],
-    "order": 0
+    "order": 0,
+    "earlier": [
+      {
+        "title": "3 papers filed to sign",
+        "when": "8:05 AM",
+        "route": "#/reviews/tag/To%20sign"
+      },
+      {
+        "title": "Daily brief ready",
+        "when": "6:30 AM",
+        "route": "#/research/brief"
+      },
+      {
+        "title": "Answer ready: Housing vs Covenant",
+        "when": "Yesterday",
+        "route": "#/create/doc/doc-3"
+      }
+    ]
   }
 ]

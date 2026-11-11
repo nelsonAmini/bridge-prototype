@@ -16,7 +16,7 @@ async function detect() {
   return mode;
 }
 
-const key = (c) => 'bridge-proto-v3:' + c;
+const key = (c) => 'bridge-proto-v4:' + c;
 
 async function loadStatic(collection) {
   if (memory[collection]) return memory[collection];
@@ -99,7 +99,7 @@ export const api = {
       await fetch('api/reset', { method: 'POST' });
       return;
     }
-    for (const k of Object.keys(localStorage)) if (k.startsWith('bridge-proto-v3:')) localStorage.removeItem(k);
+    for (const k of Object.keys(localStorage)) if (k.startsWith('bridge-proto-v4:')) localStorage.removeItem(k);
     for (const k of Object.keys(memory)) delete memory[k];
   },
 };
